@@ -1,0 +1,11 @@
+﻿.react-confirm-alert-overlay {
+    background: rgba(0,0,0,0.5);
+}
+
+.custom-ui {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 20px 75px rgba(0, 0, 0, 0.23);
+    color: #000;
+    padding: 20px;
+}
