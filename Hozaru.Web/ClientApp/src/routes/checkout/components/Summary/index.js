@@ -9,7 +9,7 @@ class Summary extends Component {
     };
 
     render() {
-        const { shoppingCartSummary } = this.props;
+        const { shoppingCartSummary, freight } = this.props;
         return (
             <div className="container mt-3 pb-2 ">
                 <div className="row font-13px">
@@ -18,7 +18,7 @@ class Summary extends Component {
                     </div>
                     <div className="col-5 text-right">
                         <span className="font-weight-normal">
-                            <NumberFormat value={shoppingCartSummary.totalSummary} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                            <NumberFormat value={shoppingCartSummary.subTotal} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
                         </span>
                     </div>
                 </div>
@@ -27,23 +27,30 @@ class Summary extends Component {
                         <span className="font-weight-normal">Subtotal Pengiriman</span>
                     </div>
                     <div className="col-5 text-right">
-                        <span className="font-weight-normal">Rp 34.000</span>
+                        <span className="font-weight-normal">
+                            <NumberFormat value={freight.rate} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                        </span>
                     </div>
                 </div>
-                <div className="row font-13px">
-                    <div className="col-7">
-                        <span className="font-weight-normal">Voucher</span>
+                {
+                    shoppingCartSummary.voucher &&
+                    <div className="row font-13px">
+                        <div className="col-7">
+                            <span className="font-weight-normal">Voucher</span>
+                        </div>
+                        <div className="col-5 text-right">
+                            <span className="font-weight-normal">Rp -5.000</span>
+                        </div>
                     </div>
-                    <div className="col-5 text-right">
-                        <span className="font-weight-normal">Rp -5.000</span>
-                    </div>
-                </div>
+                }
                 <div className="row font-16px">
                     <div className="col-7">
                         <span className="font-weight-bold">Total Pembayaran</span>
                     </div>
                     <div className="col-5 text-right">
-                        <span className="font-weight-bolder">Rp 214.000</span>
+                        <span className="font-weight-bolder">
+                            <NumberFormat value={shoppingCartSummary.totalSummary} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                        </span>
                     </div>
                 </div>
             </div>
@@ -53,6 +60,7 @@ class Summary extends Component {
 
 
 const mapStateToProps = state => ({
+    freight: state.shoppingCart.freight,
     shoppingCartSummary: state.shoppingCart.summary
 });
 

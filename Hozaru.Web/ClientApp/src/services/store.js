@@ -20,7 +20,7 @@ export default initialState => {
         const state = store.getState();
         const persist = {
             shoppingCart: state.shoppingCart,
-            total: state.total
+            customer: state.customer
         };
 
         window.localStorage.setItem('state', JSON.stringify(persist));

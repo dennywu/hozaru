@@ -21,7 +21,7 @@ class SubTotal extends Component {
                     </div>
                     <div className="col-5 text-right">
                         <span className="font-weight-bolder">
-                            <NumberFormat value={shoppingCartSummary.totalSummary} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                            <NumberFormat value={shoppingCartSummary.subTotal} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
                         </span>
                     </div>
                 </div>

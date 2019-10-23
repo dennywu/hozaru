@@ -22,11 +22,16 @@ class Checkout extends Component {
                     <ShoppingCart />
                 </div>
                 <Shipping />
-                <hr className="mt-1 mb-1" />
                 <Note />
+                <hr className="mt-1 mb-1" />
                 <SubTotal />
-                <Voucher />
+                <hr className="mt-1 mb-1" />
+                {
+                    //<Voucher />
+                    //<hr className="mt-1 mb-1" />
+                }
                 <Payment />
+                <hr className="mt-1 mb-1" />
                 <Summary />
                 <div className="row">
                     <div className="col-12">

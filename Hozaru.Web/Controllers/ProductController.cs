@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Hozaru.ApplicationServices.Products;
+using Hozaru.ApplicationServices.Products.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,24 +15,22 @@ namespace Hozaru.Web.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        [HttpGet]
+        public IEnumerable<ProductDto> Get()
         {
-            "SHAMPOO & CONDITIONER 2 in 1 LONGRICH", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            var products = IoCManager.GetInstance<IProductAppService>().GetAll();
+            return products;
+        }
 
         [HttpGet]
-        public IEnumerable<Product> Get()
+        [Route("{id}/image")]
+        public IActionResult GetImage(Guid id)
         {
-            var rng = new Random();
-            var products = Enumerable.Range(1, 7).Select(index => new Product
-            {
-                Id = Guid.NewGuid(),
-                Name = Summaries[rng.Next(Summaries.Length)],
-                Description = "",
-                Price = 185000
-            })
-            .ToArray();
-            return products;
+            var productImageStream = IoCManager.GetInstance<IProductAppService>().GetImage(id);
+            //HttpResponseMessage response = new HttpResponseMessage { Content = new StreamContent(productImageStream) };
+            //response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+            //response.Content.Headers.ContentLength = productImageStream.Length;
+            return File(productImageStream, "image/jpeg");
         }
     }
 }

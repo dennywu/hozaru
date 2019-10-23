@@ -11,7 +11,6 @@ class DialogAddToCart extends Component {
     static propTypes = {
         isOpen: PropTypes.bool.isRequired,
         product: PropTypes.object.isRequired,
-        closeDialog: PropTypes.func.isRequired,
         addProduct: PropTypes.func.isRequired
     };
 
@@ -19,26 +18,14 @@ class DialogAddToCart extends Component {
         super(props);
 
         this.state = {
-            isOpen: props.isOpen,
             product: props.product,
             quantity: 1,
             note: ''
         };
 
-        this.toggle = this.toggle.bind(this);
         this.changeQuantity = this.changeQuantity.bind(this);
         this.changeNote = this.changeNote.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    toggle() {
-        this.setState(prevState => ({
-            isOpen: !prevState.isOpen
-        }),
-            function () {
-                this.props.closeDialog();
-            }
-        );
     }
 
     changeQuantity(quantity) {
@@ -53,19 +40,19 @@ class DialogAddToCart extends Component {
         event.preventDefault();
         const { product } = this.state;
         this.props.addProduct(product, this.state.quantity, this.state.note);
-        this.toggle();
+        this.props.toggle();
     }
 
     render() {
         return (
-            <Modal isOpen={this.state.isOpen} fade={false} toogle={this.toogle} backdrop="static" className="modal-checkout modal-without-header fixed-bottom">
-                <ModalClose toggle={this.toggle} />
+            <Modal isOpen={this.props.isOpen} fade={false} toggle={this.props.toggle} backdrop={true} className="modal-checkout modal-without-header fixed-bottom">
+                <ModalClose toggle={this.props.toggle} />
                 <form onSubmit={this.handleSubmit}>
                     <ModalBody>
                         <div className="container">
                             <div className="row">
                                 <div className="col-3">
-                                    <img className="image-product-addtocart" srcSet={process.env.PUBLIC_URL + "/images/default-product.jpg"} alt="" />
+                                    <img className="image-product-addtocart" srcSet={"/api/product/" + this.props.product.id + "/image"} alt={this.props.product.name} />
                                 </div>
                                 <div className="col-9">
                                     <div className="font-weight-600">{this.props.product.name}</div>

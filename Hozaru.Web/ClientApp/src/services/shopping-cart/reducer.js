@@ -1,10 +1,20 @@
-﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY } from './actionTypes';
+﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_TYPE } from './actionTypes';
 
 const initialState = {
     items: [],
+    note: '',
+    paymentType: '',
+    freight: {
+        expeditionCode: '',
+        rate: '',
+        totalWeight: ''
+    },
     summary: {
         totalQuantity: 0,
         subTotal: 0,
+        shippingRate: 0,
+        expeditionCode: '',
+        voucher: 0,
         totalSummary: 0
     }
 };
@@ -20,10 +30,7 @@ const calculateSummary = (shoppingCart) => {
         return sum;
     }, 0);
 
-    let totalSummary = shoppingCart.items.reduce((sum, p) => {
-        sum += p.total;
-        return sum;
-    }, 0);
+    let totalSummary = subTotal + shoppingCart.freight.rate;
 
     return {
         totalQuantity: productQuantity,
@@ -65,7 +72,7 @@ export default function (state = initialState, action) {
             if (!productAlreadyInCart)
                 shoppingCart.items.push(shoppingCartItem);
 
-            shoppingCart.summary = calculateSummary(shoppingCart);
+            shoppingCart.summary = calculateSummary(state);
 
             return {
                 ...state,
@@ -80,7 +87,7 @@ export default function (state = initialState, action) {
                 shoppingCartRemoveProduct.items.splice(index, 1);
             }
 
-            shoppingCartRemoveProduct.summary = calculateSummary(shoppingCartRemoveProduct);
+            shoppingCartRemoveProduct.summary = calculateSummary(state);
 
             return {
                 ...state,
@@ -98,8 +105,29 @@ export default function (state = initialState, action) {
                 }
             });
 
-            shoppingCartChangeQty.summary = calculateSummary(shoppingCartChangeQty);
+            shoppingCartChangeQty.summary = calculateSummary(state);
 
+            return {
+                ...state,
+                quantityToChange: Object.assign({}, { productId: productChangeQty.id, quantity: quantityChangeQty })
+            };
+        case CHANGE_FREIGHT:
+            state.freight = { expeditionCode: action.expeditionCode, rate: action.shippingRate, totalWeight: action.totalWeight };
+            state.summary = calculateSummary(state);
+
+            return {
+                ...state
+            };
+
+        case CHANGE_NOTE:
+            state.note = action.note;
+
+            return {
+                ...state
+            };
+
+        case CHANGE_PAYMENT_TYPE:
+            state.paymentType = action.paymentType;
             return {
                 ...state
             };

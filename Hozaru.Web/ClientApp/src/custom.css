@@ -152,6 +152,14 @@ body {
     margin: 0 auto;
 }
 
+.mr-2em {
+    margin-right: 2em;
+}
+
+.pr-2em {
+    padding-right: 2em;
+}
+
 .product-grid {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
@@ -354,4 +362,11 @@ div.opsi-pengiriman {
 
 .color-orange {
     color: #ee4d2d;
+}
+
+.react-select {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
 }

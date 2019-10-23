@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Hozaru.Core.Application.Services.Dto;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Hozaru.Web
+namespace Hozaru.ApplicationServices.Products.Dtos
 {
-    public class Product
+    public class ProductDto : EntityDto<Guid>
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }

@@ -12,6 +12,7 @@ namespace Hozaru.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            IoCManager.RegisterAssembly();
         }
 
         public IConfiguration Configuration { get; }

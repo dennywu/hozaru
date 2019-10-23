@@ -1,0 +1,15 @@
+﻿img.logobank {
+    width: 50px;
+    margin-top: 5px;
+}
+
+div.bank-selected svg {
+    margin-top: 21px;
+    font-size: 20px;
+}
+
+div.bank-arrow {
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}

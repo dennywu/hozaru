@@ -45,9 +45,9 @@ export class GridItem extends Component {
                 <div className="product-image-container">
                     <img
                         decoding="auto"
-                        srcSet={process.env.PUBLIC_URL + "/images/default-product.jpg"}
-                        data-toggle="modal"
-                        alt="abc"
+                        srcSet={"/api/product/" + this.props.product.id + "/image"}
+            data-toggle="modal"
+            alt="abc"
                         onClick={this.showDialogProductDetail}
                     />
                 </div>
@@ -55,7 +55,7 @@ export class GridItem extends Component {
                     this.state.showDialogProductDetail &&
                     <DialogProductDetail
                         isOpen={this.state.showDialogProductDetail}
-                        closeDialog={this.closeDialogProductDetail}
+                        toggle={this.closeDialogProductDetail}
                         addToCart={this.addToCart}
                         product={this.props.product}
                     />
@@ -64,7 +64,7 @@ export class GridItem extends Component {
                     this.state.showDialogAddToCart &&
                     <DialogAddToCart
                         isOpen={this.state.showDialogAddToCart}
-                        closeDialog={this.closeDialogAddToCart}
+                        toggle={this.closeDialogAddToCart}
                         product={this.props.product}
                     />
                 }

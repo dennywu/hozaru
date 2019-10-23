@@ -16,20 +16,26 @@ class ShoppingCart extends Component {
 
     render() {
         const { shoppingCartItems } = this.props;
+        var contents = [];
+        for (var i = 0; i < shoppingCartItems.length; i++) {
+            var item = shoppingCartItems[i];
+            var line = (i !== (shoppingCartItems.length - 1)) && <hr className="mt-1 mb-1"></hr>;
+            contents.push(
+                <div key={item.product.id}>
+                    <ShoppingCartItem
+                        product={item.product}
+                        quantity={item.quantity}
+                        changeQuantity={this.props.changeQuantity}
+                        removeProduct={this.props.removeProduct}
+                        removeComponent={this.removeShoppingCartComponent} />
+                    {line}
+                </div>
+            );
+        }
 
         return (
             <>
-                {shoppingCartItems.map(item =>
-                    <div key={item.product.id}>
-                        <ShoppingCartItem
-                            product={item.product}
-                            quantity={item.quantity}
-                            changeQuantity={this.props.changeQuantity}
-                            removeProduct={this.props.removeProduct}
-                            removeComponent={this.removeShoppingCartComponent} />
-                        <hr className="mt-1 mb-1"></hr>
-                    </div>
-                )}
+                {contents}
             </>
         );
     }

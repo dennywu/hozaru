@@ -1,4 +1,4 @@
-﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY } from './actionTypes';
+﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_TYPE } from './actionTypes';
 
 export const loadCart = product => ({
     type: LOAD_CART,
@@ -24,5 +24,28 @@ export const changeQuantity = (product, quantity) => dispatch => {
         type: CHANGE_QUANTITY,
         payload: product,
         quantity: quantity
+    });
+};
+
+export const changeFreight = (expeditionCode, shippingRate, totalWeight) => dispatch => {
+    dispatch({
+        type: CHANGE_FREIGHT,
+        expeditionCode: expeditionCode,
+        shippingRate: shippingRate,
+        totalWeight: totalWeight
+    });
+};
+
+export const changeNote = (note) => dispatch => {
+    dispatch({
+        type: CHANGE_NOTE,
+        note: note
+    });
+};
+
+export const changePaymentType = (paymentType) => dispatch => {
+    dispatch({
+        type: CHANGE_PAYMENT_TYPE,
+        paymentType: paymentType
     });
 };
