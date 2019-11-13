@@ -56,7 +56,7 @@ class Payment extends Component {
             : <span className="font-weight-normal color-orange">Pilih Metode Pembayaran</span>;
 
         return (
-            <div className="container section-voucher mt-3 mb-3" onClick={this.showDialogPayment}>
+            <div className="container section-voucher mt-3 mb-3 cursor-pointer" onClick={this.showDialogPayment}>
                 <div className="row">
                     <div className="col-6">
                         <span className="font-weight-normal">

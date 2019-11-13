@@ -1,4 +1,4 @@
-﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_TYPE } from './actionTypes';
+﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_TYPE, RESET_SHOPPING_CART } from './actionTypes';
 
 export const loadCart = product => ({
     type: LOAD_CART,
@@ -47,5 +47,11 @@ export const changePaymentType = (paymentType) => dispatch => {
     dispatch({
         type: CHANGE_PAYMENT_TYPE,
         paymentType: paymentType
+    });
+};
+
+export const resetShoppingCart = () => dispatch => {
+    dispatch({
+        type: RESET_SHOPPING_CART
     });
 };

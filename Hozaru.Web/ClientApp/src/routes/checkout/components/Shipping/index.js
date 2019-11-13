@@ -131,7 +131,7 @@ class Shipping extends Component {
         const rate = selectedFreight ? selectedFreight.rate : '';
 
         let contents = customer.districts && this.state.freights.length !== 0 ?
-            <div className="row" onClick={this.showDialogShippingOption}>
+            <div className="row cursor-pointer" onClick={this.showDialogShippingOption}>
                 <div className="col-5">
                     <div className="font-weight-bolder">{expeditionName}</div>
                     <div className="font-weight-normal">{expeditionFullName}</div>

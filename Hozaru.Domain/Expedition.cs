@@ -7,11 +7,12 @@ namespace Hozaru.Domain
 {
     public class Expedition : Entity<Guid>
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public string CompanyCode { get; set; }
-        public string CompanyName { get; set; }
-        public string FullName
+        public virtual string Code { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string CompanyCode { get; set; }
+        public virtual string CompanyName { get; set; }
+        public virtual bool Disabled { get; set; }
+        public virtual string FullName
         {
             get
             {
@@ -19,12 +20,15 @@ namespace Hozaru.Domain
             }
         }
 
+        protected Expedition() { }
+
         public Expedition(string code, string name, string companyCode, string companyName)
         {
             this.Code = code;
             this.Name = name;
             this.CompanyCode = companyCode;
             this.CompanyName = companyName;
+            this.Disabled = false;
         }
     }
 }

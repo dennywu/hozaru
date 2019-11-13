@@ -7,6 +7,7 @@ using Hozaru.ApplicationServices.Districtses.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Hozaru.Core.Extensions;
+using Hozaru.Core.Dependency;
 
 namespace Hozaru.Web.Controllers
 {
@@ -14,11 +15,17 @@ namespace Hozaru.Web.Controllers
     [ApiController]
     public class DistrictController : ControllerBase
     {
+        private readonly IDistrictAppService _districtAppService;
+        public DistrictController()
+        {
+            _districtAppService = IocManager.Instance.Resolve<IDistrictAppService>();
+        }
+
         [HttpGet]
         public IEnumerable<DistrictDto> Get(string cityCode, string searchKey)
         {
             searchKey = searchKey.IsNullOrWhiteSpace() ? string.Empty : searchKey;
-            var districtses = IoCManager.GetInstance<IDistrictAppService>().Search(cityCode, searchKey);
+            var districtses = _districtAppService.Search(cityCode, searchKey);
             return districtses;
         }
     }

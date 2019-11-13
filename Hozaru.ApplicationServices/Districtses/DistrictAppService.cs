@@ -6,6 +6,7 @@ using Hozaru.Core.Domain.Repositories;
 using Hozaru.Domain;
 using System.Linq;
 using Hozaru.Core;
+using AutoMapper;
 
 namespace Hozaru.ApplicationServices.Districtses
 {
@@ -29,7 +30,7 @@ namespace Hozaru.ApplicationServices.Districtses
             var districtses = _districtRepository.GetAll()
                 .Where(i => i.City.Code == city.Code)
                 .ToList();
-            return Mapper.Instance.Map<IList<Districts>, IList<DistrictDto>>(districtses);
+            return Mapper.Map<IList<Districts>, IList<DistrictDto>>(districtses);
         }
 
         public IList<DistrictDto> Search(string cityCode, string searchKey)
@@ -43,7 +44,7 @@ namespace Hozaru.ApplicationServices.Districtses
                 .Where(i => i.City.Code == city.Code && i.Name.ToLower().Contains(searchKey.ToLower()))
                 .Take(5)
                 .ToList();
-            return Mapper.Instance.Map<IList<Districts>, IList<DistrictDto>>(districtses);
+            return Mapper.Map<IList<Districts>, IList<DistrictDto>>(districtses);
         }
     }
 }

@@ -20,6 +20,17 @@ class Receiver extends Component {
         this.populateDistrictses = this.populateDistrictses.bind(this);
         this.handleChangeCity = this.handleChangeCity.bind(this);
         this.handleChangeDistrict = this.handleChangeDistrict.bind(this);
+
+        this.state = {
+            errorMessages: {
+                name: '',
+                whatsapp: '',
+                email: '',
+                address: '',
+                city: '',
+                districts: ''
+            }
+        };
     }
 
     static propTypes = {
@@ -98,9 +109,9 @@ class Receiver extends Component {
                 <h5 className="card-title">DATA PENERIMA</h5>
                 <div className="card-body">
                     <div className="row">
-                        <div className="input-group mb-2">
+                        <div className={(this.props.errors && this.props.errors.name.hasError) ? 'input-group mb-2 has-error' : 'input-group mb-2'}>
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon1">
+                                <span className="input-group-text">
                                     <FontAwesomeIcon icon={faUser} />
                                 </span>
                             </div>
@@ -110,8 +121,19 @@ class Receiver extends Component {
                                 defaultValue={this.props.customer.name}
                                 onBlur={this.handleChangeCustomerName}
                             />
+                            {
+                                (this.props.errors && this.props.errors.name.hasError) &&
+                                <div className="col-12 pl-5">
+                                    <small className="form-text text-muted">
+                                        {
+                                            this.props.errors && this.props.errors.name.message
+                                        }
+                                    </small>
+                                </div>
+                            }
                         </div>
-                        <div className="input-group mb-2">
+
+                        <div className={(this.props.errors && this.props.errors.whatsapp.hasError) ? 'input-group mb-2 has-error' : 'input-group mb-2'}>
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1">
                                     <FontAwesomeIcon icon={faWhatsapp} />
@@ -123,8 +145,16 @@ class Receiver extends Component {
                                 defaultValue={this.props.customer.whatsapp}
                                 onBlur={this.handleChangeWhatsapp}
                             />
+                            {
+                                (this.props.errors && this.props.errors.whatsapp.hasError) &&
+                                <div className="col-12 pl-5">
+                                    <small className="form-text text-muted">
+                                        {this.props.errors && this.props.errors.whatsapp.message}
+                                    </small>
+                                </div>
+                            }
                         </div>
-                        <div className="input-group mb-2">
+                        <div className={(this.props.errors && this.props.errors.email.hasError) ? 'input-group mb-2 has-error' : 'input-group mb-2'}>
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1">
                                     <FontAwesomeIcon icon={faEnvelope} />
@@ -133,11 +163,20 @@ class Receiver extends Component {
                             <input type="email"
                                 className="form-control"
                                 placeholder="Email Aktif"
+                                autoComplete="disabled"
                                 defaultValue={this.props.customer.email}
                                 onBlur={this.handleChangeEmail}
                             />
+                            {
+                                (this.props.errors && this.props.errors.email.hasError) &&
+                                <div className="col-12 pl-5">
+                                    <small className="form-text text-muted">
+                                        {this.props.errors && this.props.errors.email.message}
+                                    </small>
+                                </div>
+                            }
                         </div>
-                        <div className="input-group mb-2">
+                        <div className={(this.props.errors && this.props.errors.city.hasError) ? 'input-group mb-2 has-error' : 'input-group mb-2'}>
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1">
                                     <FontAwesomeIcon icon={faGlobeAsia} />
@@ -150,9 +189,16 @@ class Receiver extends Component {
                                 value={this.props.customer.city}
                                 onChange={this.handleChangeCity}
                             />
-
+                            {
+                                (this.props.errors && this.props.errors.city.hasError) &&
+                                <div className="col-12 pl-5">
+                                    <small className="form-text text-muted">
+                                        {this.props.errors && this.props.errors.city.message}
+                                    </small>
+                                </div>
+                            }
                         </div>
-                        <div className="input-group mb-2">
+                        <div className={(this.props.errors && this.props.errors.districts.hasError) ? 'input-group mb-2 has-error' : 'input-group mb-2'}>
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1">
                                     <FontAwesomeIcon icon={faCity} />
@@ -166,9 +212,16 @@ class Receiver extends Component {
                                 loadOptions={this.loadDistrictses}
                                 onChange={this.handleChangeDistrict}
                             />
-
+                            {
+                                (this.props.errors && this.props.errors.districts.hasError) &&
+                                <div className="col-12 pl-5">
+                                    <small className="form-text text-muted">
+                                        {this.props.errors && this.props.errors.districts.message}
+                                    </small>
+                                </div>
+                            }
                         </div>
-                        <div className="input-group">
+                        <div className={(this.props.errors && this.props.errors.address.hasError) ? 'input-group has-error' : 'input-group'}>
                             <div className="input-group-prepend">
                                 <span className="input-group-text" id="basic-addon1">
                                     <FontAwesomeIcon icon={faAt} />
@@ -182,6 +235,14 @@ class Receiver extends Component {
                                 onBlur={this.handleChangeAddress}
                             >
                             </textarea>
+                            {
+                                (this.props.errors && this.props.errors.address.hasError) &&
+                                <div className="col-12 pl-5">
+                                    <small className="form-text text-muted">
+                                        {this.props.errors && this.props.errors.address.message}
+                                    </small>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -191,7 +252,8 @@ class Receiver extends Component {
 }
 
 const mapStateToProps = state => ({
-    customer: state.customer
+    customer: state.customer,
+    errors: state.customer.errors
 });
 
 export default connect(mapStateToProps, { changeCustomerInfo })(Receiver);

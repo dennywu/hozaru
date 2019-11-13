@@ -32,6 +32,7 @@ class DialogShippingOption extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        event.stopPropagation();
         this.props.changeFreightOption(this.state.selectedFreight);
         this.props.toggleDialog();
     }

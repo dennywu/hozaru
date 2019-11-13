@@ -5,12 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper" Version="4.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Hozaru.AutoMapper\Hozaru.AutoMapper.csproj" />
     <ProjectReference Include="..\Hozaru.Core\Hozaru.Core.csproj" />
     <ProjectReference Include="..\Hozaru.Domain\Hozaru.Domain.csproj" />
+    <ProjectReference Include="..\Hozaru.Whatsapp\Hozaru.Whatsapp.csproj" />
   </ItemGroup>
 
 </Project>

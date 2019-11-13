@@ -5,15 +5,21 @@ VisualStudioVersion = 16.0.29403.142
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.Web", "Hozaru.Web\Hozaru.Web.csproj", "{89B1B504-765E-49E5-9B80-65D9B157D0F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.Domain", "Hozaru.Domain\Hozaru.Domain.csproj", "{6E57F040-DF94-4595-9979-3BDA23558B45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.Domain", "Hozaru.Domain\Hozaru.Domain.csproj", "{6E57F040-DF94-4595-9979-3BDA23558B45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.ApplicationServices", "Hozaru.ApplicationServices\Hozaru.ApplicationServices.csproj", "{632C3D61-E836-4326-BC98-C089780F4B6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.ApplicationServices", "Hozaru.ApplicationServices\Hozaru.ApplicationServices.csproj", "{632C3D61-E836-4326-BC98-C089780F4B6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.Core", "Hozaru.Core\Hozaru.Core.csproj", "{92C82514-DE60-41FD-96F6-9A81AED0E95F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.Core", "Hozaru.Core\Hozaru.Core.csproj", "{92C82514-DE60-41FD-96F6-9A81AED0E95F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.AutoMapper", "Hozaru.AutoMapper\Hozaru.AutoMapper.csproj", "{4DCB6B18-E90C-4EE4-AC7B-F3944F751287}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.AutoMapper", "Hozaru.AutoMapper\Hozaru.AutoMapper.csproj", "{4DCB6B18-E90C-4EE4-AC7B-F3944F751287}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.Repositories.MockUp", "Hozaru.Repositories.MockUp\Hozaru.Repositories.MockUp.csproj", "{5E909F94-F111-4FD4-B132-6A4505F77776}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.Repositories.MockUp", "Hozaru.Repositories.MockUp\Hozaru.Repositories.MockUp.csproj", "{5E909F94-F111-4FD4-B132-6A4505F77776}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.Whatsapp", "Hozaru.Whatsapp\Hozaru.Whatsapp.csproj", "{534C8EFA-ABDC-4C3B-98EA-6E84AC38F458}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.NHibernate", "Hozaru.NHibernate\Hozaru.NHibernate.csproj", "{F0A74012-D54B-42AF-9835-81E6CC58B477}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.Persistences.NHibernate", "Hozaru.Persistences.NHibernate\Hozaru.Persistences.NHibernate.csproj", "{90D92A86-F9BA-4D0E-9561-24C0266BF827}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,18 @@ Global
 		{5E909F94-F111-4FD4-B132-6A4505F77776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E909F94-F111-4FD4-B132-6A4505F77776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E909F94-F111-4FD4-B132-6A4505F77776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{534C8EFA-ABDC-4C3B-98EA-6E84AC38F458}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{534C8EFA-ABDC-4C3B-98EA-6E84AC38F458}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{534C8EFA-ABDC-4C3B-98EA-6E84AC38F458}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{534C8EFA-ABDC-4C3B-98EA-6E84AC38F458}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0A74012-D54B-42AF-9835-81E6CC58B477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0A74012-D54B-42AF-9835-81E6CC58B477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0A74012-D54B-42AF-9835-81E6CC58B477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0A74012-D54B-42AF-9835-81E6CC58B477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90D92A86-F9BA-4D0E-9561-24C0266BF827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90D92A86-F9BA-4D0E-9561-24C0266BF827}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90D92A86-F9BA-4D0E-9561-24C0266BF827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90D92A86-F9BA-4D0E-9561-24C0266BF827}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

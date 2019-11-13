@@ -7,9 +7,11 @@ namespace Hozaru.Domain
 {
     public class Districts : Entity<Guid>
     {
-        public City City { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public virtual City City { get; set; }
+        public virtual string Code { get; set; }
+        public virtual string Name { get; set; }
+
+        protected Districts() { }
 
         public Districts(City city, string code, string name)
         {

@@ -91,7 +91,7 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    padding-top: 60px;
+    padding-top: 51px;
     /*margin-bottom: 60px;*/
 }
 
@@ -108,6 +108,14 @@ body {
 }
 
 /* CUSTOM */
+.hand {
+    cursor: pointer;
+}
+
+.text-underline {
+    text-decoration: underline;
+}
+
 .font-11px {
     font-size: 11px;
 }
@@ -128,12 +136,44 @@ body {
     font-size: 16px;
 }
 
+.font-22px {
+    font-size: 22px;
+}
+
+.font-27px {
+    font-size: 27px;
+}
+
+.background-warning {
+    background-color: #ffe58f;
+}
+
+.background-grey {
+    background-color: #f3f3f3;
+}
+
+.background-info {
+    background-color: #00BFA5;
+}
+
+.font-weight-500 {
+    font-weight: 500;
+}
+
 .font-weight-600 {
     font-weight: 600;
 }
 
 .font-weight-700 {
     font-weight: 700;
+}
+
+.pl-6 {
+    padding-left: 4em !important;
+}
+
+.ml-minus-10px {
+    margin-left: -10px;
 }
 
 .mt-3px {
@@ -364,9 +404,57 @@ div.opsi-pengiriman {
     color: #ee4d2d;
 }
 
+.color-white {
+    color: #ffffff;
+}
+
+.color-info {
+    color: #00BFA5;
+}
+
 .react-select {
     position: relative;
     flex: 1 1 auto;
     width: 1%;
     margin-bottom: 0;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.has-error {
+}
+
+    .has-error input,
+    .has-error input:focus,
+    .has-error textarea,
+    .has-error textarea:focus {
+        border-color: red;
+    }
+
+    .has-error .react-select {
+        border: 1px solid red;
+    }
+
+    .has-error small {
+        color: red !important;
+    }
+
+    .has-error svg {
+        color: #dc3545 !important;
+    }
+
+.width-95percent {
+    width: 95%;
+}
+
+.width-100percent {
+    width: 100%;
+}
+
+.btn-transparent {
+    background-color: transparent;
+    color: #000;
+    border-color: #a2a2a2;
 }

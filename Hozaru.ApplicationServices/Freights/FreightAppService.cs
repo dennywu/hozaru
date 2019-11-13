@@ -31,6 +31,9 @@ namespace Hozaru.ApplicationServices.Freights
 
             foreach (var item in freight.Items)
             {
+                if (item.Expedition.Disabled)
+                    continue;
+
                 var weightInKG = Math.Ceiling(weightShoppingCart / 1000);
                 var shippingRate = weightInKG * item.Rate;
                 var description = item.GetEstimatedTimeDepartureInString();

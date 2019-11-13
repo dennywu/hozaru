@@ -22,7 +22,7 @@ namespace Hozaru.ApplicationServices.Cities
         public IList<CityDto> Search()
         {
             var cities = _cityRepository.GetAllList();
-            return Mapper.Instance.Map<IList<City>, IList<CityDto>>(cities);
+            return Mapper.Map<IList<City>, IList<CityDto>>(cities);
         }
 
         public IList<CityDto> Search(string searchKey)
@@ -31,7 +31,7 @@ namespace Hozaru.ApplicationServices.Cities
                 .Where(i => i.Name.ToLower().Contains(searchKey.ToLower()))
                 .Take(5)
                 .ToList();
-            return Mapper.Instance.Map<IList<City>, IList<CityDto>>(cities);
+            return Mapper.Map<IList<City>, IList<CityDto>>(cities);
         }
     }
 }

@@ -23,6 +23,7 @@ class DialogPayment extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        event.stopPropagation();
         this.props.changePaymentTypeOption(this.state.selectedPaymentType);
         this.props.toggleDialog();
     }

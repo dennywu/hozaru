@@ -41,13 +41,13 @@ export class GridItem extends Component {
 
     render() {
         return (
-            <div className="product-image">
+            <div className="product-image cursor-pointer">
                 <div className="product-image-container">
                     <img
                         decoding="auto"
                         srcSet={"/api/product/" + this.props.product.id + "/image"}
-            data-toggle="modal"
-            alt="abc"
+                        data-toggle="modal"
+                        alt={this.props.product.name}
                         onClick={this.showDialogProductDetail}
                     />
                 </div>

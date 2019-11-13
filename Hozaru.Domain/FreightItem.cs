@@ -7,9 +7,11 @@ namespace Hozaru.Domain
 {
     public class FreightItem : Entity<Guid>
     {
-        public Expedition Expedition { get; set; }
-        public decimal Rate { get; set; }
-        public int EstimatedTimeDeparture { get; set; }
+        public virtual Expedition Expedition { get; set; }
+        public virtual decimal Rate { get; set; }
+        public virtual int EstimatedTimeDeparture { get; set; }
+
+        protected FreightItem() { }
 
         public FreightItem(Expedition expedition, decimal rate, int estimatedTimeDeparture)
         {
@@ -18,7 +20,7 @@ namespace Hozaru.Domain
             this.EstimatedTimeDeparture = estimatedTimeDeparture;
         }
 
-        public string GetEstimatedTimeDepartureInString()
+        public virtual string GetEstimatedTimeDepartureInString()
         {
             var now = DateTime.Now;
             var minTimeDeparture = now.AddDays(EstimatedTimeDeparture).ToString("dd MMM");

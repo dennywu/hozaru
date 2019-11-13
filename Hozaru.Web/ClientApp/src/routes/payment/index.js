@@ -1,0 +1,135 @@
+﻿import React, { Component } from 'react';
+import { default as NumberFormat } from 'react-number-format';
+import { dateTimeFormat } from '../../utils/DateUtil';
+
+class Payment extends Component {
+    constructor() {
+        super();
+        this.populateOrder = this.populateOrder.bind(this);
+        this.handleClickUploadPayment = this.handleClickUploadPayment.bind(this);
+        this.handleClickPayLater = this.handleClickPayLater.bind(this);
+
+        this.state = {
+            order: {
+                paymentType: {
+                    code: '',
+                    bankName: '',
+                    accountNumber: '',
+                    accountName: '',
+                    bankBranch: ''
+                },
+                summary: {
+                    total: 0
+                }
+            },
+            orderId: ''
+        };
+    }
+
+    componentDidMount() {
+        let orderId = this.props.match.params.id;
+        this.setState({
+            orderId: orderId
+        }, () => {
+            this.populateOrder();
+        });
+    }
+
+    async populateOrder() {
+        const response = await fetch('/api/order?id=' + this.state.orderId);
+        const data = await response.json();
+        this.setState({ order: data });
+    }
+
+    handleClickUploadPayment(event) {
+        event.preventDefault();
+        this.props.history.push('/payment-confirmation/' + this.state.orderId);
+    }
+
+    handleClickPayLater(event) {
+        event.preventDefault();
+        this.props.history.push('/order/' + this.state.orderId);
+    }
+
+    render() {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-12 font-15px">Total Pembayaran:</div>
+                    <div className="col-12 color-orange font-weight-bold font-27px">
+                        <NumberFormat value={this.state.order.summary.total} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                    </div>
+                </div>
+                <div className="row mt-2">
+                    <div className="col-12">
+                        <div className="background-warning p-1 pl-2">Bayar pesanan sesuai jumlah diatas</div>
+                    </div>
+                </div>
+                <div className="row mt-3 mb-3">
+                    <div className="col-12 font-15px ">
+                        Dicek dalam 24 jam setelah bukti transfer diupload.
+                    </div>
+                </div>
+                <div className="row mt-3 mb-3 border-top border-bottom background-grey">
+                    <div className="col-1 pt-2 pb-2">
+                        <span className="badge badge-secondary">1</span>
+                    </div>
+                    <div className="col-11 pl-1">
+                        <div className="pt-2 pb-2">
+                            Gunakan ATM / iBanking / mBanking / setor tunai untuk transfer ke rekening berikut ini:
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12">
+                        <div className="row pl-4">
+                            <div className="col-1">
+                                <img className='logobank'
+                                    alt={this.state.order.paymentType.bankName}
+                                    srcSet={"/api/paymenttype/" + this.state.order.paymentType.code + "/image"} />
+                            </div>
+                            <div className="col-9 pl-6">
+                                <div className="font-weight-bold">{this.state.order.paymentType.bankName}</div>
+                                <div>No. Rekening: <span className="font-weight-bold">{this.state.order.paymentType.accountNumber}</span></div>
+                                <div>Nama Rekening: <span className="font-weight-bold">{this.state.order.paymentType.accountName}</span></div>
+                                <div>Cabang: <span className="font-weight-bold">{this.state.order.paymentType.bankBranch}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-3 background-grey border-top">
+                    <div className="col-1 pt-2 pb-2">
+                        <span className="badge badge-secondary">2</span>
+                    </div>
+                    <div className="col-11 pl-1">
+                        <div className="pt-2 pb-2">
+                            Silahkan upload bukti tranfer sebelum:
+                            <div className="font-weight-bold">{dateTimeFormat(this.state.order.dueDateConfirmation)}</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mb-3 background-grey">
+                    <div className="col-1 pt-2 pb-2">
+                        <span className="badge badge-secondary">3</span>
+                    </div>
+                    <div className="col-11 pl-1">
+                        <div className="pt-2 pb-2">
+                            Demi keamanan transaksi, mohon untuk tidak membagikan bukti atau konfirmasi pembayaran pesanan
+                                kepada siapapun, selain mengunggahnya disini
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-4">
+                    <button type="submit" className="btn btn-primary margin-center width-95percent" onClick={this.handleClickUploadPayment}>
+                        Upload bukti transfer Sekarang
+                        </button>
+                </div>
+                <div className="row mt-3">
+                    <button type="submit" className="btn btn-secondary margin-center width-95percent" onClick={this.handleClickPayLater}>Upload bukti transfer Nanti Saja</button>
+                </div>
+            </div>
+        );
+    }
+};
+
+export default Payment;

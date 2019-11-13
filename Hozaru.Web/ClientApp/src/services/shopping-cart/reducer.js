@@ -1,4 +1,4 @@
-﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_TYPE } from './actionTypes';
+﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_TYPE, RESET_SHOPPING_CART } from './actionTypes';
 
 const initialState = {
     items: [],
@@ -128,6 +128,11 @@ export default function (state = initialState, action) {
 
         case CHANGE_PAYMENT_TYPE:
             state.paymentType = action.paymentType;
+            return {
+                ...state
+            };
+        case RESET_SHOPPING_CART:
+            state = initialState;
             return {
                 ...state
             };

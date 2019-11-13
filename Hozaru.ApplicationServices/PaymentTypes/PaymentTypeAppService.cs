@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using AutoMapper;
 using Hozaru.ApplicationServices.PaymentTypes.Dtos;
 using Hozaru.Core.Domain.Repositories;
 using Hozaru.Domain;
@@ -19,8 +20,8 @@ namespace Hozaru.ApplicationServices.PaymentTypes
 
         public IList<PaymentTypeDto> GetAll()
         {
-            var paymentTypes = _paymentTypeRepository.GetAllList();
-            return Mapper.Instance.Map<IList<PaymentType>, IList<PaymentTypeDto>>(paymentTypes);
+            var paymentTypes = _paymentTypeRepository.GetAllList(i => i.Disabled == false);
+            return Mapper.Map<IList<PaymentType>, IList<PaymentTypeDto>>(paymentTypes);
         }
 
         public Stream GetImage(string code)

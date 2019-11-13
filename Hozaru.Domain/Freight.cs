@@ -9,11 +9,11 @@ namespace Hozaru.Domain
 {
     public class Freight : Entity<Guid>
     {
-        public City OriginCity { get; set; }
-        public Districts OriginDistricts { get; set; }
-        public City DestinationCity { get; set; }
-        public Districts DestinationDistricts { get; set; }
-        public IList<FreightItem> Items { get; set; }
+        public virtual City OriginCity { get; set; }
+        public virtual Districts OriginDistricts { get; set; }
+        public virtual City DestinationCity { get; set; }
+        public virtual Districts DestinationDistricts { get; set; }
+        public virtual IList<FreightItem> Items { get; set; }
 
         protected Freight()
         {
@@ -27,7 +27,7 @@ namespace Hozaru.Domain
             this.DestinationDistricts = destinationDistrict;
         }
 
-        public FreightItem AddItem(Expedition expedition, decimal rate, int estimatedTimeDeparture)
+        public virtual FreightItem AddItem(Expedition expedition, decimal rate, int estimatedTimeDeparture)
         {
             if (Items.Any(i => i == expedition))
                 throw new HozaruException("Expedition already exist");

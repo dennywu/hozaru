@@ -1,9 +1,13 @@
+using Hozaru.Core;
+using Hozaru.Core.Dependency;
+using Hozaru.Core.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace Hozaru.Web
 {
@@ -12,7 +16,6 @@ namespace Hozaru.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            IoCManager.RegisterAssembly();
         }
 
         public IConfiguration Configuration { get; }
@@ -20,6 +23,9 @@ namespace Hozaru.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var hozaruBootstrapper = new HozaruBootstrapper();
+            hozaruBootstrapper.IocManager.RegisterIfNot<IAssemblyFinder, WebAssemblyFinder>();
+            hozaruBootstrapper.Initialize();
 
             services.AddControllersWithViews();
 
@@ -28,6 +34,8 @@ namespace Hozaru.Web
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            
 
             services.AddCors(options =>
             {
