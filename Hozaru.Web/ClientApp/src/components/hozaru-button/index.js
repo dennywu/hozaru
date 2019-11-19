@@ -18,8 +18,7 @@ export default class HozaruButton extends Component {
 
     static propTypes = {
         state: PropTypes.oneOf(Object.keys(STATE).map(k => STATE[k])),
-        type: PropTypes.string,
-        state: PropTypes.oneOf(Object.keys(STATE).map(k => STATE[k]))
+        type: PropTypes.string
     };
 
     componentWillReceiveProps(nextProps) {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hozaru.Core.Configurations;
 using Hozaru.Domain;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Hozaru.ApplicationServices.PaymentTypes.Dtos
             if (context == null)
                 return null;
 
+            var apiDomainName = AppSettingConfigurationHelper.GetSection("APIDomainName").Value;
             var paymentType = (PaymentType)context.SourceValue;
             return new PaymentTypeDto()
             {
@@ -21,7 +23,7 @@ namespace Hozaru.ApplicationServices.PaymentTypes.Dtos
                 Code = paymentType.Code,
                 IsManualConfirmation = paymentType.IsManualConfirmation,
                 Name = paymentType.Name,
-                ImageUrl = string.Format("/api/paymenttype/image/{0}?v={1}", paymentType.Code, paymentType.LastModificationTime.Value.ToString("ddMMyyyHHmmss"))
+                ImageUrl = string.Format("{0}/api/paymenttype/image/{1}?v={2}", apiDomainName, paymentType.Code, paymentType.LastModificationTime.Value.ToString("ddMMyyyHHmmss"))
             };
         }
     }

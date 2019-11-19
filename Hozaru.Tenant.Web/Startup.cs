@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Reflection;
 
-namespace Hozaru.Web
+namespace Hozaru.Tenant.Web
 {
     public class Startup
     {
@@ -21,22 +19,13 @@ namespace Hozaru.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllersWithViews();
-            services.AddResponseCaching();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
-            });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("development",
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:3002").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                });
             });
         }
 
@@ -45,12 +34,11 @@ namespace Hozaru.Web
         {
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
-                app.UseExceptionHandler("/error");
+                app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/error");
+                app.UseExceptionHandler("/Error");
             }
 
             app.UseStaticFiles();
@@ -74,8 +62,6 @@ namespace Hozaru.Web
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-
-            app.UseCors("development");
         }
     }
 }

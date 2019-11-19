@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hozaru.Core.Configurations;
 using Hozaru.Domain;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,13 @@ namespace Hozaru.ApplicationServices.Products.Dtos
             if (context == null)
                 return null;
 
+            var apiDomainName = AppSettingConfigurationHelper.GetSection("APIDomainName").Value;
             var productImage = (ProductImage)context.SourceValue;
             return new ProductImageDto()
             {
                 Id = productImage.Id,
                 Priority = productImage.Priority,
-                Url = string.Format("/api/product/image/{0}/{1}?v={2}", productImage.Product.Id, productImage.Id, productImage.LastModificationTime.Value.ToString("ddMMyyyHHmmss"))
+                Url = string.Format("{0}/api/product/image/{1}/{2}?v={3}", apiDomainName, productImage.Product.Id, productImage.Id, productImage.LastModificationTime.Value.ToString("ddMMyyyHHmmss"))
             };
         }
     }

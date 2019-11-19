@@ -10,6 +10,7 @@ import Order from './routes/order';
 import store from './services/store';
 import './custom.css';
 import './services/error-handler';
+import './services/axios-interceptor';
 
 export default class App extends Component {
     static displayName = App.name;

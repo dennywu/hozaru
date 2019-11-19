@@ -7,6 +7,7 @@ function errorResponseHandler(error) {
         return Promise.reject(error);
     }
 
+    var defaultErrorMessage = 'Terjadi sesuatu yang tidak terduga sehingga tidak bisa menyelesaikan permintaan Anda. Kami mohon maaf.';
     // if has response show the error
     if (error.response) {
         var message = '';
@@ -14,12 +15,14 @@ function errorResponseHandler(error) {
             message = error.response.data;
         } else {
             if (error.response.data.Message === undefined) {
-                message = 'Terjadi sesuatu yang tidak terduga sehingga tidak bisa menyelesaikan permintaan Anda. Kami mohon maaf.';
+                message = defaultErrorMessage;
             } else {
                 message = error.response.data.Message;
             }
         }
         Alert.error(message);
+    } else {
+        Alert.error(error.message);
     }
     return Promise.reject(error);
 }
