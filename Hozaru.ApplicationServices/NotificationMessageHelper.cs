@@ -1,4 +1,5 @@
-﻿using Hozaru.Domain;
+﻿using Hozaru.Core.Configurations;
+using Hozaru.Domain;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -6,11 +7,12 @@ using System.Text;
 
 namespace Hozaru.ApplicationServices
 {
-    public class NotificationMessageHelper
+    public static class NotificationMessageHelper
     {
-        public string GenerateDraftMessage(Order order)
+        public static string GenerateDraftMessage(Order order)
         {
-            string orderUrl = string.Format("http://localhost:3000/order/{0}", order.Id);
+            var domainName = AppSettingConfigurationHelper.GetSection("DomainName").Value;
+            string orderUrl = string.Format("{0}/order/{1}", domainName, order.Id);
             string items = "";
             foreach (var item in order.Items)
             {
@@ -31,7 +33,7 @@ Total yang Harus Dibayar: *Rp {5}*
 
 Metode Pembayaran: {6}
 Silahkan transfer ke: 
-*{7}*
+*Bank {7}*
 *{8} a/n {9}*
 
 klik link dibawah ini untuk upload bukti pembayaran:
@@ -51,27 +53,30 @@ _Abaikan pesan ini jika kak {0} Sudah Bayar_.";
                 order.PaymentType.AccountNumber, 
                 order.PaymentType.AccountName, 
                 orderUrl);
-            return WebUtility.UrlEncode(message);
+            return message;
         }
 
-        public string GenerateConfirmationMessage(Order order)
+        public static string GenerateConfirmationMessage(Order order)
         {
-            string orderUrl = string.Format("http://localhost:3000/order/{0}", order.Id);
-            var template = @"Halo kak {0}.
+            var domainName = AppSettingConfigurationHelper.GetSection("DomainName").Value;
+            string orderUrl = string.Format("{0}/order/{1}", domainName, order.Id);
 
-Terimakasih atas pembayaran Anda sebesar Rp {1} pada tanggal {2} untuk Orderan {3}.
+            var template = @"Halo kak *{0}*.
+
+Terimakasih atas pembayaran Anda sebesar *Rp {1}* pada tanggal *{2}* untuk Orderan *{3}*.
 
 Kami akan kirim orderan Anda setelah Orderan Anda terverifikasi.
 
 klik link dibawah ini untuk lihat orderan kak {0}:
+
 {4}";
             var message = string.Format(template, 
                 order.CustomerName,
                 String.Format("{0:#,##0}", order.Summary.Total),
-                order.GetLastPayment().PaymentDate.ToString("dd-MMM-yyyy HH:mm:ss"), 
+                order.GetLastPayment().PaymentDate.ToString("dd MMM yyyy HH:mm:ss"), 
                 order.OrderNumber,
                 orderUrl);
-            return WebUtility.UrlEncode(message);
+            return message;
         }
     }
 }

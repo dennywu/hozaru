@@ -9,6 +9,7 @@ using Hozaru.Whatsapp;
 using Hozaru.ApplicationServices.AutoNumbers;
 using AutoMapper;
 using Hozaru.ApplicationServices.ImagesGenerator;
+using Hozaru.Core;
 
 namespace Hozaru.ApplicationServices.Orders
 {
@@ -55,7 +56,7 @@ namespace Hozaru.ApplicationServices.Orders
 
             _orderRepository.Insert(order);
 
-            var message = new NotificationMessageHelper().GenerateDraftMessage(order);
+            var message = NotificationMessageHelper.GenerateDraftMessage(order);
             WhatsappAPI.SendMessage(order.WhatsappNumber, message);
 
             return Mapper.Map<OrderDto>(order);
@@ -64,6 +65,8 @@ namespace Hozaru.ApplicationServices.Orders
         public OrderDto Get(Guid id)
         {
             var order = _orderRepository.Get(id);
+            if (order.IsNull())
+                throw new HozaruException("Orderan tidak ditemukan.");
             return Mapper.Map<OrderDto>(order);
         }
 
@@ -76,7 +79,7 @@ namespace Hozaru.ApplicationServices.Orders
             order.Confirmation(inputDto.BankName, inputDto.AccountName, inputDto.AccountNumber, filePath);
             _orderRepository.Update(order);
 
-            var message = new NotificationMessageHelper().GenerateConfirmationMessage(order);
+            var message = NotificationMessageHelper.GenerateConfirmationMessage(order);
             WhatsappAPI.SendMessage(order.WhatsappNumber, message);
 
             return order.Id;

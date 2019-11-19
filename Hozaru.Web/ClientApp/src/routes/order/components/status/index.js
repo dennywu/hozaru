@@ -65,7 +65,7 @@ class OrderStatus extends Component {
                     </>;
                 break;
             default:
-                content = <>Error</>
+                content = <></>
         }
         return content;
     }
@@ -74,7 +74,7 @@ class OrderStatus extends Component {
         const { order } = this.props;
         let content = this.renderStatus(order);
         return (
-            <div className="container background-info">
+            <div className="container background-info mt-minus-5px">
                 <div className="row">
                     <div className="col-1 color-white font-16px mt-2">
                         <FontAwesomeIcon icon={faFileInvoice} />

@@ -1,11 +1,12 @@
 ﻿using Hozaru.Core.Domain.Entities;
+using Hozaru.Core.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Hozaru.Domain
 {
-    public class Districts : Entity<Guid>
+    public class Districts : AuditedEntity<Guid>
     {
         public virtual City City { get; set; }
         public virtual string Code { get; set; }

@@ -2,6 +2,8 @@
 import { GridItem } from './GridItem';
 import { GridEmpty } from './GridEmpty';
 import './Grid.css';
+import Loading from '../../../../components/loading';
+import axios from 'axios';
 
 export class Grid extends Component {
     constructor(props) {
@@ -14,9 +16,10 @@ export class Grid extends Component {
     }
 
     async populateProducts() {
-        const response = await fetch('/api/product');
-        const data = await response.json();
-        this.setState({ products: data, loading: false });
+        axios.get('/api/product')
+            .then(res => {
+                this.setState({ products: res.data, loading: false });
+            });
     }
 
     static chunkArray(myArray, chunk_size) {
@@ -62,7 +65,7 @@ export class Grid extends Component {
 
     render() {
         let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
+            ? <Loading />
             : Grid.renderGridProduct(this.state.products);
 
         return (

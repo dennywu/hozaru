@@ -43,14 +43,11 @@ a {
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-    font-size: 14px;
-}
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
+html {
+    position: relative;
+    min-height: 100%;
+    font-size: 14px;
 }
 
 .border-top {
@@ -72,12 +69,8 @@ button.accept-policy {
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
-}
 
-@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+/*@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
     html {
         transform: rotate(-90deg);
         transform-origin: left top;
@@ -87,12 +80,32 @@ html {
         top: 100%;
         left: 0;
     }
-}
+}*/
 
 body {
-    /* Margin bottom by footer height */
-    padding-top: 51px;
-    /*margin-bottom: 60px;*/
+    margin: 0 auto;
+    padding-top: 55px;
+    max-width: 480px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) and (orientation: landscape) {
+    body {
+        box-shadow: 0 0 15px 1px rgba(0,0,0,.1);
+    }
+}
+
+@media screen and (min-width: 480px) {
+    body {
+        box-shadow: 0 0 15px 1px rgba(0,0,0,.1);
+    }
+}
+
+@media screen and (min-width: 480px) {
+    .fixed-top, .fixed-bottom {
+        max-width: 480px;
+        left: 50%;
+        margin-left: -240px !important;
+    }
 }
 
 .footer {
@@ -172,8 +185,24 @@ body {
     padding-left: 4em !important;
 }
 
+.pl-30px {
+    padding-left: 30px !important;
+}
+
+pl-0{
+    padding-left:0px !important;
+}
+
+.pt-5px {
+    padding-top: 5px !important;
+}
+
 .ml-minus-10px {
     margin-left: -10px;
+}
+
+.mt-minus-5px {
+    margin-top: -5px;
 }
 
 .mt-3px {
@@ -263,48 +292,56 @@ body {
 
 @media (max-width: 768px) {
     div.modal-addtocart {
-        margin: 0 10% 0 10%;
+        margin: 2% 10% 2% 10%;
     }
 }
 
-div.modal-addtocart div.modal-body {
-    padding: 0px;
+.modal-open .modal {
+    overflow-y: hidden;
 }
 
-div.modal-addtocart div.modal-content {
-    border-radius: 10px;
-    border: 1px solid #757575 !important;
+div.modal-addtocart {
+    -webkit-overflow-scrolling: touch;
 }
 
-div.modal-addtocart img.image-product-addtocart {
-    width: 100%;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-}
+    div.modal-addtocart div.modal-body {
+        padding: 0px;
+    }
 
-div.modal-addtocart .modal-footer,
-div.modal-checkout .modal-footer {
-    padding: 0px;
-    border-top: 0px;
-}
+    div.modal-addtocart div.modal-content {
+        border-radius: 0px 0px 10px 10px;
+        border: 1px solid #757575 !important;
+    }
 
-    div.modal-addtocart .modal-footer .addtocart,
-    div.modal-checkout .modal-footer .checkout {
+    div.modal-addtocart img.image-product-addtocart {
         width: 100%;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        border-top-left-radius: 0px;
-        border-top-right-radius: 0px;
-        border: 0px;
-        font-size: 12px;
-        font-weight: bold;
-        padding: 10px 0 10px 0;
+        /*border-top-left-radius: 8px;
+    border-top-right-radius: 8px;*/
     }
 
-div.modal-addtocart .product-description {
-    margin: 7px 10px;
-    font-size: 12px;
-}
+    div.modal-addtocart .modal-footer,
+    div.modal-checkout .modal-footer {
+        padding: 0px;
+        border-top: 0px;
+    }
+
+        div.modal-addtocart .modal-footer .addtocart,
+        div.modal-checkout .modal-footer .checkout {
+            width: 100%;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border: 0px;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 10px 0 10px 0;
+        }
+
+    div.modal-addtocart .product-description {
+        margin: 7px 10px;
+        font-size: 12px;
+    }
 
 div.modal-dialog.bottom {
     position: absolute;
@@ -318,7 +355,8 @@ div.modal-dialog.bottom {
 }
 
 div.modal-checkout {
-    margin: 0px;
+    margin: 1.7em auto;
+    margin-bottom: 0px;
 }
 
     div.modal-checkout .modal-content {
@@ -335,7 +373,7 @@ div.modal-checkout {
 }
 
 .numeric-input.narrow span.react-numeric-input {
-    width: 80px;
+    width: 100px;
 }
 
 .numeric-input.small span.react-numeric-input input {
@@ -410,6 +448,10 @@ div.opsi-pengiriman {
 
 .color-info {
     color: #00BFA5;
+}
+
+.color-black {
+    color: #000000;
 }
 
 .react-select {

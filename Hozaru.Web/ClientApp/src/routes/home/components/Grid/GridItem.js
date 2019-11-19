@@ -45,7 +45,7 @@ export class GridItem extends Component {
                 <div className="product-image-container">
                     <img
                         decoding="auto"
-                        srcSet={"/api/product/" + this.props.product.id + "/image"}
+                        srcSet={this.props.product.firstProductImage.url}
                         data-toggle="modal"
                         alt={this.props.product.name}
                         onClick={this.showDialogProductDetail}

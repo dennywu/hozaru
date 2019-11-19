@@ -20,6 +20,7 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.PaymentTypes
             Map(i => i.AccountNumber).Length(64).Not.Nullable();
             Map(i => i.ImageUrl).Length(64).Not.Nullable();
             Map(i => i.Disabled).Not.Nullable();
+            this.MapAudited();
         }
     }
 }

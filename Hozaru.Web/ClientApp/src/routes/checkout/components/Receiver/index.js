@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { changeCustomerInfo } from '../../../../services/customer/actions';
 import AsyncSelect from 'react-select/async';
+import axios from 'axios';
 
 class Receiver extends Component {
     constructor(props) {
@@ -21,16 +22,7 @@ class Receiver extends Component {
         this.handleChangeCity = this.handleChangeCity.bind(this);
         this.handleChangeDistrict = this.handleChangeDistrict.bind(this);
 
-        this.state = {
-            errorMessages: {
-                name: '',
-                whatsapp: '',
-                email: '',
-                address: '',
-                city: '',
-                districts: ''
-            }
-        };
+        this.state = {};
     }
 
     static propTypes = {
@@ -79,11 +71,10 @@ class Receiver extends Component {
         });
 
     async populateCities(searchKey) {
-        let response = await fetch('/api/city?searchKey=' + searchKey);
-        let data = await response.json();
+        var res = await axios.get('/api/city?searchKey=' + searchKey);
         var result = [];
-        data.forEach(item => {
-            result.push({ label: item.name, value: item.name });
+        res.data.forEach(item => {
+            result.push({ label: item.name, value: item.code });
         });
         return result;
     }
@@ -94,11 +85,10 @@ class Receiver extends Component {
             return;
         }
 
-        let response = await fetch('/api/district?cityCode=' + this.props.customer.city.value + '&searchKey=' + searchKey);
-        let data = await response.json();
+        var res = await axios.get('/api/district?cityCode=' + this.props.customer.city.value + '&searchKey=' + searchKey)
         var result = [];
-        data.forEach(item => {
-            result.push({ label: item.name, value: item.name });
+        res.data.forEach(item => {
+            result.push({ label: item.name, value: item.code });
         });
         return result;
     }

@@ -14,6 +14,7 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Districtses
             Map(i => i.Code).Length(12).Not.Nullable();
             Map(i => i.Name).Length(64).Not.Nullable();
             References(i => i.City).Column("City_Id").Index("districts_city_id");
+            this.MapAudited();
         }
     }
 }

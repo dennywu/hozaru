@@ -1,0 +1,28 @@
+﻿.carousel .carousel-status {
+    left: 0 !important;
+    right: auto !important;
+    background: #000;
+    opacity: 0.6;
+    border-radius: 12px;
+    margin: 5px;
+    padding: 3px 10px;
+}
+
+.carousel .control-dots .dot.selected, .carousel .control-dots .dot:hover {
+    opacity: 1;
+    background: #1b6ec2 !important;
+}
+
+.carousel .control-dots .dot {
+    opacity: 1 !important;
+    margin: 0 5px !important;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.9);
+}
+
+ul.control-dots {
+    padding-left: 0px;
+}
+
+.product-description {
+    white-space: pre-line;
+}

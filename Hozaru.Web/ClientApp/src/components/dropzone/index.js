@@ -77,6 +77,7 @@ class Dropzone extends Component {
                     type="file"
                     multiple
                     onChange={this.onFilesAdded}
+                    accept="image/x-png,image/gif,image/jpeg"
                 />
                 <img
                     alt="upload"

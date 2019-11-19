@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Hozaru.Core;
+using Hozaru.Core.Domain.Entities.Auditing;
 
 namespace Hozaru.Domain
 {
-    public class Order : Entity<Guid>
+    public class Order : AuditedEntity<Guid>
     {
         public virtual string OrderNumber { get; set; }
         public virtual DateTime TransactionDate { get; set; }
@@ -54,7 +55,7 @@ namespace Hozaru.Domain
 
         public virtual void AddItem(Product product, int quantity, string note)
         {
-            var orderItem = new OrderItem(product, quantity, note);
+            var orderItem = new OrderItem(this, product, quantity, note);
             this.Items.Add(orderItem);
 
             calculateSummary();
@@ -83,7 +84,7 @@ namespace Hozaru.Domain
 
         public virtual void Confirmation(string bankName, string accountName, string accountNumber, string imageFileName)
         {
-            var newPayment = new OrderPayment(imageFileName, bankName, accountName, accountNumber);
+            var newPayment = new OrderPayment(this, imageFileName, bankName, accountName, accountNumber);
             this.PaymentHistories.Add(newPayment);
             this.Status = OrderStatus.REVIEW;
         }

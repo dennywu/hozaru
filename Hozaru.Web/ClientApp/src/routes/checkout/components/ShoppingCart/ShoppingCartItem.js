@@ -59,6 +59,7 @@ class ShoppingCartItem extends Component {
                                     <button className='form-control btn-danger' onClick={() => {
                                         this.handleClickDelete()
                                         onClose()
+                                        window.location = '/';
                                     }}>Hapus</button>
                                 </div>
                             </div>
@@ -78,7 +79,7 @@ class ShoppingCartItem extends Component {
         return (
             <div className="row">
                 <div className="col-3 image-product">
-                    <img className="w100" srcSet={"/api/product/" + this.props.product.id + "/image"} alt={this.props.product.name} />
+                    <img className="w100" srcSet={this.props.product.firstProductImage.url} alt={this.props.product.name} />
                 </div>
                 <div className="col-9">
                     <div className="font-weight-600 text-truncate">{this.props.product.name}</div>

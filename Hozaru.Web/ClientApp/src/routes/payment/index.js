@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { default as NumberFormat } from 'react-number-format';
 import { dateTimeFormat } from '../../utils/DateUtil';
+import Loading from '../../components/loading';
+import axios from 'axios';
 
 class Payment extends Component {
     constructor() {
@@ -22,7 +24,8 @@ class Payment extends Component {
                     total: 0
                 }
             },
-            orderId: ''
+            orderId: '',
+            loading: true
         };
     }
 
@@ -36,9 +39,13 @@ class Payment extends Component {
     }
 
     async populateOrder() {
-        const response = await fetch('/api/order?id=' + this.state.orderId);
-        const data = await response.json();
-        this.setState({ order: data });
+        axios.get('/api/order', {
+            params: {
+                id: this.state.orderId
+            }
+        }).then(res => {
+            this.setState({ order: res.data, loading: false });
+        });
     }
 
     handleClickUploadPayment(event) {
@@ -52,6 +59,9 @@ class Payment extends Component {
     }
 
     render() {
+        if (this.state.loading)
+            return <Loading />;
+
         return (
             <div className="container">
                 <div className="row">
@@ -74,7 +84,7 @@ class Payment extends Component {
                     <div className="col-1 pt-2 pb-2">
                         <span className="badge badge-secondary">1</span>
                     </div>
-                    <div className="col-11 pl-1">
+                    <div className="col-10 pl-1">
                         <div className="pt-2 pb-2">
                             Gunakan ATM / iBanking / mBanking / setor tunai untuk transfer ke rekening berikut ini:
                         </div>
@@ -86,7 +96,7 @@ class Payment extends Component {
                             <div className="col-1">
                                 <img className='logobank'
                                     alt={this.state.order.paymentType.bankName}
-                                    srcSet={"/api/paymenttype/" + this.state.order.paymentType.code + "/image"} />
+                                    srcSet={this.state.order.paymentType.imageUrl} />
                             </div>
                             <div className="col-9 pl-6">
                                 <div className="font-weight-bold">{this.state.order.paymentType.bankName}</div>
@@ -101,9 +111,9 @@ class Payment extends Component {
                     <div className="col-1 pt-2 pb-2">
                         <span className="badge badge-secondary">2</span>
                     </div>
-                    <div className="col-11 pl-1">
+                    <div className="col-10 pl-1">
                         <div className="pt-2 pb-2">
-                            Silahkan upload bukti tranfer sebelum:
+                            Silahkan upload bukti transfer sebelum:
                             <div className="font-weight-bold">{dateTimeFormat(this.state.order.dueDateConfirmation)}</div>
                         </div>
                     </div>
@@ -112,7 +122,7 @@ class Payment extends Component {
                     <div className="col-1 pt-2 pb-2">
                         <span className="badge badge-secondary">3</span>
                     </div>
-                    <div className="col-11 pl-1">
+                    <div className="col-10 pl-1">
                         <div className="pt-2 pb-2">
                             Demi keamanan transaksi, mohon untuk tidak membagikan bukti atau konfirmasi pembayaran pesanan
                                 kepada siapapun, selain mengunggahnya disini
@@ -124,7 +134,7 @@ class Payment extends Component {
                         Upload bukti transfer Sekarang
                         </button>
                 </div>
-                <div className="row mt-3">
+                <div className="row mt-3 mb-2">
                     <button type="submit" className="btn btn-secondary margin-center width-95percent" onClick={this.handleClickPayLater}>Upload bukti transfer Nanti Saja</button>
                 </div>
             </div>

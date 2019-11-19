@@ -7,12 +7,12 @@ using System.Text;
 
 namespace Hozaru.ApplicationServices.PaymentTypes.Dtos
 {
-    [AutoMapFrom(typeof(PaymentType))]
     public class PaymentTypeDto : EntityDto<Guid>
     {
         public string Code { get; set; }
         public string Name { get; set; }
         public bool IsManualConfirmation { get; set; }
         public string BankName { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

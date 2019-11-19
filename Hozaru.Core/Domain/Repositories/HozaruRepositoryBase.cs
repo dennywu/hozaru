@@ -41,10 +41,10 @@ namespace Hozaru.Core.Domain.Repositories
         public virtual TEntity Get(TPrimaryKey id)
         {
             var entity = FirstOrDefault(id);
-            if (entity == null)
-            {
-                throw new HozaruException("There is no such an entity with given primary key. Entity type: " + typeof(TEntity).FullName + ", primary key: " + id);
-            }
+            //if (entity == null)
+            //{
+            //    throw new ApplicationException("There is no such an entity with given primary key. Entity type: " + typeof(TEntity).FullName + ", primary key: " + id);
+            //}
 
             return entity;
         }

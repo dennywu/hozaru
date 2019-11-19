@@ -2,6 +2,7 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { default as NumberFormat } from 'react-number-format';
 import './style.css';
+import "bootstrap/dist/css/bootstrap.css";
 
 
 class DialogShippingOption extends Component {
@@ -44,21 +45,21 @@ class DialogShippingOption extends Component {
             shippingOptionElements.push(
                 <div key={freight.id} >
                     <div className="row" onClick={this.clickFreightRow}>
-                        <div className="col-1">
+                        <div className="col-12 custom-control custom-radio">
                             <input type="radio" name="freight"
-                                className="form-control"
+                                className="custom-control-input"
                                 value={freight.expeditionCode}
                                 checked={this.state.selectedFreight === freight.expeditionCode}
                                 onChange={this.handleChangeFreight}
                             />
-                        </div>
-                        <div className="col-10 pl-4">
-                            <div>{freight.expeditionFullName}
-                                <span className="color-orange">
-                                    <NumberFormat value={freight.rate} displayType={'text'} thousandSeparator={true} prefix={' Rp '} />
-                                </span>
-                            </div>
-                            <div className="font-weight-light font-12px">{freight.description}</div>
+                            <label class="custom-control-label ml-2 pl-2">
+                                <div>{freight.expeditionFullName}
+                                    <span className="color-orange">
+                                        <NumberFormat value={freight.rate} displayType={'text'} thousandSeparator={true} prefix={' Rp '} />
+                                    </span>
+                                </div>
+                                <div className="font-weight-light font-12px">{freight.description}</div>
+                            </label>
                         </div>
                     </div>
                     <hr className="mt-2 mb-2"></hr>

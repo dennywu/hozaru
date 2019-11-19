@@ -31,10 +31,12 @@ namespace Hozaru.Web.Controllers
         }
 
         [HttpGet]
-        [Route("{id}/image")]
-        public IActionResult GetImage(Guid id)
+        [Route("image/{id}/{productImageId}")]
+        public IActionResult GetImage(Guid id, Guid productImageId)
         {
-            var productImageStream = _productAppService.GetImage(id);
+            Response.Headers.Add("cache-control", new[] { "public,max-age=31536000" });
+            Response.Headers.Add("Expires", new[] { DateTime.UtcNow.AddYears(1).ToString("R") });
+            var productImageStream = _productAppService.GetImage(id, productImageId);
             return File(productImageStream, "image/jpeg");
         }
     }

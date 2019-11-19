@@ -6,6 +6,9 @@ import { dateTimeFormat } from '../../utils/DateUtil';
 import OrderStatus from './components/status';
 import OrderReceiver from './components/receiver';
 import ListOrderItem from './components/list-order-item';
+import Toolbar from './components/toolbar';
+import Loading from '../../components/loading';
+import axios from 'axios';
 
 class Order extends Component {
     constructor() {
@@ -30,9 +33,11 @@ class Order extends Component {
     }
 
     async populateOrder() {
-        const response = await fetch('/api/order?id=' + this.state.orderId);
-        const data = await response.json();
-        this.setState({ order: data, loading: false });
+        axios.get('/api/order?id=' + this.state.orderId)
+            .then(res => {
+                const order = res.data;
+                this.setState({ order: order, loading: false });
+            });
     }
 
     handleClickToHomepage() {
@@ -93,7 +98,7 @@ class Order extends Component {
                             <div className="font-16px font-weight-500">Produk Pesanan</div>
                         </div>
                     </div>
-                    <ListOrderItem order={order}/>
+                    <ListOrderItem order={order} />
 
                     <hr className="mt-1 mb-1" />
 
@@ -126,7 +131,7 @@ class Order extends Component {
 
                     <hr className="mt-1 mb-1" />
 
-                    <div className="row mt-3">
+                    <div className="row mt-3 mb-3">
                         <div className="col-6">
                             <button className="btn btn-transparent width-100percent" onClick={this.handleClickUploadPayment}>
                                 <FontAwesomeIcon icon={faComments} /> Hubungi Penjual
@@ -138,6 +143,8 @@ class Order extends Component {
                             </button>
                         </div>
                     </div>
+
+                    <Toolbar order={order} />
                 </div>
             </>
         );
@@ -145,7 +152,7 @@ class Order extends Component {
 
     render() {
         let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
+            ? <Loading />
             : this.renderContent(this.state.order);
 
         return (

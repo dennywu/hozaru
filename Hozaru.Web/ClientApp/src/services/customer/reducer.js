@@ -36,27 +36,50 @@ const initialState = {
     }
 };
 
-const validate = (state) => {
+const validateByBefore = (state) => {
     if (!state.customerToChange) {
         return;
     }
 
-    if (state.customerToChange.name !== state.name || state.name === '')
+    if (state.customerToChange.name !== state.name)
         state.errors.name = (state.name !== '') ? { hasError: false, message: '' } : { hasError: true, message: 'Masukan Nama Anda' };
 
-    if (state.customerToChange.whatsapp !== state.whatsapp || state.whatsapp === '')
+    if (state.customerToChange.whatsapp !== state.whatsapp)
         state.errors.whatsapp = (state.whatsapp !== '') ? { hasError: false, message: '' } : { hasError: true, message: 'Masukan No. Whatsapp Anda' };
 
-    if (state.customerToChange.email !== state.email || state.email === '')
+    if (state.customerToChange.email !== state.email)
         state.errors.email = (state.email !== '') ? { hasError: false, message: '' } : { hasError: true, message: 'Masukan Email Anda' };
 
-    if (state.customerToChange.address !== state.address || state.address === '')
+    if (state.customerToChange.address !== state.address)
         state.errors.address = (state.address !== '') ? { hasError: false, message: '' } : { hasError: true, message: 'Masukan Alamat Anda' };
 
-    if (state.customerToChange.city !== state.city || state.city === null)
+    if (state.customerToChange.city !== state.city)
         state.errors.city = (state.city !== null) ? { hasError: false, message: '' } : { hasError: true, message: 'Pilih Kota Anda' };
 
-    if (state.customerToChange.districts !== state.districts || state.districts === null)
+    if (state.customerToChange.districts !== state.districts)
+        state.errors.districts = (state.districts !== null) ? { hasError: false, message: '' } : { hasError: true, message: 'Pilih Kecamatan Anda' };
+
+    state.errors.hasError = (state.errors.name.hasError || state.errors.whatsapp.hasError || state.errors.email.hasError || state.errors.address.hasError ||
+        state.errors.city.hasError || state.errors.districts.hasError);
+};
+
+const validate = (state) => {
+    if (state.name === '')
+        state.errors.name = (state.name !== '') ? { hasError: false, message: '' } : { hasError: true, message: 'Masukan Nama Anda' };
+
+    if (state.whatsapp === '')
+        state.errors.whatsapp = (state.whatsapp !== '') ? { hasError: false, message: '' } : { hasError: true, message: 'Masukan No. Whatsapp Anda' };
+
+    if (state.email === '')
+        state.errors.email = (state.email !== '') ? { hasError: false, message: '' } : { hasError: true, message: 'Masukan Email Anda' };
+
+    if (state.address === '')
+        state.errors.address = (state.address !== '') ? { hasError: false, message: '' } : { hasError: true, message: 'Masukan Alamat Anda' };
+
+    if (state.city === null)
+        state.errors.city = (state.city !== null) ? { hasError: false, message: '' } : { hasError: true, message: 'Pilih Kota Anda' };
+
+    if (state.districts === null)
         state.errors.districts = (state.districts !== null) ? { hasError: false, message: '' } : { hasError: true, message: 'Pilih Kecamatan Anda' };
 
     state.errors.hasError = (state.errors.name.hasError || state.errors.whatsapp.hasError || state.errors.email.hasError || state.errors.address.hasError ||
@@ -66,7 +89,7 @@ const validate = (state) => {
 export default function (state = initialState, action) {
     switch (action.type) {
         case CHANGE_CUSTOMER_INFO:
-            validate(state);
+            validateByBefore(state);
             return {
                 ...state,
                 customerToChange: Object.assign({}, action.payload)

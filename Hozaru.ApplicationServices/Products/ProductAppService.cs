@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 using AutoMapper;
 using Hozaru.ApplicationServices.Products.Dtos;
 using Hozaru.Core.Domain.Repositories;
 using Hozaru.Domain;
+using Hozaru.Core.Configurations;
 
 namespace Hozaru.ApplicationServices.Products
 {
@@ -23,10 +25,14 @@ namespace Hozaru.ApplicationServices.Products
             return Mapper.Map<IList<Product>, IList<ProductDto>>(products);
         }
 
-        public Stream GetImage(Guid productId)
+        public Stream GetImage(Guid productId, Guid productImageId)
         {
             var product = _productRepo.Get(productId);
-            return File.OpenRead(product.ImageUrl);
+            var productImage = product.Images.FirstOrDefault(i => i.Id == productImageId);
+
+            var pathFileDirectory = AppSettingConfigurationHelper.GetSection("PathFileStorageDirectory").Value;
+            var filePath = Path.Combine(pathFileDirectory, productImage.ImageUrl);
+            return File.OpenRead(filePath);
         }
     }
 }

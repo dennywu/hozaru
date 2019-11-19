@@ -9,6 +9,7 @@ import PaymentConfirmation from './routes/payment-confirmation';
 import Order from './routes/order';
 import store from './services/store';
 import './custom.css';
+import './services/error-handler';
 
 export default class App extends Component {
     static displayName = App.name;

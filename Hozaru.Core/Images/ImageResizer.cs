@@ -82,8 +82,7 @@ namespace Hozaru.Core.Images
             int destHeight = (int)(sourceHeight * nPercent);
 
             Bitmap bmPhoto = new Bitmap(width, height);
-            bmPhoto.SetResolution(imgPhoto.HorizontalResolution,
-                             imgPhoto.VerticalResolution);
+            bmPhoto.SetResolution(72,72);
 
             Graphics grPhoto = Graphics.FromImage(bmPhoto);
             grPhoto.Clear(Color.White);

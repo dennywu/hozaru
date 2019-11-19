@@ -17,6 +17,10 @@ namespace Hozaru.ApplicationServices
         public static void Map()
         {
             Mapper.CreateMap<Order, OrderDto>().ConvertUsing<OrderDtoConverter>();
+            Mapper.CreateMap<Product, ProductDto>().ConvertUsing<ProductDtoConverter>();
+            Mapper.CreateMap<ProductImage, ProductImageDto>().ConvertUsing<ProductImageDtoConverter>();
+            Mapper.CreateMap<PaymentType, PaymentTypeDto>().ConvertUsing<PaymentTypeDtoConverter>();
+            Mapper.CreateMap<PaymentType, PaymentTypeFullDto>().ConvertUsing<PaymentTypeFullDtoConverter>();
         }
     }
 }

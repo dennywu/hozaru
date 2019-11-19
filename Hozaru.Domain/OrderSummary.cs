@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Hozaru.Core.Domain.Entities.Auditing;
 
 namespace Hozaru.Domain
 {
-    public class OrderSummary : Entity<Guid>
+    public class OrderSummary : AuditedEntity<Guid>
     {
         public virtual decimal SubTotal { get; set; }
         public virtual decimal ShippingCost { get; set; }

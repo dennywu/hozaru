@@ -12,8 +12,11 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Freights
             : base("FreightItems")
         {
             Map(i => i.Rate).Not.Nullable();
-            Map(i => i.EstimatedTimeDeparture).Not.Nullable();
+            Map(i => i.EstimatedTimeDepartureMin).Not.Nullable();
+            Map(i => i.EstimatedTimeDepartureMax).Not.Nullable();
             References(i => i.Expedition).Column("Expedition_Id").Index("freightitem_expedition_id");
+            References(i => i.Freight).Column("Freight_Id").ForeignKey("fk_freight_freightitem");
+            this.MapAudited();
         }
     }
 }

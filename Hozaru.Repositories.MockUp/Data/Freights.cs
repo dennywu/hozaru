@@ -30,37 +30,37 @@ namespace Hozaru.Repositories.MockUp.Data
             IList<Freight> freights = new List<Freight>();
 
             var freightBengkong = new Freight(batam, batam, bengkong);
-            freightBengkong.AddItem(JNEReg, 7000, 2).Id = Guid.Parse("00000000-0000-0000-0000-000000000001");
-            freightBengkong.AddItem(JNEYes, 14000, 1).Id = Guid.Parse("00000000-0000-0000-0000-000000000002");
+            freightBengkong.AddItem(JNEReg, 7000, 2, 3).Id = Guid.Parse("00000000-0000-0000-0000-000000000001");
+            freightBengkong.AddItem(JNEYes, 14000, 1, 2).Id = Guid.Parse("00000000-0000-0000-0000-000000000002");
             freights.Add(freightBengkong);
 
             var freightSekupang = new Freight(batam, batam, sekupang);
-            freightSekupang.AddItem(JNEReg, 7000, 2).Id = Guid.Parse("00000000-0000-0000-0000-000000000003");
-            freightSekupang.AddItem(JNEYes, 14000, 1).Id = Guid.Parse("00000000-0000-0000-0000-000000000004");
+            freightSekupang.AddItem(JNEReg, 7000, 2, 3).Id = Guid.Parse("00000000-0000-0000-0000-000000000003");
+            freightSekupang.AddItem(JNEYes, 14000, 1, 2).Id = Guid.Parse("00000000-0000-0000-0000-000000000004");
             freights.Add(freightSekupang);
 
             var freightBatamKota = new Freight(batam, batam, batamKota);
-            freightBatamKota.AddItem(JNEReg, 7000, 2).Id = Guid.Parse("00000000-0000-0000-0000-000000000005");
-            freightBatamKota.AddItem(JNEYes, 14000, 1).Id = Guid.Parse("00000000-0000-0000-0000-000000000006");
+            freightBatamKota.AddItem(JNEReg, 7000, 2, 3).Id = Guid.Parse("00000000-0000-0000-0000-000000000005");
+            freightBatamKota.AddItem(JNEYes, 14000, 1, 2).Id = Guid.Parse("00000000-0000-0000-0000-000000000006");
             freights.Add(freightBatamKota);
 
             var freightSenayang = new Freight(batam, batam, senayang);
-            freightSenayang.AddItem(JNEReg, 42000, 10).Id = Guid.Parse("00000000-0000-0000-0000-000000000007");
+            freightSenayang.AddItem(JNEReg, 42000, 10, 11).Id = Guid.Parse("00000000-0000-0000-0000-000000000007");
             freights.Add(freightSenayang);
 
             var freightSingkep = new Freight(batam, batam, singkep);
-            freightSingkep.AddItem(JNEReg, 20000, 2).Id = Guid.Parse("00000000-0000-0000-0000-000000000008");
-            freightSingkep.AddItem(JNEOKE, 22000, 4).Id = Guid.Parse("00000000-0000-0000-0000-000000000009");
+            freightSingkep.AddItem(JNEReg, 20000, 2, 3).Id = Guid.Parse("00000000-0000-0000-0000-000000000008");
+            freightSingkep.AddItem(JNEOKE, 22000, 4, 5).Id = Guid.Parse("00000000-0000-0000-0000-000000000009");
             freights.Add(freightSingkep);
 
             var freightSingkepBarat = new Freight(batam, batam, singkepBarat);
-            freightSingkepBarat.AddItem(JNEReg, 20000, 2).Id = Guid.Parse("00000000-0000-0000-0000-000000000010");
-            freightSingkepBarat.AddItem(JNEOKE, 22000, 4).Id = Guid.Parse("00000000-0000-0000-0000-000000000011");
+            freightSingkepBarat.AddItem(JNEReg, 20000, 2, 3).Id = Guid.Parse("00000000-0000-0000-0000-000000000010");
+            freightSingkepBarat.AddItem(JNEOKE, 22000, 4, 5).Id = Guid.Parse("00000000-0000-0000-0000-000000000011");
             freights.Add(freightSingkepBarat);
 
             var freightSingkepPesisir = new Freight(batam, batam, singkepPesisir);
-            freightSingkepPesisir.AddItem(JNEReg, 20000, 2).Id = Guid.Parse("00000000-0000-0000-0000-000000000012");
-            freightSingkepPesisir.AddItem(JNEOKE, 22000, 4).Id = Guid.Parse("00000000-0000-0000-0000-000000000013");
+            freightSingkepPesisir.AddItem(JNEReg, 20000, 2, 3).Id = Guid.Parse("00000000-0000-0000-0000-000000000012");
+            freightSingkepPesisir.AddItem(JNEOKE, 22000, 4, 5).Id = Guid.Parse("00000000-0000-0000-0000-000000000013");
             freights.Add(freightSingkepPesisir);
 
             return freights.AsQueryable();

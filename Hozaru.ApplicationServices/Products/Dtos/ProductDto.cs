@@ -7,11 +7,12 @@ using System.Text;
 
 namespace Hozaru.ApplicationServices.Products.Dtos
 {
-    [AutoMapFrom(typeof(Product))]
     public class ProductDto : EntityDto<Guid>
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public IList<ProductImageDto> Images { get; set; }
+        public ProductImageDto FirstProductImage { get; set; }
     }
 }

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Hozaru.Core;
+using Hozaru.Core.Domain.Entities.Auditing;
 
 namespace Hozaru.Domain
 {
-    public class Freight : Entity<Guid>
+    public class Freight : AuditedEntity<Guid>
     {
         public virtual City OriginCity { get; set; }
         public virtual Districts OriginDistricts { get; set; }
@@ -27,12 +28,12 @@ namespace Hozaru.Domain
             this.DestinationDistricts = destinationDistrict;
         }
 
-        public virtual FreightItem AddItem(Expedition expedition, decimal rate, int estimatedTimeDeparture)
+        public virtual FreightItem AddItem(Expedition expedition, decimal rate, int estimatedTimeDepartureMin, int estimatedTimeDepartureMax)
         {
             if (Items.Any(i => i == expedition))
                 throw new HozaruException("Expedition already exist");
 
-            var item = new FreightItem(expedition, rate, estimatedTimeDeparture);
+            var item = new FreightItem(this, expedition, rate, estimatedTimeDepartureMin, estimatedTimeDepartureMax);
             this.Items.Add(item);
             return item;
         }

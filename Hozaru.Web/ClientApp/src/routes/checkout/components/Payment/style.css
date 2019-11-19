@@ -13,3 +13,31 @@ div.bank-arrow {
     right: 0;
     margin-right: 10px;
 }
+
+@media screen and (min-width: 480px) {
+    div.bank-arrow {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .payment-type-value {
+        padding-right: 2em;
+    }
+
+    .btn-more {
+        display: none;
+    }
+}
+
+.custom-control-label::before {
+    width: 20px;
+    height: 20px;
+    margin-top: 7px;
+}
+
+.custom-control-label::after {
+    width: 20px;
+    height: 20px;
+    margin-top: 7px;
+}

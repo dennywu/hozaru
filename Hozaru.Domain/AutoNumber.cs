@@ -1,11 +1,12 @@
 ﻿using Hozaru.Core.Domain.Entities;
+using Hozaru.Core.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Hozaru.Domain
 {
-    public class AutoNumber : Entity<Guid>
+    public class AutoNumber : AuditedEntity<Guid>
     {
         public virtual string Date { get; set; }
         public virtual int Number { get; set; }

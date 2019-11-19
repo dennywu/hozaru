@@ -52,7 +52,7 @@ class DialogAddToCart extends Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-3">
-                                    <img className="image-product-addtocart" srcSet={"/api/product/" + this.props.product.id + "/image"} alt={this.props.product.name} />
+                                    <img className="image-product-addtocart" srcSet={this.props.product.firstProductImage.url} alt={this.props.product.name} />
                                 </div>
                                 <div className="col-9">
                                     <div className="font-weight-600">{this.props.product.name}</div>
@@ -61,13 +61,7 @@ class DialogAddToCart extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row pt-3">
-                                <div className="col-12">
-                                    <textarea className="form-control" rows="3" placeholder="Cacatan: Warna / Ukuran (Optional)" defaultValue={this.state.note} onBlur={this.changeNote}>
-                                    </textarea>
-                                </div>
-                            </div>
-                            <div className="row pt-3">
+                            <div className="row mt-3">
                                 <div className="col-12 numeric-input center narrow">
                                     <NumericInput className="form-control" min={1} max={1000} value={this.state.quantity} mobile={true} onChange={this.changeQuantity} />
                                 </div>

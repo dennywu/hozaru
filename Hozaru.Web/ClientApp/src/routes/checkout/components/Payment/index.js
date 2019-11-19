@@ -5,6 +5,7 @@ import DialogPayment from './DialogPayment';
 import { connect } from 'react-redux';
 import { changePaymentType } from '../../../../services/shopping-cart/actions';
 import './style.css';
+import axios from 'axios';
 
 class Payment extends Component {
     constructor() {
@@ -36,24 +37,20 @@ class Payment extends Component {
     }
 
     async populatePaymentTypes() {
-        const response = await fetch('/api/paymenttype', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
-        const responseData = await response.json();
-        this.setState({
-            paymentTypes: responseData
-        });
+        axios.get('/api/paymenttype')
+            .then(res => {
+                var data = res.data;
+                this.setState({
+                    paymentTypes: data
+                });
+            });
     }
 
     render() {
         const paymentType = this.state.paymentTypes.find(i => i.code === this.props.selectedPaymentType);
         var paymentTypeElement = paymentType ?
-            <span className="font-weight-bold">{paymentType.name}</span>
-            : <span className="font-weight-normal color-orange">Pilih Metode Pembayaran</span>;
+            <span className="font-weight-bold">{paymentType.name} <FontAwesomeIcon className='btn-more color-black' icon={faChevronRight} /></span>
+            : <span className="font-weight-normal color-orange">Pilih Metode Pembayaran <FontAwesomeIcon className='btn-more color-black' icon={faChevronRight} /></span>;
 
         return (
             <div className="container section-voucher mt-3 mb-3 cursor-pointer" onClick={this.showDialogPayment}>
@@ -63,12 +60,12 @@ class Payment extends Component {
                             <FontAwesomeIcon icon={faDollarSign} className="color-orange" /> Metode Pembayaran
                         </span>
                     </div>
-                    <div className="col-6 text-right pr-2em">
+                    <div className="col-6 text-right payment-type-value">
                         {paymentTypeElement}
                     </div>
 
                     <div className="bank-arrow">
-                        <FontAwesomeIcon icon={faChevronRight}/>
+                        <FontAwesomeIcon icon={faChevronRight} />
                     </div>
                 </div>
                 {

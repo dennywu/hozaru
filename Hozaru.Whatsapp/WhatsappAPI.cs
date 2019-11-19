@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Castle.Core.Logging;
+using Hozaru.Core;
+using Hozaru.Core.Configurations;
+using Hozaru.Core.Dependency;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -7,28 +11,36 @@ namespace Hozaru.Whatsapp
 {
     public class WhatsappAPI
     {
-        private static string _domainAPI = "https://console.wablas.com";
-        private static string _token = "0Pphj2VhsDMqFCUTL5abYhelzC2dKeH1RqZVK8UbeXiPUVLz9VkYEiT7dz0e7BGp";
-
         public static void SendMessage(string phone, string message)
         {
-            using (var httpClient = new HttpClient())
+            if (Convert.ToBoolean(AppSettingConfigurationHelper.GetSection("SendWhatsapp").Value))
             {
-                httpClient.BaseAddress = new Uri(_domainAPI);
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(_token);
+                var domainAPI = AppSettingConfigurationHelper.GetSection("Wablas").GetSection("DomainAPI").Value;
+                var token = AppSettingConfigurationHelper.GetSection("Wablas").GetSection("Token").Value;
 
-                var data = new
+                using (var httpClient = new HttpClient())
                 {
-                    phone = phone,
-                    message = message
-                };
-                var dataJson = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                    httpClient.BaseAddress = new Uri(domainAPI);
+                    httpClient.DefaultRequestHeaders.Accept.Clear();
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
 
-                var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
+                    var data = new
+                    {
+                        phone = phone,
+                        message = message
+                    };
+                    var dataJson = Newtonsoft.Json.JsonConvert.SerializeObject(data);
 
-                //var response = httpClient.PostAsync("/api/send-message", content).Result;
+                    var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
+
+                    var response = httpClient.PostAsync("/api/send-message", content).Result;
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var logger = IocManager.Instance.Resolve<ILogger>();
+                        logger.ErrorFormat("Failed send Whatstapp {0} with message: {1}. Error Message: {2}", phone, message, response.Content.ReadAsStringAsync().Result);
+                    }
+                }
             }
         }
     }

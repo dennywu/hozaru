@@ -1,8 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
+import "bootstrap/dist/css/bootstrap.css";
 
 class DialogPayment extends Component {
     constructor(props) {
@@ -32,28 +31,36 @@ class DialogPayment extends Component {
         const { paymentTypes } = this.props;
         var paymentTypeOptionElements = [];
         paymentTypes.forEach(paymentType => {
-            var selected = this.state.selectedPaymentType === paymentType.code && <FontAwesomeIcon icon={faCheckCircle} />;
             paymentTypeOptionElements.push(
                 <div key={paymentType.code} >
                     <div className="row" onClick={this.handleClickPaymentRow.bind(this, paymentType)}>
-                        <div className="col-1 text-right bank-selected color-orange">
-                            {selected}
-                        </div>
-                        <div className="col-1">
-                            <img
-                                className='logobank'
-                                alt='BCA'
-                                srcSet={"/api/paymenttype/" + paymentType.code + "/image"}
+                        <div className="col-12 custom-control custom-radio">
+                            <input type="radio"
+                                className="custom-control-input"
+                                value={this.state.selectedPaymentType}
+                                checked={this.state.selectedPaymentType === paymentType.code}
+                                onChange={this.handleClickPaymentRow}
                             />
-                        </div>
-                        <div className="col-9 pl-5">
-                            <div>{paymentType.name}</div>
-                            <div className="font-weight-light font-12px">
-                                Hanya menerima dari Bank {paymentType.bankName}
-                            </div>
-                            <div className="font-weight-light font-12px">
-                                {paymentType.isManualConfirmation && "Perlu upload bukti transfer"}
-                            </div>
+                            <label className="custom-control-label">
+                                <div className="row">
+                                    <div className="col-3 pl-30px">
+                                        <img
+                                            className='logobank'
+                                            alt='BCA'
+                                            srcSet={paymentType.imageUrl}
+                                        />
+                                    </div>
+                                    <div className="col-9">
+                                        <div>{paymentType.name}</div>
+                                        <div className="font-weight-light font-12px">
+                                            Hanya menerima dari Bank {paymentType.bankName}
+                                        </div>
+                                        <div className="font-weight-light font-12px">
+                                            {paymentType.isManualConfirmation && "Perlu upload bukti transfer"}
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     <hr className="mt-2 mb-2"></hr>

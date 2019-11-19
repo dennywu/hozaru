@@ -16,6 +16,7 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Expeditions
             Map(i => i.CompanyCode).Length(64).Not.Nullable();
             Map(i => i.CompanyName).Length(64).Not.Nullable();
             Map(i => i.Disabled).Not.Nullable();
+            this.MapAudited();
         }
     }
 }

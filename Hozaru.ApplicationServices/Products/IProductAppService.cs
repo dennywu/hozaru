@@ -10,6 +10,6 @@ namespace Hozaru.ApplicationServices.Products
     public interface IProductAppService : IApplicationService
     {
         IList<ProductDto> GetAll();
-        Stream GetImage(Guid productId);
+        Stream GetImage(Guid productId, Guid productImageId);
     }
 }

@@ -1,11 +1,12 @@
 ﻿using Hozaru.Core.Domain.Entities;
+using Hozaru.Core.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Hozaru.Domain
 {
-    public class Customer : Entity<Guid>
+    public class Customer : AuditedEntity<Guid>
     {
         public virtual string Name { get; set; }
         public virtual string Whatsapp { get; set; }

@@ -8,9 +8,9 @@ export class Home extends Component {
 
     render() {
         return (
-            <div>
+            <div className="mt-2">
                 <StoreProfile />
-                <hr />
+                <hr className="mt-2 mb-2"/>
                 <Grid />
                 <FloatCart />
             </div>

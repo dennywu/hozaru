@@ -1,7 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { default as NumberFormat } from 'react-number-format';
 import Dropzone from '../../components/dropzone';
-import { post } from 'axios';
+import axios from 'axios';
+import Loading from '../../components/loading';
+import HozaruButton from '../../components/hozaru-button';
 
 class PaymentConfirmation extends Component {
     constructor() {
@@ -16,6 +18,8 @@ class PaymentConfirmation extends Component {
         this.validate = this.validate.bind(this);
 
         this.state = {
+            loading: true,
+            buttonState: '',
             order: {
                 paymentType: {
                     code: '',
@@ -52,9 +56,10 @@ class PaymentConfirmation extends Component {
     }
 
     async populateOrder() {
-        const response = await fetch('/api/order?id=' + this.state.orderId);
-        const data = await response.json();
-        this.setState({ order: data });
+        axios.get('/api/order', { params: { id: this.state.orderId } })
+            .then(res => {
+                this.setState({ order: res.data, loading: false });
+            });
     }
 
     handleAddImage(files) {
@@ -114,7 +119,8 @@ class PaymentConfirmation extends Component {
                 accountName: this.validate(this.state.accountName, 'Nama Rekening Pengirim'),
                 accountNumber: this.validate(this.state.accountNumber, 'Nomor Rekening Pengirim'),
                 bankName: this.validate(this.state.bankName, 'Nama Bank Pengirim')
-            }
+            },
+            buttonState: 'loading'
         }, () => {
             if (this.state.errors.accountName !== '' && this.state.errors.accountNumber !== '' && this.state.errors.bankName !== '')
                 return;
@@ -137,18 +143,25 @@ class PaymentConfirmation extends Component {
                 },
             };
 
-            post("/api/order/confirmation", formData, config).then(response => {
-                if (response.statusText === "OK") {
-                    this.props.history.push('/order/' + this.state.orderId);
-                }
-                else {
-                    alert(response.data);
-                }
-            });
+            axios.post("/api/order/confirmation", formData, config)
+                .then(response => {
+                    if (response.statusText === "OK") {
+                        this.props.history.push('/order/' + this.state.orderId);
+                    }
+                    else {
+                        alert(response.data);
+                    }
+                })
+                .finally(() => {
+                    this.setState({ buttonState: '' });
+                });
         });
     }
 
     render() {
+        if (this.state.loading)
+            return <Loading />;
+
         let uploadReceiptContent = "";
         if (this.state.receiptImage) {
             uploadReceiptContent =
@@ -194,7 +207,7 @@ class PaymentConfirmation extends Component {
                                 <div className="col-1">
                                     <img className='logobank'
                                         alt={this.state.order.paymentType.bankName}
-                                        srcSet={"/api/paymenttype/" + this.state.order.paymentType.code + "/image"} />
+                                        srcSet={this.state.order.paymentType.imageUrl} />
                                 </div>
                                 <div className="col-9 pl-6">
                                     <div className="font-weight-bold">{this.state.order.paymentType.bankName}</div>
@@ -272,9 +285,7 @@ class PaymentConfirmation extends Component {
                         }
                     </div>
                     <div className="row mt-4 mb-2">
-                        <button type="submit" className="btn btn-primary margin-center width-95percent">
-                            Kirimkan
-                        </button>
+                        <HozaruButton type="submit" className="btn btn-primary margin-center width-95percent" state={this.state.buttonState}>Kirimkan</HozaruButton>
                     </div>
                 </div>
             </form>

@@ -17,6 +17,7 @@ namespace Hozaru.Core.Auditing
         public AuditingConfiguration()
         {
             IsEnabled = true;
+            IsEnabledForAnonymousUsers = false;
             Selectors = new AuditingSelectorList();
             //MvcControllers = new MvcControllersAuditingConfiguration();
         }

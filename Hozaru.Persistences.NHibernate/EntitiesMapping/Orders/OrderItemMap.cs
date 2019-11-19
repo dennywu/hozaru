@@ -16,6 +16,8 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Orders
             Map(i => i.Note).Length(256);
             Map(i => i.Total).Length(64).Not.Nullable();
             References(i => i.Product).Column("Product_Id").Index("orderitem_product_id");
+            References(i => i.Order).Column("Order_Id").ForeignKey("fk_order_orderitem");
+            this.MapAudited();
         }
     }
 }

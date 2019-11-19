@@ -29,9 +29,11 @@ namespace Hozaru.Web.Controllers
         }
 
         [HttpGet]
-        [Route("{code}/image")]
+        [Route("image/{code}")]
         public IActionResult GetImage(string code)
         {
+            Response.Headers.Add("cache-control", new[] { "public,max-age=31536000" });
+            Response.Headers.Add("Expires", new[] { DateTime.UtcNow.AddYears(1).ToString("R") });
             var paymentTypeImageStream = _paymentTypeAppService.GetImage(code);
             return File(paymentTypeImageStream, "image/png");
         }

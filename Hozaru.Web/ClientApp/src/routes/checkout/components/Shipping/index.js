@@ -6,6 +6,7 @@ import { default as NumberFormat } from 'react-number-format';
 import { changeFreight } from '../../../../services/shopping-cart/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 class Shipping extends Component {
     constructor(props) {
@@ -63,38 +64,32 @@ class Shipping extends Component {
             data.items.push(shoppingCartItem);
         });
 
-        const response = await fetch('/api/freight', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        const responseData = await response.json();
-        this.setState({
-            freights: responseData
-        });
-
-        if (responseData.length === 0) {
-            this.resetShippingRate();
-            return;
-        }
-
-        var selectedExpeditionCode = this.state.selectedExpeditionCode;
-        if (selectedExpeditionCode === '') {
+        axios.post('/api/freight', data).then(res => {
+            const responseData = res.data;
             this.setState({
-                selectedExpeditionCode: responseData[0].expeditionCode
+                freights: responseData
             });
-        }
 
-        if (selectedExpeditionCode !== '' && responseData.find(i => i.expeditionCode === selectedExpeditionCode) == null) {
-            this.setState({
-                selectedExpeditionCode: responseData[0].expeditionCode
-            });
-        }
+            if (responseData.length === 0) {
+                this.resetShippingRate();
+                return;
+            }
 
-        this.updateFreight();
+            var selectedExpeditionCode = this.state.selectedExpeditionCode;
+            if (selectedExpeditionCode === '') {
+                this.setState({
+                    selectedExpeditionCode: responseData[0].expeditionCode
+                });
+            }
+
+            if (selectedExpeditionCode !== '' && responseData.find(i => i.expeditionCode === selectedExpeditionCode) == null) {
+                this.setState({
+                    selectedExpeditionCode: responseData[0].expeditionCode
+                });
+            }
+
+            this.updateFreight();
+        });
     }
 
     updateFreight() {

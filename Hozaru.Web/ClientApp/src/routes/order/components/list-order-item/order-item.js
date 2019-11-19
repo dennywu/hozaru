@@ -12,7 +12,7 @@ class OrderItem extends Component {
         return (
             <>
                 <div className="col-3 image-product">
-                    <img className="w100" srcSet={"/api/product/" + item.product.id + "/image"} alt={item.product.name} />
+                    <img className="w100" srcSet={item.product.firstProductImage.url} alt={item.product.name} />
                 </div>
                 <div className="col-9">
                     <div className="font-weight-600 text-truncate">{item.product.name}</div>

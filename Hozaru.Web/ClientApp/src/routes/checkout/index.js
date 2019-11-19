@@ -9,12 +9,17 @@ import Summary from './components/Summary';
 import { connect } from 'react-redux';
 import { validateCustomerInfo } from '../../services/customer/actions';
 import { resetShoppingCart } from '../../services/shopping-cart/actions';
+import axios from 'axios';
+import HozaruButton from '../../components/hozaru-button';
 
 class Checkout extends Component {
     constructor(props) {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
         this.fetchToServer = this.fetchToServer.bind(this);
+        this.state = {
+            buttonState: ''
+        };
     }
 
     componentDidMount() {
@@ -53,6 +58,8 @@ class Checkout extends Component {
     }
 
     async fetchToServer() {
+        this.setState({ buttonState: 'loading' });
+
         const { customer, shoppingCart } = this.props;
         let data = {
             name: customer.name,
@@ -72,21 +79,14 @@ class Checkout extends Component {
             data.items.push(shoppingCartItem);
         });
 
-        fetch('/api/order', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(response => {
-            return response.json();
-        }).then(data => {
-            this.props.resetShoppingCart();
-            this.props.history.push('/payment/' + data.id);
-        }).catch(ex => {
-            console.error(ex);
-        });
+        axios.post('/api/order', data)
+            .then(res => {
+                this.props.resetShoppingCart();
+                this.props.history.push('/payment/' + res.data.id);
+            })
+            .finally(() => {
+                this.setState({ buttonState: '' });
+            });
     }
 
     render() {
@@ -116,7 +116,7 @@ class Checkout extends Component {
                 <Payment />
                 <hr className="mt-1 mb-1" />
                 <Summary />
-                <button type="submit" className="btn btn-primary button-full">Bayar Sekarang</button>
+                <HozaruButton type="submit" className="btn btn-primary button-full" state={this.state.buttonState}>Bayar Sekarang</HozaruButton>
             </form>
         );
     }

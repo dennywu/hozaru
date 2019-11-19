@@ -19,6 +19,7 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Freights
                 .Inverse()
                 .KeyColumn("Freight_Id")
                 .ForeignKeyConstraintName("fk_freightitem_freight");
+            this.MapAudited();
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Hozaru.Core.Dependency;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Hozaru.Core.Domain.Repositories
 {
-    public interface IRepository
+    public interface IRepository : ITransientDependency
     {
 
     }
