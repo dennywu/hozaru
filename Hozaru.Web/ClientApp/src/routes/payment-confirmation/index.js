@@ -82,7 +82,8 @@ class PaymentConfirmation extends Component {
 
     removeReceiptImage() {
         this.setState({
-            receiptImage: ''
+            receiptImage: '',
+            fileReceiptImage: ''
         });
     }
 

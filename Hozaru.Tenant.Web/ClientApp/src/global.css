@@ -1,0 +1,23 @@
+﻿.crop-text-2 {
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+svg.MuiSvgIcon-root {
+    margin-right: 3px;
+}
+
+.text-underline {
+    text-decoration: underline;
+}
+
+.mb-10px{
+    margin-bottom:10px;
+}
+
+.border-grey {
+    border: 1px solid #a2a2a2;
+}

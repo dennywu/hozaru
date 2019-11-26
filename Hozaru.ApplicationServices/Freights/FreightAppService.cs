@@ -24,6 +24,7 @@ namespace Hozaru.ApplicationServices.Freights
             var weightShoppingCart = calculateWeightShoppingCart(inputDto);
 
             var freight = _freightRepository.FirstOrDefault(i => i.DestinationDistricts.Code == inputDto.Districts);
+            Validate.Found(freight, "Ongkos Kirim", inputDto.Districts);
 
             IList<FreightDto> result = new List<FreightDto>();
             if (freight == null)

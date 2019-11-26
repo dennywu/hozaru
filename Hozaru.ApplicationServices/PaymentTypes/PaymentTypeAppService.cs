@@ -29,6 +29,8 @@ namespace Hozaru.ApplicationServices.PaymentTypes
         public Stream GetImage(string code)
         {
             var paymentType = _paymentTypeRepository.FirstOrDefault(i => i.Code == code);
+            Validate.Found(paymentType, "Tipe Pembayaran", code);
+
             var pathFileDirectory = AppSettingConfigurationHelper.GetSection("PathFileStorageDirectory").Value;
             var filePath = Path.Combine(pathFileDirectory, paymentType.ImageUrl);
 

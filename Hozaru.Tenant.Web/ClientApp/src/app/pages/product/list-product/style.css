@@ -1,0 +1,42 @@
+﻿.card.product-card {
+    margin-bottom: 10px;
+}
+
+    .card.product-card img {
+        height: 100%;
+        object-fit:cover;
+    }
+
+    .card.product-card .card-body {
+        padding: 10px;
+    }
+
+    .card.product-card .card-title.h5 {
+        margin-bottom: 3px;
+    }
+
+    .card.product-card .card-text {
+        margin-bottom: 5px !important;
+    }
+
+    .card.product-card .product-archive .overlay {
+        position: absolute;
+        background: #000;
+        opacity: 0.7;
+        width: 100%;
+        height: 61%;
+        top: 0;
+        text-align:center;
+    }
+        .card.product-card .product-archive .overlay span.material-icons {
+            color: #ffffff;
+            font-size: 50px;
+            margin-top: 35px;
+        }
+
+        .card.product-card .product-archive .overlay div.text {
+            color: white;
+            text-align: center;
+            margin-top: 5px;
+            font-size: 15px;
+        }

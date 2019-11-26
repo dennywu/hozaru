@@ -21,6 +21,8 @@ namespace Hozaru.ApplicationServices.Products.Dtos
                 Description = product.Description,
                 Name = product.Name,
                 Price = product.Price,
+                Weight = product.Weight,
+                Status = product.Status,
                 FirstProductImage = Mapper.Map<ProductImageDto>(product.Images.FirstOrDefault()),
                 Images = Mapper.Map<IList<ProductImageDto>>(product.Images.OrderBy(i => i.Priority))
             };

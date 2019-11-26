@@ -13,6 +13,7 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Products
         {
             Map(i => i.ImageUrl).Length(255).Not.Nullable();
             Map(i => i.Priority).Not.Nullable();
+            Map(i => i.FileName).Length(128).Not.Nullable();
             References(i => i.Product).Column("Product_Id").ForeignKey("fk_product_productimage");
             this.MapAudited();
         }

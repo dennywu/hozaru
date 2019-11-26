@@ -16,4 +16,19 @@
     <ProjectReference Include="..\Hozaru.Whatsapp\Hozaru.Whatsapp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="MessagesDataAnnotation.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessagesDataAnnotation.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="MessagesDataAnnotation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessagesDataAnnotation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

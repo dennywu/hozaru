@@ -10,6 +10,7 @@ using Hozaru.ApplicationServices.AutoNumbers;
 using AutoMapper;
 using Hozaru.ApplicationServices.ImagesGenerator;
 using Hozaru.Core;
+using System.Drawing.Imaging;
 
 namespace Hozaru.ApplicationServices.Orders
 {
@@ -37,18 +38,25 @@ namespace Hozaru.ApplicationServices.Orders
         public OrderDto CreateOrder(CreateOrderInputDto inputDto)
         {
             var districts = _districtRepository.FirstOrDefault(i => i.Code == inputDto.DistrictCode);
+            Validate.Found(districts, "Kecamatan", inputDto.DistrictCode);
+
             var order = Order.Create(inputDto.Name, inputDto.Email, inputDto.Whatsapp, districts, inputDto.Address, inputDto.Note);
             foreach(var itemInputDto in inputDto.Items)
             {
                 var product = _productRepository.Get(itemInputDto.ProductId);
+                Validate.Found(product, "Produk");
                 order.AddItem(product, itemInputDto.Quantity, itemInputDto.Note);
             }
 
             var freight = _freightRepository.FirstOrDefault(i => i.DestinationDistricts.Code == districts.Code);
+            Validate.Found(freight, "Ongkos Kirim", districts.Code);
+
             var expedition = freight.Items.FirstOrDefault(i => i.Expedition.Code == inputDto.ExpeditionCode);
+            Validate.Found(expedition, "Ekpedisi", inputDto.ExpeditionCode);
             order.Shipping(freight, expedition.Expedition);
 
             var paymentType = _paymentTypeRepository.FirstOrDefault(i => i.Code == inputDto.PaymentTypeCode);
+            Validate.Found(expedition, "Tipe Pembayaran", inputDto.PaymentTypeCode);
             order.ChangePaymentType(paymentType);
 
             var orderNumber = _autoNumberGenerator.GenerateOrderNumber(order.TransactionDate);
@@ -65,16 +73,16 @@ namespace Hozaru.ApplicationServices.Orders
         public OrderDto Get(Guid id)
         {
             var order = _orderRepository.Get(id);
-            if (order.IsNull())
-                throw new HozaruException("Orderan tidak ditemukan.");
+            Validate.Found(order, "Orderan");
             return Mapper.Map<OrderDto>(order);
         }
 
         public Guid Confirmation(ConfirmationOrderInputDto inputDto)
         {
             var order = _orderRepository.Get(inputDto.Id);
+            Validate.Found(order, "Orderan");
             var fileName = string.Format("{0}_{1}", order.OrderNumber, order.PaymentHistories.Count + 1);
-            var filePath = _imageGenerator.SavePaymentReceipt(inputDto.generateImage(), fileName);
+            var filePath = _imageGenerator.SavePaymentReceipt(inputDto.generateImage(), fileName, ImageFormat.Jpeg);
 
             order.Confirmation(inputDto.BankName, inputDto.AccountName, inputDto.AccountNumber, filePath);
             _orderRepository.Update(order);

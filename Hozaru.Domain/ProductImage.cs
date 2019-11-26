@@ -11,16 +11,19 @@ namespace Hozaru.Domain
         public virtual Product Product { get; set; }
         public virtual string ImageUrl { get; set; }
         public virtual int Priority { get; set; }
+        public virtual string FileName { get; set; }
 
         protected ProductImage()
         {
         }
 
-        public ProductImage(Product product, string imageUrl, int priority) : this()
+        public ProductImage(Product product, string imageUrl, int priority, string fileName) 
+            : this()
         {
             this.Product = product;
             this.ImageUrl = imageUrl;
             this.Priority = priority;
+            this.FileName = fileName;
         }
     }
 }

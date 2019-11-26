@@ -15,6 +15,7 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Products
             Map(i => i.Description).Length(4000).Not.Nullable();
             Map(i => i.Price).Not.Nullable();
             Map(i => i.Weight).Not.Nullable();
+            Map(i => i.Status).Not.Nullable();
             HasMany(i => i.Images)
                 .Cascade.AllDeleteOrphan()
                 .Inverse()

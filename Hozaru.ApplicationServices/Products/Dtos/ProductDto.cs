@@ -12,6 +12,8 @@ namespace Hozaru.ApplicationServices.Products.Dtos
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public decimal Weight { get; set; }
+        public ProductStatus Status { get; set; }
         public IList<ProductImageDto> Images { get; set; }
         public ProductImageDto FirstProductImage { get; set; }
     }

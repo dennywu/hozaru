@@ -86,6 +86,21 @@ namespace Hozaru.NHibernate.Interceptors
                 }
             }
 
+            if (entity is IModificationAudited)
+            {
+                for (var i = 0; i < propertyNames.Length; i++)
+                {
+                    if (propertyNames[i] == "LastModificationTime")
+                    {
+                        state[i] = (entity as IModificationAudited).LastModificationTime = Clock.Now;
+                    }
+                    else if (propertyNames[i] == "LastModifierUserId")
+                    {
+                        state[i] = (entity as IModificationAudited).LastModifierUserId = _hozaruSession.Value.UserId;
+                    }
+                }
+            }
+
             //if (entity is IMayHaveTenant)
             //{
             //    var currentTenantId = _hozaruSession.Value.TenantId;

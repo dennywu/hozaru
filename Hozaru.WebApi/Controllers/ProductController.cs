@@ -21,11 +21,65 @@ namespace Hozaru.WebApi.Controllers
             _productAppService = IocManager.Instance.Resolve<IProductAppService>();
         }
 
+        [HttpPost]
+        public ProductDto CreateProduct([FromForm] CreateNewProductInputDto inputDto)
+        {
+            var productId = _productAppService.Create(inputDto);
+            return _productAppService.Get(productId);
+        }
+
+        [HttpPut]
+        public ProductDto Edit([FromForm] EditProductInputDto inputDto)
+        {
+            var productId = _productAppService.Edit(inputDto);
+            return _productAppService.Get(productId);
+        }
+
+        [HttpPut]
+        [Route("{id}/archive")]
+        public IActionResult Archive(Guid id)
+        {
+            _productAppService.Archive(id);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{id}/activate")]
+        public IActionResult Activate(Guid id)
+        {
+            _productAppService.Activate(id);
+            return Ok();
+        }
+
         [HttpGet]
         public IEnumerable<ProductDto> Get()
         {
-            var products = _productAppService.GetAll();
+            var products = _productAppService.GetAll(ProductStatusInputDto.ACTIVE);
             return products;
+        }
+
+        [HttpGet]
+        [Route("all")]
+        public IEnumerable<ProductDto> GetAllStatus()
+        {
+            var products = _productAppService.GetAll(ProductStatusInputDto.ALL);
+            return products;
+        }
+
+        [HttpGet]
+        [Route("archive")]
+        public IEnumerable<ProductDto> GetProductArchive()
+        {
+            var products = _productAppService.GetAll(ProductStatusInputDto.ARCHIVE);
+            return products;
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public ProductDto GetById(Guid id)
+        {
+            var product = _productAppService.Get(id);
+            return product;
         }
 
         [HttpGet]
