@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { StatusOrder } from "../../OrderStatus";
 
 class Toolbar extends Component {
     constructor() {
@@ -17,7 +18,9 @@ class Toolbar extends Component {
     renderToolbar(order) {
         let content = '';
         switch (order.statusText) {
-            case "DRAFT":
+            case StatusOrder.DRAFT:
+            case StatusOrder.WAITINGFORPAYMENT:
+            case StatusOrder.PAYMENTREJECTED:
                 content =
                     <>
                     <div className="col-12">
@@ -27,28 +30,28 @@ class Toolbar extends Component {
                     </div>
                     </>;
                 break;
-            case "REVIEW":
+            case StatusOrder.PACKAGING:
                 content =
                     <>
                         
                     </>;
                 break;
-            case "PACKAGING":
+            case StatusOrder.SHIPPING:
                 content =
                     <>
                         
                     </>;
                 break;
-            case "SHIPPING":
+            case StatusOrder.DONE:
                 content =
                     <>
                         
                     </>;
                 break;
-            case "DONE":
+            case StatusOrder.CANCELED:
                 content =
                     <>
-                        
+
                     </>;
                 break;
             default:

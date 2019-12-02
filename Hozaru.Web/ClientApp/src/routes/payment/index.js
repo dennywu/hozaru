@@ -39,13 +39,10 @@ class Payment extends Component {
     }
 
     async populateOrder() {
-        axios.get('/api/order', {
-            params: {
-                id: this.state.orderId
-            }
-        }).then(res => {
-            this.setState({ order: res.data, loading: false });
-        });
+        axios.get('/api/orders/' + this.state.orderId)
+            .then(res => {
+                this.setState({ order: res.data, loading: false });
+            });
     }
 
     handleClickUploadPayment(event) {

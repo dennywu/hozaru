@@ -72,16 +72,17 @@
 
 // Modify icon color for flaticon2 icons
 .kt-aside {
-	.kt-aside-menu {
-		> .kt-menu__nav {
-			.kt-menu__item {
-				> .kt-menu__link:not(.kt-menu__link--active):not(.kt-menu__link--here):not(.kt-menu__link--hover) {
-					[class^="flaticon2-"],
-					[class*=" flaticon2-"] {
-						color: #434d6b;
-					}
-				}
-			}
-		}
-	}
+    .kt-aside-menu {
+        > .kt-menu__nav {
+            .kt-menu__item {
+                > .kt-menu__link:not(.kt-menu__link--active):not(.kt-menu__link--here):not(.kt-menu__link--hover) {
+                    [class^="flaticon2-"],
+                    [class*=" flaticon2-"] {
+                        //color: #434d6b;
+                        color: #ecf0f7;
+                    }
+                }
+            }
+        }
+    }
 }

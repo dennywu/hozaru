@@ -84,7 +84,7 @@ class Dropzone extends Component {
                     className="Icon"
                     src={require("./baseline-cloud_upload.svg")}
                 />
-                <span className="text-center font-13px color-orange hand text-underline">Upload</span>
+                <span className="text-center font-13px color-orange hand text-underline">{this.props.text || ''}</span>
             </div>
         )
     }

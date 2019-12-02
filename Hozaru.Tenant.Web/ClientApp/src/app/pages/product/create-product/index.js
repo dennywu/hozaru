@@ -124,7 +124,7 @@ class CreateProduct extends Component {
             let imageData = this.state.imagesData.find(index => index.priority === i);
             if (imageData) {
                 content =
-                    <Col sm={2} xs={6} key={imageData.id}>
+                    <Col sm={2} xs={6} key={imageData.id} className="mb-10px">
                         <img src={imageData.data}
                             alt="Upload Gambar Produk"
                             className="margin-center"
@@ -135,7 +135,7 @@ class CreateProduct extends Component {
                     </Col>
             } else {
                 content =
-                    <Col sm={2} xs={6}>
+                    <Col sm={2} xs={6} className="mb-10px">
                         <Dropzone onFilesAdded={this.handleAddImage} data={{ priority: i }} />
                     </Col>
             }
@@ -150,9 +150,6 @@ class CreateProduct extends Component {
                             <Form.Group>
                                 <Form.Label>Nama Produk</Form.Label>
                                 <Form.Control type="text" placeholder="Nama Produk" defaultValue={this.state.name} onBlur={this.handleChangeProductName} />
-                                <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                </Form.Text>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Deskripsi Produk</Form.Label>

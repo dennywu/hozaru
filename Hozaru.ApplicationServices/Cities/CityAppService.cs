@@ -6,7 +6,6 @@ using AutoMapper;
 using Hozaru.ApplicationServices.Cities.Dtos;
 using Hozaru.Core.Domain.Repositories;
 using Hozaru.Domain;
-using Hozaru.Core.Linq;
 
 namespace Hozaru.ApplicationServices.Cities
 {

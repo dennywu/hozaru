@@ -475,20 +475,20 @@ $kt-aside-config: (
 								self: (
 									bg-color: (
 										default: transparent,
-										open: #1b1b28,
-										here: #1b1b28,
-										active: #1b1b28,
-										hover: #1b1b28
+										open: #4267b2,
+										here: #4267b2,
+										active: #4267b2,
+										hover: #4267b2
 									)
 								),
 								// link icon
 								icon: (
 									font-color:	(
-										default: #494b74,
+										default: #ecf0f7,
 										open: kt-brand-color(),
 										here: kt-brand-color(),
 										active: kt-brand-color(),
-										hover: kt-brand-color()
+										hover: #ffffff
 									),
 								),
 								// link bullet
@@ -515,7 +515,7 @@ $kt-aside-config: (
 								// link text
 								text:	(
 									font-color:	(
-										default: #a2a3b7,
+										default: #ecf0f7,
 										open: #ffffff,
 										here: #ffffff,
 										active: #ffffff,
@@ -626,10 +626,10 @@ $kt-aside-config: (
 								// submenu section
 								section: (
 									text: (
-										font-color: #4c4e6f
+										font-color: #ecf0f7
 									),
 									icon: (
-										font-color: #4c4e6f
+										font-color: #ecf0f7
 									)
 								),
 
@@ -643,7 +643,7 @@ $kt-aside-config: (
 						// root section
 						section: (
 							text: (
-								font-color: #4c4e6f
+								font-color: #e5e4e4
 							),
 							icon: (
 								font-color: #4c4e6f

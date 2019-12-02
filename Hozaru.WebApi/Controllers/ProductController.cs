@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Hozaru.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     [Authorize]
     public class ProductController : HozaruApiController

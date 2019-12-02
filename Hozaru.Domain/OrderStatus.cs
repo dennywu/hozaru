@@ -7,9 +7,11 @@ namespace Hozaru.Domain
     public enum OrderStatus : int
     {
         DRAFT = 10,
-        REVIEW = 20,
-        PACKAGING = 30,
+        WAITINGFORPAYMENT = 20,
+        PAYMENTREJECTED = 30,
+        PACKAGING = 40,
         SHIPPING = 50,
-        DONE = 60
+        DONE = 60,
+        CANCELED = 70
     }
 }

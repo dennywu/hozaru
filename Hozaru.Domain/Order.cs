@@ -25,6 +25,7 @@ namespace Hozaru.Domain
         public virtual decimal ShipingRatePerKG { get; set; }
         public virtual IList<OrderPayment> PaymentHistories { get; set; }
         public virtual OrderStatus Status { get; set; }
+        public virtual string AirWaybill { get; set; }
         public virtual OrderSummary Summary { get; set; }
 
         protected Order()
@@ -86,7 +87,12 @@ namespace Hozaru.Domain
         {
             var newPayment = new OrderPayment(this, imageFileName, bankName, accountName, accountNumber);
             this.PaymentHistories.Add(newPayment);
-            this.Status = OrderStatus.REVIEW;
+            this.Status = OrderStatus.WAITINGFORPAYMENT;
+        }
+
+        public virtual string GetCustomerAddress()
+        {
+            return string.Format("{0}, {1}, {2}", Address, Districts.Name, Districts.City.Name);
         }
 
         private void calculateSummary()
@@ -97,6 +103,22 @@ namespace Hozaru.Domain
         public virtual OrderPayment GetLastPayment()
         {
             return this.PaymentHistories.OrderByDescending(i => i.PaymentDate).FirstOrDefault();
+        }
+
+        public virtual void Approve()
+        {
+            this.Status = OrderStatus.PACKAGING;
+        }
+
+        public virtual void Reject()
+        {
+            this.Status = OrderStatus.PAYMENTREJECTED;
+        }
+
+        public virtual void UpdateAirWaybill(string airWaybill)
+        {
+            this.AirWaybill = airWaybill;
+            this.Status = OrderStatus.SHIPPING;
         }
     }
 }

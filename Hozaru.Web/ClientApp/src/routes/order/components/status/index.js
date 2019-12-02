@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import { dateTimeFormat } from '../../../../utils/DateUtil';
 import { default as NumberFormat } from 'react-number-format';
+import { StatusOrder } from "../../OrderStatus";
 
 class OrderStatus extends Component {
     static propTypes = {
@@ -13,7 +14,7 @@ class OrderStatus extends Component {
     renderStatus(order) {
         let content = '';
         switch (order.statusText) {
-            case "DRAFT":
+            case StatusOrder.DRAFT:
                 content =
                     <>
                         <div className="font-16px font-weight-500">Belum Bayar</div>
@@ -24,13 +25,25 @@ class OrderStatus extends Component {
                         <div className="font-12px">Waktu Pemesanan: {dateTimeFormat(order.transactionDate)}</div>
                     </>;
                 break;
-            case "REVIEW":
+            case StatusOrder.WAITINGFORPAYMENT:
                 content =
                     <>
                         <div className="font-16px font-weight-500">Proses Verifikasi Pembayaran</div>
                         <span>
                             Kami sudah menerima Konfirmasi Pembayaran Anda sebesar <NumberFormat value={order.summary.total} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />.
                             Kami akan menginformasikan melalui Whatsapp {order.whatsappNumber} setelah Orderan Anda terverifikasi.
+                        </span>
+                        <div className="font-12px">Waktu Pembayaran: {dateTimeFormat(order.lastPayment.paymentDate)}</div>
+                    </>;
+                break;
+            case StatusOrder.PAYMENTREJECTED:
+                content =
+                    <>
+                        <div className="font-16px font-weight-500">Pembayaran Gagal</div>
+                        <span>
+                            Kami sudah menerima Konfirmasi Pembayaran Anda.
+                            Tetapi kami tidak bisa verifikasi Pembayaran Anda dikarenakan Pembayaran Anda tidak diterima di rekening kami.
+                            Silahkan lakukan Pembayaran dan upload Bukti Pembayaran Anda.
                         </span>
                         <div className="font-12px">Waktu Pembayaran: {dateTimeFormat(order.lastPayment.paymentDate)}</div>
                     </>;

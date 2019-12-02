@@ -29,6 +29,7 @@ namespace Hozaru.WebApi.Controllers
 
         [HttpGet]
         [Route("image/{code}")]
+        [AllowAnonymous]
         public IActionResult GetImage(string code)
         {
             Response.Headers.Add("cache-control", new[] { "public,max-age=31536000" });

@@ -15,13 +15,18 @@ export default {
                 translate: "MENU.DASHBOARD",
                 bullet: "dot"
             },
-            { section: "Orderan" },
+            { section: "Pesanan" },
             {
-                title: "Orderan",
+                title: "Pesanan",
                 root: true,
                 bullet: "dot",
                 icon: "flaticon2-browser-2",
                 page: "orders"
+            }, 
+            {
+                title: "Rincian Pesanan",
+                page: "/orders/:id/detail",
+                hide: true
             },
             { section: "Produk" },
             {

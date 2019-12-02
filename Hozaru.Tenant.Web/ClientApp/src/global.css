@@ -11,13 +11,49 @@ svg.MuiSvgIcon-root {
 }
 
 .text-underline {
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
 
-.mb-10px{
-    margin-bottom:10px;
+.mb-10px {
+    margin-bottom: 10px;
+}
+
+.ml-10px {
+    margin-left: 10px !important;
+}
+
+.ml-20px {
+    margin-left: 10px;
+}
+
+.mr-10px {
+    margin-right: 10px !important;
+}
+
+.mt-5px {
+    margin-top: 5px;
+}
+
+.mt-10px {
+    margin-top: 10px;
+}
+
+.pl-10px {
+    padding-left: 10px;
+}
+
+.pl-20px {
+    padding-left: 10px;
 }
 
 .border-grey {
     border: 1px solid #a2a2a2;
+}
+
+.background-warning {
+    background: #ffc15e !important;
+}
+
+.swal2-container {
+    z-index: 2000;
 }

@@ -16,7 +16,7 @@ export class Grid extends Component {
     }
 
     async populateProducts() {
-        axios.get('/api/product')
+        axios.get('/api/products')
             .then(res => {
                 this.setState({ products: res.data, loading: false });
             });

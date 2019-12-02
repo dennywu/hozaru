@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Hozaru.Core.Application.Services.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Hozaru.Core.Linq
+namespace Hozaru
 {
     public static class QueryableExtensions
     {
@@ -26,10 +27,10 @@ namespace Hozaru.Core.Linq
         /// </summary>
         /// <param name="query">Queryable to apply paging</param>
         /// <param name="pagedResultRequest">An object implements <see cref="IPagedResultRequest"/> interface</param>
-        //public static IQueryable<T> PageBy<T>(this IQueryable<T> query, IPagedResultRequest pagedResultRequest)
-        //{
-        //    return query.PageBy(pagedResultRequest.SkipCount, pagedResultRequest.MaxResultCount);
-        //}
+        public static IQueryable<T> PageBy<T>(this IQueryable<T> query, IPagedResultRequest pagedResultRequest)
+        {
+            return query.PageBy(pagedResultRequest.SkipCount, pagedResultRequest.MaxResultCount);
+        }
 
         /// <summary>
         /// Filters a <see cref="IQueryable{T}"/> by given predicate if given condition is true.

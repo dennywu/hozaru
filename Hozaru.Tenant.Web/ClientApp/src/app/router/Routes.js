@@ -15,6 +15,7 @@ import LogoutPage from "../pages/auth/Logout";
 import { LayoutContextProvider, LayoutSplashScreen } from "../../_metronic";
 import * as routerHelpers from "../router/RouterHelpers";
 import ProductPage from "../pages/product/ProductPage";
+import OrderPage from "../pages/orders/OrderPage";
 
 export const Routes = withRouter(({ Layout, history }) => {
     const lastLocation = useLastLocation();
@@ -49,6 +50,7 @@ export const Routes = withRouter(({ Layout, history }) => {
                 ) : (
                         <Layout>
                             <ProductPage userLastLocation={userLastLocation} />
+                            <OrderPage userLastLocation={userLastLocation} />
                         </Layout>
                     )}
             </Switch>

@@ -23,7 +23,7 @@ namespace Hozaru.ApplicationServices.Products.Dtos
                 Price = product.Price,
                 Weight = product.Weight,
                 Status = product.Status,
-                FirstProductImage = Mapper.Map<ProductImageDto>(product.Images.FirstOrDefault()),
+                FirstProductImage = Mapper.Map<ProductImageDto>(product.Images.FirstOrDefault(i => i.Priority == 1)),
                 Images = Mapper.Map<IList<ProductImageDto>>(product.Images.OrderBy(i => i.Priority))
             };
         }

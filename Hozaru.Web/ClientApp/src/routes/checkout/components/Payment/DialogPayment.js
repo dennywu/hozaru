@@ -46,7 +46,7 @@ class DialogPayment extends Component {
                                     <div className="col-3 pl-30px">
                                         <img
                                             className='logobank'
-                                            alt='BCA'
+                                            alt={paymentType.bankName}
                                             srcSet={paymentType.imageUrl}
                                         />
                                     </div>

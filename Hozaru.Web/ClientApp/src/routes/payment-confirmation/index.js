@@ -56,7 +56,7 @@ class PaymentConfirmation extends Component {
     }
 
     async populateOrder() {
-        axios.get('/api/order', { params: { id: this.state.orderId } })
+        axios.get('/api/orders/' + this.state.orderId)
             .then(res => {
                 this.setState({ order: res.data, loading: false });
             });
@@ -144,7 +144,7 @@ class PaymentConfirmation extends Component {
                 },
             };
 
-            axios.post("/api/order/confirmation", formData, config)
+            axios.post("/api/orders/confirmation", formData, config)
                 .then(response => {
                     if (response.statusText === "OK") {
                         this.props.history.push('/order/' + this.state.orderId);

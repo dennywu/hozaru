@@ -1,6 +1,6 @@
 ﻿import axios from 'axios';
 
-export const API_PRODUCT_URL = "api/product";
+export const API_PRODUCT_URL = "api/products";
 
 export function getProducts() {
     return axios.get(API_PRODUCT_URL + "/all");

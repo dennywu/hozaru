@@ -2,19 +2,19 @@
     height: 100%;
     width: 95%;
     background-color: #fff;
-    border: 2px dashed #626060;
+    border: 2px dashed #4267b2;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     font-size: 12px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
     .Dropzone:hover {
-        background-color: #f8f8f8;
-        border: 2px dashed red;
+        background-color: #ecf0f7;
+        border: 2px dashed #4267b2;
     }
 
 .Highlight {
@@ -23,8 +23,9 @@
 
 .Icon {
     opacity: 0.5;
-    height: 64px;
-    width: 64px;
+    height: 32px;
+    width: 32px;
+    margin: 32px 0px;
 }
 
 .FileInput {

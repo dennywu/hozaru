@@ -33,7 +33,7 @@ class Order extends Component {
     }
 
     async populateOrder() {
-        axios.get('/api/order?id=' + this.state.orderId)
+        axios.get('/api/orders/' + this.state.orderId)
             .then(res => {
                 const order = res.data;
                 this.setState({ order: order, loading: false });

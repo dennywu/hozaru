@@ -7,12 +7,12 @@ using System.Text;
 
 namespace Hozaru.ApplicationServices.Orders.Dtos
 {
-    [AutoMapFrom(typeof(OrderPayment))]
     public class OrderPaymentDto : EntityDto<Guid>
     {
         public DateTime PaymentDate { get; set; }
         public string PaymentBankName { get; set; }
         public string PaymentAccountName { get; set; }
         public string PaymentAccountNumber { get; set; }
+        public string Url { get; set; }
     }
 }

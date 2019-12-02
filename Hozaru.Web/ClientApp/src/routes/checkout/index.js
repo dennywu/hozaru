@@ -79,7 +79,7 @@ class Checkout extends Component {
             data.items.push(shoppingCartItem);
         });
 
-        axios.post('/api/order', data)
+        axios.post('/api/orders', data)
             .then(res => {
                 this.props.resetShoppingCart();
                 this.props.history.push('/payment/' + res.data.id);

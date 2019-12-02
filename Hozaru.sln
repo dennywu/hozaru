@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.NHibernate", "Hozaru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.Persistences.NHibernate", "Hozaru.Persistences.NHibernate\Hozaru.Persistences.NHibernate.csproj", "{90D92A86-F9BA-4D0E-9561-24C0266BF827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.Tenant.Web", "Hozaru.Tenant.Web\Hozaru.Tenant.Web.csproj", "{E4E846D9-C31E-46C1-AEB4-55BD4889477E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.Tenant.Web", "Hozaru.Tenant.Web\Hozaru.Tenant.Web.csproj", "{E4E846D9-C31E-46C1-AEB4-55BD4889477E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.WebApi", "Hozaru.WebApi\Hozaru.WebApi.csproj", "{13506716-5283-47B5-A726-DCAA18BB089E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.WebApi", "Hozaru.WebApi\Hozaru.WebApi.csproj", "{13506716-5283-47B5-A726-DCAA18BB089E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentations", "Presentations", "{71FD19C3-18C2-4FA5-81C4-D0C6006CFEA2}"
 EndProject
@@ -35,9 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domains", "Domains", "{22D6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructures", "Infrastructures", "{CE6E2F3D-61CC-4916-B7EA-7EA284810A3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.Authentication", "Hozaru.Authentication\Hozaru.Authentication.csproj", "{888E727A-CD2C-4316-9556-9B9C8202F6B0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hozaru.Tenant.WebApp", "Hozaru.Tenant.WebApp\Hozaru.Tenant.WebApp.csproj", "{42854CDD-F5E0-49B8-983F-A280F1178587}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hozaru.Authentication", "Hozaru.Authentication\Hozaru.Authentication.csproj", "{888E727A-CD2C-4316-9556-9B9C8202F6B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,10 +91,6 @@ Global
 		{888E727A-CD2C-4316-9556-9B9C8202F6B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{888E727A-CD2C-4316-9556-9B9C8202F6B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{888E727A-CD2C-4316-9556-9B9C8202F6B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42854CDD-F5E0-49B8-983F-A280F1178587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42854CDD-F5E0-49B8-983F-A280F1178587}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42854CDD-F5E0-49B8-983F-A280F1178587}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42854CDD-F5E0-49B8-983F-A280F1178587}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,7 +108,6 @@ Global
 		{E4E846D9-C31E-46C1-AEB4-55BD4889477E} = {71FD19C3-18C2-4FA5-81C4-D0C6006CFEA2}
 		{13506716-5283-47B5-A726-DCAA18BB089E} = {71FD19C3-18C2-4FA5-81C4-D0C6006CFEA2}
 		{888E727A-CD2C-4316-9556-9B9C8202F6B0} = {5ECCF4EE-DC62-47DD-8390-7EBE820111D7}
-		{42854CDD-F5E0-49B8-983F-A280F1178587} = {71FD19C3-18C2-4FA5-81C4-D0C6006CFEA2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A97CEC78-1CEA-4F25-A508-3C17352E4AE6}

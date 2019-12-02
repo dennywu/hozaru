@@ -24,6 +24,7 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Orders
             Map(i => i.Note).Length(255).Not.Nullable();
             Map(i => i.ShipingRatePerKG).Not.Nullable();
             Map(i => i.Status).Not.Nullable();
+            Map(i => i.AirWaybill).Length(32).Nullable();
             HasMany(i => i.Items)
                 .Cascade.AllDeleteOrphan()
                 .Inverse()

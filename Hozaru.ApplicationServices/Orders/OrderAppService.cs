@@ -11,6 +11,9 @@ using AutoMapper;
 using Hozaru.ApplicationServices.ImagesGenerator;
 using Hozaru.Core;
 using System.Drawing.Imaging;
+using Hozaru.Core.Application.Services.Dto;
+using System.IO;
+using Hozaru.Core.Configurations;
 
 namespace Hozaru.ApplicationServices.Orders
 {
@@ -41,7 +44,7 @@ namespace Hozaru.ApplicationServices.Orders
             Validate.Found(districts, "Kecamatan", inputDto.DistrictCode);
 
             var order = Order.Create(inputDto.Name, inputDto.Email, inputDto.Whatsapp, districts, inputDto.Address, inputDto.Note);
-            foreach(var itemInputDto in inputDto.Items)
+            foreach (var itemInputDto in inputDto.Items)
             {
                 var product = _productRepository.Get(itemInputDto.ProductId);
                 Validate.Found(product, "Produk");
@@ -77,6 +80,53 @@ namespace Hozaru.ApplicationServices.Orders
             return Mapper.Map<OrderDto>(order);
         }
 
+        public PagedResultOutput<ListOrderDto> GetAll(GetListOrderInputDto inputDto)
+        {
+            IQueryable<Order> query;
+            var orders = _orderRepository.GetAll();
+            switch (inputDto.Status)
+            {
+                case OrderStatusInputDto.DRAFT:
+                    query = orders.Where(i => i.Status == OrderStatus.DRAFT);
+                    break;
+                case OrderStatusInputDto.WAITINGFORPAYMENT:
+                    query = orders.Where(i => i.Status == OrderStatus.WAITINGFORPAYMENT);
+                    break;
+                case OrderStatusInputDto.PAYMENTREJECTED:
+                    query = orders.Where(i => i.Status == OrderStatus.PAYMENTREJECTED);
+                    break;
+                case OrderStatusInputDto.PACKAGING:
+                    query = orders.Where(i => i.Status == OrderStatus.PACKAGING);
+                    break;
+                case OrderStatusInputDto.SHIPPING:
+                    query = orders.Where(i => i.Status == OrderStatus.SHIPPING);
+                    break;
+                case OrderStatusInputDto.DONE:
+                    query = orders.Where(i => i.Status == OrderStatus.DONE);
+                    break;
+                default:
+                    query = orders;
+                    break;
+            }
+
+            var result = query.OrderByDescending(i => i.TransactionDate).PageBy(inputDto).ToList();
+            var resultCount = query.Count();
+            return new PagedResultOutput<ListOrderDto>(resultCount, Mapper.Map<List<ListOrderDto>>(result));
+        }
+
+        public Stream GetReceiptImage(Guid id, Guid paymentId)
+        {
+            var order = _orderRepository.Get(id);
+            Validate.Found(order, "Orderan");
+
+            var payment = order.PaymentHistories.FirstOrDefault(i => i.Id == paymentId);
+            Validate.Found(payment, "Bukti Pembayaran");
+
+            var pathFileDirectory = AppSettingConfigurationHelper.GetSection("PathFileStorageDirectory").Value;
+            var filePath = Path.Combine(pathFileDirectory, payment.ReceiptImageUrl);
+            return File.OpenRead(filePath);
+        }
+
         public Guid Confirmation(ConfirmationOrderInputDto inputDto)
         {
             var order = _orderRepository.Get(inputDto.Id);
@@ -91,6 +141,37 @@ namespace Hozaru.ApplicationServices.Orders
             WhatsappAPI.SendMessage(order.WhatsappNumber, message);
 
             return order.Id;
+        }
+
+        public void UpdateAirWaybill(UpdateAirWaybillInputDto inputDto)
+        {
+            var order = _orderRepository.Get(inputDto.Id);
+            Validate.Found(order, "Orderan");
+
+            order.UpdateAirWaybill(inputDto.AirWaybill);
+            _orderRepository.Update(order);
+        }
+
+        public void Approve(Guid id)
+        {
+            var order = _orderRepository.Get(id);
+            Validate.Found(order, "Orderan");
+            order.Approve();
+            _orderRepository.Update(order);
+
+            var message = NotificationMessageHelper.GenerateApprovedMessage(order);
+            WhatsappAPI.SendMessage(order.WhatsappNumber, message);
+        }
+
+        public void Reject(RejectPaymentInputDto inputDto)
+        {
+            var order = _orderRepository.Get(inputDto.Id);
+            Validate.Found(order, "Orderan");
+            order.Reject();
+            _orderRepository.Update(order);
+
+            var message = NotificationMessageHelper.GenerateRejectPaymentMessage(order, inputDto.Reason);
+            WhatsappAPI.SendMessage(order.WhatsappNumber, message);
         }
     }
 }

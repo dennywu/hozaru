@@ -5,7 +5,7 @@ import './style.css';
 import { getProducts } from '../../../crud/product.crud';
 import ProductCard from './product-card';
 
-class Product extends Component {
+class ListProduct extends Component {
     constructor() {
         super();
         this.handleChangeTab = this.handleChangeTab.bind(this);
@@ -63,4 +63,4 @@ class Product extends Component {
     }
 }
 
-export default Product;
+export default ListProduct;

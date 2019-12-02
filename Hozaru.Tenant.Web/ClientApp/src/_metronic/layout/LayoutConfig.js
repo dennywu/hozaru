@@ -53,7 +53,7 @@ export const initLayoutConfig = {
       skin: "light",
       fixed: {
         desktop: false,
-        mobile: false
+        mobile: true
       }
     },
     menu: {
