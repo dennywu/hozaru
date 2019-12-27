@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Orders
 {
-    public class OrderPaymentMap : EntityMap<OrderPayment, Guid>
+    public class OrderPaymentMap : EntityMap<OrderPaymentHistory, Guid>
     {
         public OrderPaymentMap()
             : base("OrderPaymentHistories")

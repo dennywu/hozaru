@@ -390,5 +390,75 @@ namespace Hozaru
 
             return str.Left(maxLength - postfix.Length) + postfix;
         }
+
+        /// <summary>
+        /// Removes first occurrence of the given postfixes from end of the given string.
+        /// Ordering is important. If one of the postFixes is matched, others will not be tested.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        /// <param name="postFixes">one or more postfix.</param>
+        /// <returns>Modified string or the same string if it has not any of given postfixes</returns>
+        public static string RemovePostFix(this string str, params string[] postFixes)
+        {
+            if (str == null)
+            {
+                return null;
+            }
+
+            if (str == string.Empty)
+            {
+                return string.Empty;
+            }
+
+            if (postFixes.IsNullOrEmpty())
+            {
+                return str;
+            }
+
+            foreach (var postFix in postFixes)
+            {
+                if (str.EndsWith(postFix))
+                {
+                    return str.Left(str.Length - postFix.Length);
+                }
+            }
+
+            return str;
+        }
+
+        /// <summary>
+        /// Removes first occurrence of the given prefixes from beginning of the given string.
+        /// Ordering is important. If one of the preFixes is matched, others will not be tested.
+        /// </summary>
+        /// <param name="str">The string.</param>
+        /// <param name="preFixes">one or more prefix.</param>
+        /// <returns>Modified string or the same string if it has not any of given prefixes</returns>
+        public static string RemovePreFix(this string str, params string[] preFixes)
+        {
+            if (str == null)
+            {
+                return null;
+            }
+
+            if (str == string.Empty)
+            {
+                return string.Empty;
+            }
+
+            if (preFixes.IsNullOrEmpty())
+            {
+                return str;
+            }
+
+            foreach (var preFix in preFixes)
+            {
+                if (str.StartsWith(preFix))
+                {
+                    return str.Right(str.Length - preFix.Length);
+                }
+            }
+
+            return str;
+        }
     }
 }

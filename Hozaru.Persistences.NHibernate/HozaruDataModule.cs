@@ -1,21 +1,19 @@
-﻿using Hozaru.Core.Modules;
+﻿using Hozaru.Core.Configurations;
+using Hozaru.Core.Identity.NHibernate;
+using Hozaru.Core.Modules;
 using Hozaru.Domain;
 using Hozaru.NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 using Hozaru.NHibernate.Configuration;
 using NHibernate.Tool.hbm2ddl;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using Hozaru.Core.Configurations;
+using System;
+using System.Reflection;
 
 namespace Hozaru.Persistences.NHibernate
 {
     [DependsOn(
         typeof(HozaruDomainModule),
-        typeof(HozaruNHibernateModule))]
+        typeof(HozaruNHibernateModule),
+        typeof(HozaruCoreIdentityNHibernateModule))]
     public class HozaruDataModule : HozaruModule
     {
 

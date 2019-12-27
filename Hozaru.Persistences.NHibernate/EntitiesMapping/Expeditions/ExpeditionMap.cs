@@ -11,11 +11,16 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Expeditions
         public ExpeditionMap() :
             base("Expeditions")
         {
-            Map(i => i.Code).Length(12).Not.Nullable();
+            Map(i => i.RajaOngkirCode).Length(64).Not.Nullable();
+            Map(i => i.Code).Length(64).Not.Nullable();
             Map(i => i.Name).Length(64).Not.Nullable();
-            Map(i => i.CompanyCode).Length(64).Not.Nullable();
-            Map(i => i.CompanyName).Length(64).Not.Nullable();
-            Map(i => i.Disabled).Not.Nullable();
+            Map(i => i.AliasName).Length(64).Not.Nullable();
+            HasMany(i => i.Services)
+                .Cascade.AllDeleteOrphan()
+                .Inverse()
+                .KeyColumn("Expedition_Id")
+                .ForeignKeyConstraintName("fk_expeditionservice_expedition");
+
             this.MapAudited();
         }
     }

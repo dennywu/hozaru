@@ -12,6 +12,7 @@ namespace Hozaru.ApplicationServices.Products.Dtos
         [MinLength(5, ErrorMessage = "Nama Produk harus lebih dari 5 karakter.")]
         [MaxLength(128, ErrorMessage = "Nama Produk tidak boleh lebih dari 128 karakter.")]
         [Required(ErrorMessageResourceType = typeof(MessagesDataAnnotation), ErrorMessageResourceName = "Required")]
+        [RegularExpression(@"^[^\\/:*;\.\)\(]+$", ErrorMessage = "Karakter :, ., ;, *, / and '\' tidak diizinkan untuk digunakan")]
         public string Name { get; set; }
 
         [Display(Name = "Deskripsi Produk")]
@@ -25,12 +26,16 @@ namespace Hozaru.ApplicationServices.Products.Dtos
         [Range(typeof(decimal), "1", "100000000", ErrorMessage = "Berat Produk tidak boleh lebih kecil dari 1 Gram dan tidak besar dari 100.000.000 Gram")]
         public decimal Weight { get; set; }
 
+        [MaxLength(32, ErrorMessage = "SKU Produk tidak boleh lebih dari 32 karakter.")]
+        public string SKU { get; set; }
+
         [RequiredNotEmpty(ErrorMessage = "Silahkan upload Gambar Produk.")]
         public IList<ProductImageInputDto> Images { get; set; }
 
         public CreateNewProductInputDto()
         {
             Images = new List<ProductImageInputDto>();
+            SKU = string.Empty;
         }
     }
 }

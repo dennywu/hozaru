@@ -19,6 +19,7 @@ namespace Hozaru.ApplicationServices.Products.Dtos
             {
                 Id = product.Id,
                 Description = product.Description,
+                SKU = product.SKU,
                 Name = product.Name,
                 Price = product.Price,
                 Weight = product.Weight,

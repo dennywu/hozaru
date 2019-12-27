@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,7 +36,7 @@ namespace Hozaru.ApplicationServices.Orders.Dtos
                 throw new Exception("Please upload payment receipt");
 
             var imageStream = PaymentReceipt.OpenReadStream();
-            var image = Image.FromStream(imageStream);
+            var image = Image.Load(imageStream);
             return image;
         }
     }

@@ -1,7 +1,7 @@
 import { toAbsoluteUrl } from "../utils/utils";
 
 export const initLayoutConfig = {
-  demo: "demo1",
+  //demo: "demo1",
   // == Base Layout
   self: {
     layout: "fluid",
@@ -52,7 +52,7 @@ export const initLayoutConfig = {
       width: "fluid", // fixed|fluid
       skin: "light",
       fixed: {
-        desktop: false,
+        desktop: true,
         mobile: true
       }
     },

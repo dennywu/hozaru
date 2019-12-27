@@ -6,10 +6,11 @@ using System.Text;
 
 namespace Hozaru.Domain
 {
-    public class AutoNumber : AuditedEntity<Guid>
+    public class AutoNumber : AuditedEntity<Guid>, IMustHaveTenant
     {
         public virtual string Date { get; set; }
         public virtual int Number { get; set; }
+        public virtual int TenantId { get; set; }
 
         protected AutoNumber() { }
 
@@ -26,7 +27,7 @@ namespace Hozaru.Domain
 
         public virtual string GetOrderNumber()
         {
-            return string.Format("{0}{1}", Date, Number.ToString("0000"));
+            return string.Format("{0}{1}{2}", Date, TenantId.ToString("000"), Number.ToString("0000"));
         }
     }
 }

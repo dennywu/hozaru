@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 
 export default initialState => {
-    initialState = JSON.parse(window.localStorage.getItem('state')) || initialState;
+    initialState = JSON.parse(window.localStorage.getItem('hozaru:state')) || initialState;
     const middleware = [thunk];
 
     const store = createStore(
@@ -20,10 +20,12 @@ export default initialState => {
         const state = store.getState();
         const persist = {
             shoppingCart: state.shoppingCart,
-            customer: state.customer
+            customer: state.customer,
+            tenant: state.tenant,
+            apiKey: state.apiKey
         };
 
-        window.localStorage.setItem('state', JSON.stringify(persist));
+        window.localStorage.setItem('hozaru:state', JSON.stringify(persist));
     });
 
     return store;

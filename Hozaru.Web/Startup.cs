@@ -1,3 +1,4 @@
+using Hozaru.Web.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -53,6 +54,7 @@ namespace Hozaru.Web
                 app.UseExceptionHandler("/error");
             }
 
+            app.UseMiddleware<FilterTernantMiddleware>();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

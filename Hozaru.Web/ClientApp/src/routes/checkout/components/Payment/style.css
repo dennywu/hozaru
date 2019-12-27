@@ -33,11 +33,17 @@ div.bank-arrow {
 .custom-control-label::before {
     width: 20px;
     height: 20px;
-    margin-top: 7px;
+    margin-top: 4px;
 }
 
 .custom-control-label::after {
     width: 20px;
     height: 20px;
-    margin-top: 7px;
+    margin-top: 4px;
+}
+
+
+.expeditionServiceGroupHeader svg {
+    float: right;
+    transition: all 0.5s;
 }

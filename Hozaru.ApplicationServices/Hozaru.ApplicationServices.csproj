@@ -10,9 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Hozaru.Authentication\Hozaru.Authentication.csproj" />
     <ProjectReference Include="..\Hozaru.AutoMapper\Hozaru.AutoMapper.csproj" />
     <ProjectReference Include="..\Hozaru.Core\Hozaru.Core.csproj" />
     <ProjectReference Include="..\Hozaru.Domain\Hozaru.Domain.csproj" />
+    <ProjectReference Include="..\Hozaru.Identity\Hozaru.Identity.csproj" />
     <ProjectReference Include="..\Hozaru.Whatsapp\Hozaru.Whatsapp.csproj" />
   </ItemGroup>
 

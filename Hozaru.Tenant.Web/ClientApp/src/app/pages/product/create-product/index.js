@@ -10,6 +10,7 @@ class CreateProduct extends Component {
     constructor() {
         super();
         this.handleChangeProductName = this.handleChangeProductName.bind(this);
+        this.handleChangeSKU = this.handleChangeSKU.bind(this);
         this.handleChangeProductDescription = this.handleChangeProductDescription.bind(this);
         this.handleChangeProductPrice = this.handleChangeProductPrice.bind(this);
         this.handleChangeProductWeight = this.handleChangeProductWeight.bind(this);
@@ -18,6 +19,7 @@ class CreateProduct extends Component {
         this.handleDeleteImage = this.handleDeleteImage.bind(this);
         this.state = {
             name: '',
+            sku: '',
             description: '',
             price: '',
             weight: '',
@@ -32,6 +34,7 @@ class CreateProduct extends Component {
         this.setState({ buttonState: 'loading' });
         const formData = new FormData();
         formData.append('name', this.state.name);
+        formData.append('sku', this.state.sku || "");
         formData.append('description', this.state.description);
         formData.append('weight', this.state.weight || 0);
         formData.append('price', this.state.price || 0);
@@ -60,6 +63,11 @@ class CreateProduct extends Component {
     handleChangeProductName(ev) {
         let productName = ev.target.value;
         this.setState({ name: productName });
+    }
+
+    handleChangeSKU(ev) {
+        let sku = ev.target.value;
+        this.setState({ sku: sku });
     }
 
     handleChangeProductDescription(ev) {
@@ -150,6 +158,13 @@ class CreateProduct extends Component {
                             <Form.Group>
                                 <Form.Label>Nama Produk</Form.Label>
                                 <Form.Control type="text" placeholder="Nama Produk" defaultValue={this.state.name} onBlur={this.handleChangeProductName} />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>SKU Produk</Form.Label>
+                                <Form.Control type="text" placeholder="SKU atau Kode Produk" defaultValue={this.state.sku} onBlur={this.handleChangeSKU} />
+                                <Form.Text className="text-muted">
+                                    Ini boleh tidak diisi. Anda bisa masukkan SKU, Kode produk atau Barcode
+                                </Form.Text>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Deskripsi Produk</Form.Label>

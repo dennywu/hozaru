@@ -5,16 +5,8 @@ using System.Text;
 namespace Hozaru.Core.Domain.Entities.Auditing
 {
     [Serializable]
-    public abstract class AuditedEntity<TPrimaryKey> : CreationAuditedEntity<TPrimaryKey>, IAudited
+    public abstract class AuditedEntity : AuditedEntity<int>
     {
-        /// <summary>
-        /// Last modification date of this entity.
-        /// </summary>
-        public virtual DateTime? LastModificationTime { get; set; }
 
-        /// <summary>
-        /// Last modifier user of this entity.
-        /// </summary>
-        public virtual long? LastModifierUserId { get; set; }
     }
 }

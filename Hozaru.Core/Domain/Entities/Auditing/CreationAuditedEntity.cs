@@ -6,24 +6,8 @@ using System.Text;
 namespace Hozaru.Core.Domain.Entities.Auditing
 {
     [Serializable]
-    public abstract class CreationAuditedEntity<TPrimaryKey> : Entity<TPrimaryKey>, ICreationAudited
+    public abstract class CreationAuditedEntity : CreationAuditedEntity<int>
     {
-        /// <summary>
-        /// Creation time of this entity.
-        /// </summary>
-        public virtual DateTime CreationTime { get; set; }
 
-        /// <summary>
-        /// Creator of this entity.
-        /// </summary>
-        public virtual long? CreatorUserId { get; set; }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        protected CreationAuditedEntity()
-        {
-            CreationTime = Clock.Now;
-        }
     }
 }

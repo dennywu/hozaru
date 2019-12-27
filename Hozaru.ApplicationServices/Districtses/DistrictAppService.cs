@@ -15,30 +15,44 @@ namespace Hozaru.ApplicationServices.Districtses
         private IRepository<City> _cityRepository;
         private IRepository<Districts> _districtRepository;
 
-        public DistrictAppService(IRepository<City> cityRepository,IRepository<Districts> districtRepository)
+        public DistrictAppService(IRepository<City> cityRepository, IRepository<Districts> districtRepository)
         {
             _cityRepository = cityRepository;
             _districtRepository = districtRepository;
         }
 
-        public IList<DistrictDto> GetAll(string cityCode)
+        public void Create(CreateDistrictInputDto inputDto)
         {
-            if (!_cityRepository.Exist(i => i.Code == cityCode))
+            var city = _cityRepository.FirstOrDefault(i => i.IdRajaOngkir == inputDto.IdCityRajaOngkir);
+            Validate.Found(city, "Kota");
+
+            var district = new Districts(inputDto.IdRajaOngkir, city, inputDto.Code, inputDto.Name);
+            _districtRepository.Insert(district);
+        }
+
+        public bool Exist(int idRajaOngkir)
+        {
+            return _districtRepository.Exist(i => i.IdRajaOngkir == idRajaOngkir);
+        }
+
+        public IList<DistrictDto> GetAll(Guid cityId)
+        {
+            if (!_cityRepository.Exist(i => i.Id == cityId))
                 return new List<DistrictDto>();
 
-            var city = _cityRepository.FirstOrDefault(i => i.Code == cityCode);
+            var city = _cityRepository.FirstOrDefault(i => i.Id == cityId);
             var districtses = _districtRepository.GetAll()
                 .Where(i => i.City.Code == city.Code)
                 .ToList();
             return Mapper.Map<IList<Districts>, IList<DistrictDto>>(districtses);
         }
 
-        public IList<DistrictDto> Search(string cityCode, string searchKey)
+        public IList<DistrictDto> Search(Guid cityId, string searchKey)
         {
-            if (!_cityRepository.Exist(i => i.Code == cityCode))
+            if (!_cityRepository.Exist(i => i.Id == cityId))
                 return new List<DistrictDto>();
 
-            var city = _cityRepository.FirstOrDefault(i => i.Code == cityCode);
+            var city = _cityRepository.FirstOrDefault(i => i.Id == cityId);
 
             var districtses = _districtRepository.GetAll()
                 .Where(i => i.City.Code == city.Code && i.Name.ToLower().Contains(searchKey.ToLower()))

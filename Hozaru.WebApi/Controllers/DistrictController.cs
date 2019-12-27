@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hozaru.ApplicationServices.Districtses;
 using Hozaru.ApplicationServices.Districtses.Dtos;
+using Hozaru.Authentication;
 using Hozaru.Core.Dependency;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,10 +24,11 @@ namespace Hozaru.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<DistrictDto> Get(string cityCode, string searchKey)
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AllScheme)]
+        public IEnumerable<DistrictDto> Get(Guid cityId, string searchKey)
         {
             searchKey = searchKey.IsNullOrWhiteSpace() ? string.Empty : searchKey;
-            var districtses = _districtAppService.Search(cityCode, searchKey);
+            var districtses = _districtAppService.Search(cityId, searchKey);
             return districtses;
         }
     }

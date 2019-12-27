@@ -6,12 +6,13 @@ using System.Text;
 
 namespace Hozaru.Domain
 {
-    public class Customer : AuditedEntity<Guid>
+    public class Customer : AuditedEntity<Guid>, IMustHaveTenant
     {
         public virtual string Name { get; set; }
         public virtual string Whatsapp { get; set; }
         public virtual string Email { get; set; }
         public virtual Districts Districts { get; set; }
+        public virtual int TenantId { get; set; }
 
         protected Customer() { }
 

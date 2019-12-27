@@ -74,7 +74,7 @@ class Receiver extends Component {
         var res = await axios.get('/api/city?searchKey=' + searchKey);
         var result = [];
         res.data.forEach(item => {
-            result.push({ label: item.name, value: item.code });
+            result.push({ label: item.name, value: item.id });
         });
         return result;
     }
@@ -85,10 +85,10 @@ class Receiver extends Component {
             return;
         }
 
-        var res = await axios.get('/api/district?cityCode=' + this.props.customer.city.value + '&searchKey=' + searchKey)
+        var res = await axios.get('/api/district?cityId=' + this.props.customer.city.value + '&searchKey=' + searchKey)
         var result = [];
         res.data.forEach(item => {
-            result.push({ label: item.name, value: item.code });
+            result.push({ label: item.name, value: item.id });
         });
         return result;
     }

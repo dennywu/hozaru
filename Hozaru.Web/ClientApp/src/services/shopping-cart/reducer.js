@@ -1,11 +1,11 @@
-﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_TYPE, RESET_SHOPPING_CART } from './actionTypes';
+﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_METHOD, RESET_SHOPPING_CART, UPDATE_PRODUCT } from './actionTypes';
 
 const initialState = {
     items: [],
     note: '',
-    paymentType: '',
+    paymentMethod: '',
     freight: {
-        expeditionCode: '',
+        expeditionServiceId: '',
         rate: '',
         totalWeight: ''
     },
@@ -13,7 +13,7 @@ const initialState = {
         totalQuantity: 0,
         subTotal: 0,
         shippingRate: 0,
-        expeditionCode: '',
+        expeditionServiceId: '',
         voucher: 0,
         totalSummary: 0
     }
@@ -78,6 +78,28 @@ export default function (state = initialState, action) {
                 ...state,
                 productToAdd: Object.assign({}, action.payload)
             };
+        case UPDATE_PRODUCT:
+            let shoppingCartUpdateProduct = state;
+            let productUpdated = action.payload;
+
+            if (productUpdated.status === 20) { // 20 is product archieved
+                const index = shoppingCartUpdateProduct.items.findIndex(item => item.product.id === productUpdated.id);
+                if (index >= 0) {
+                    shoppingCartUpdateProduct.items.splice(index, 1);
+                }
+            } else {
+                shoppingCartUpdateProduct.items.forEach(item => {
+                    if (item.product.id === productUpdated.id) {
+                        item.product = productUpdated;
+                        item.total = productUpdated.price * item.quantity;
+                    }
+                });
+            }
+
+            shoppingCartUpdateProduct.summary = calculateSummary(state);
+            return {
+                ...state
+            };
         case REMOVE_PRODUCT:
             let shoppingCartRemoveProduct = state;
             let productRemoveProduct = action.payload;
@@ -112,7 +134,7 @@ export default function (state = initialState, action) {
                 quantityToChange: Object.assign({}, { productId: productChangeQty.id, quantity: quantityChangeQty })
             };
         case CHANGE_FREIGHT:
-            state.freight = { expeditionCode: action.expeditionCode, rate: action.shippingRate, totalWeight: action.totalWeight };
+            state.freight = { expeditionServiceId: action.expeditionServiceId, rate: action.shippingRate, totalWeight: action.totalWeight };
             state.summary = calculateSummary(state);
 
             return {
@@ -126,8 +148,8 @@ export default function (state = initialState, action) {
                 ...state
             };
 
-        case CHANGE_PAYMENT_TYPE:
-            state.paymentType = action.paymentType;
+        case CHANGE_PAYMENT_METHOD:
+            state.paymentMethod = action.paymentMethod;
             return {
                 ...state
             };

@@ -4,17 +4,8 @@ using System.Text;
 
 namespace Hozaru.Core.Domain.Entities
 {
-    public interface IEntity<TPrimaryKey>
+    public interface IEntity : IEntity<Guid>
     {
-        /// <summary>
-        /// Unique identifier for this entity.
-        /// </summary>
-        TPrimaryKey Id { get; set; }
 
-        /// <summary>
-        /// Checks if this entity is transient (not persisted to database and it has not an <see cref="Id"/>).
-        /// </summary>
-        /// <returns>True, if this entity is transient</returns>
-        bool IsTransient();
     }
 }

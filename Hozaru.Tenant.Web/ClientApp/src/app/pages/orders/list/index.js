@@ -53,7 +53,8 @@ class ListOrder extends Component {
             case 4: status = StatusOrder.PACKAGING; break;
             case 5: status = StatusOrder.SHIPPING; break;
             case 6: status = StatusOrder.DONE; break;
-            case 6: status = StatusOrder.CANCELED; break;
+            case 7: status = StatusOrder.VOID; break;
+            case 8: status = StatusOrder.RETURNED; break;
         }
         this.setState({ status: status, page: 0 }, () => {
             this.syncOrders();

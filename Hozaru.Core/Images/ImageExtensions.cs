@@ -1,29 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 using System.Text;
 using System.Linq;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.Formats.Gif;
 
 namespace Hozaru.Core.Images
 {
     public static class ImageExtensions
     {
-        public static string ToStringImageFormat(this ImageFormat format)
+        public static string GetFileExtension(this IImageFormat imageFormat)
         {
-            try
-            {
-                return ImageCodecInfo.GetImageEncoders()
-                        .First(x => x.FormatID == format.Guid)
-                        .FilenameExtension
-                        .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                        .First()
-                        .Trim('*')
-                        .ToLower();
-            }
-            catch (Exception)
-            {
-                return "." + format.ToString().ToLower();
-            }
+            if (imageFormat is JpegFormat)
+                return ".jpg";
+            if (imageFormat is PngFormat)
+                return ".png";
+            if (imageFormat is GifFormat)
+                return ".gif";
+
+            throw new HozaruException("Invalid file format");
+        }
+
+        public static IImageEncoder GetEncoder(this IImageFormat imageFormat)
+        {
+            if (imageFormat is JpegFormat)
+                return new JpegEncoder { Quality = 100 };
+            if (imageFormat is PngFormat)
+                return new PngEncoder();
+            if (imageFormat is GifFormat)
+                return new GifEncoder();
+
+            throw new HozaruException("Invalid file format");
         }
     }
 }

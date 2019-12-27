@@ -66,7 +66,7 @@ class RejectPaymentDialog extends Component {
                         margin="normal"
                         helperText="Masukan pesan mengapa Pembayaran ini Anda tolak"
                         variant="outlined"
-                        value={this.state.reason}
+                        defaultValue={this.state.reason}
                         onBlur={this.handleChangeReason}
                     />
                 </DialogContent>

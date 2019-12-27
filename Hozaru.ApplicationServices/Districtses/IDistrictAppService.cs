@@ -8,7 +8,9 @@ namespace Hozaru.ApplicationServices.Districtses
 {
     public interface IDistrictAppService : IApplicationService
     {
-        IList<DistrictDto> GetAll(string cityCode);
-        IList<DistrictDto> Search(string cityCode, string searchKey);
+        IList<DistrictDto> GetAll(Guid cityId);
+        IList<DistrictDto> Search(Guid cityId, string searchKey);
+        bool Exist(int idRajaOngkir);
+        void Create(CreateDistrictInputDto inputDto);
     }
 }

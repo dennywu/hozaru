@@ -16,7 +16,8 @@ class ShoppingCartItemOrder extends Component {
                     <img style={{ height: "60px" }} srcSet={orderItem.product.firstProductImage.url} />
                 </TableCell>
                 <TableCell style={{ paddingRight: "0px" }}>
-                    <span>{orderItem.product.name}</span>
+                    <div>{orderItem.product.name}</div>
+                    <div>SKU: {orderItem.product.sku || "-"}</div>
                 </TableCell>
                 <TableCell align="right">
                     <NumberFormat value={orderItem.price} displayType={'text'} thousandSeparator={true} prefix={''} />

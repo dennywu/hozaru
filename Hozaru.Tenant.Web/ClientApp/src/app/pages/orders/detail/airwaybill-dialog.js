@@ -18,7 +18,7 @@ class AirWaybillDialog extends Component {
 
     componentDidMount() {
         const { order } = this.props;
-        this.setState({ airWaybill: order.airWaybill });
+        this.setState({ airWaybill: order.shipment.airWayBill });
     }
 
     static propTypes = {
@@ -57,7 +57,7 @@ class AirWaybillDialog extends Component {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">Nomor Resi Pengiriman</DialogTitle>
+                <DialogTitle>Nomor Resi Pengiriman</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         Masukan nomor resi atau Air Waybill pengiriman Anda.

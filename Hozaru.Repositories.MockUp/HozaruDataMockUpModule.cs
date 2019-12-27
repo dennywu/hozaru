@@ -18,7 +18,7 @@ namespace Hozaru.Repositories.MockUp
             IocManager.Register<IRepository<City>, CityMockUpRepository>(Core.Dependency.DependencyLifeStyle.Singleton);
             IocManager.Register<IRepository<Districts>, DistrictMockUpRepository>(Core.Dependency.DependencyLifeStyle.Singleton);
             IocManager.Register<IRepository<Freight>, FreightMockUpRepository>(Core.Dependency.DependencyLifeStyle.Singleton);
-            IocManager.Register<IRepository<PaymentType>, PaymentTypeMockUpRepository>(Core.Dependency.DependencyLifeStyle.Singleton);
+            IocManager.Register<IRepository<PaymentMethod>, PaymentMethodMockUpRepository>(Core.Dependency.DependencyLifeStyle.Singleton);
             IocManager.Register<IRepository<Order>, OrderMockUpRepository>(Core.Dependency.DependencyLifeStyle.Singleton);
             IocManager.Register<IAutoNumberRepository, AutoNumberMockUpRepository>(Core.Dependency.DependencyLifeStyle.Singleton);
         }

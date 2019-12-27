@@ -6,7 +6,8 @@
     PACKAGING: "PACKAGING",
     SHIPPING: "SHIPPING",
     DONE: "DONE",
-    CANCELED: "CANCELED"
+    VOID: "VOID",
+    RETURNED: "RETURNED"
 };
 
 const StatusData =
@@ -16,7 +17,8 @@ const StatusData =
     { code: "PACKAGING", name: "Perlu Dikirim" },
     { code: "SHIPPING", name: "Sedang Dikirim" },
     { code: "DONE", name: "Selesai" },
-    { code: "CANCELED", name: "Pembatalan" }];
+    { code: "VOID", name: "Dibatalkan" },
+    { code: "RETURNED", name: "Dikembalikan" }];
 
 export const getStatusIndonesia = function (statusOrder) {
     return StatusData.find(i => i.code == statusOrder).name;

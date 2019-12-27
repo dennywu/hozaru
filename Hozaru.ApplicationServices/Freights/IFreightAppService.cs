@@ -9,5 +9,6 @@ namespace Hozaru.ApplicationServices.Freights
     public interface IFreightAppService : IApplicationService
     {
         IList<FreightDto> GetFreight(GetFreightInputDto inputDto);
+        FreightDto GetFreightByExpeditionService(GetFreightByServiceInputDto inputDto);
     }
 }

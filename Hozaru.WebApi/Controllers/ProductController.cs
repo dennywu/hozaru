@@ -1,11 +1,13 @@
 ﻿using Hozaru.ApplicationServices.Products;
 using Hozaru.ApplicationServices.Products.Dtos;
 using Hozaru.Authentication;
+using Hozaru.Core.Application.Services.Dto;
 using Hozaru.Core.Dependency;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Hozaru.WebApi.Controllers
 {
@@ -52,9 +54,10 @@ namespace Hozaru.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductDto> Get()
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AllScheme)]
+        public PagedResultOutput<ProductDto> Get([FromQuery] GetProductPagedInputDto inputDto)
         {
-            var products = _productAppService.GetAll(ProductStatusInputDto.ACTIVE);
+            var products = _productAppService.GetProductActive(inputDto);
             return products;
         }
 
@@ -76,6 +79,7 @@ namespace Hozaru.WebApi.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AllScheme)]
         public ProductDto GetById(Guid id)
         {
             var product = _productAppService.Get(id);

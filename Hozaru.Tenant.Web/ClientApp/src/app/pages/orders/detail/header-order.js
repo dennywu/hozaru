@@ -24,7 +24,7 @@ class HeaderOrder extends Component {
                             <h6>Nomor Pesanan</h6>
                             <div className="">{order.orderNumber}</div>
                             <div className="mt-5px">
-                                <Button variant="outlined" color="secondary" onClick={() => { window.open(order.whatsappUrl) }}>Hubungi Pembeli</Button>
+                                <Button variant="outlined" color="secondary" onClick={() => { window.open(order.customer.whatsappUrl) }}>Hubungi Pembeli</Button>
                             </div>
                         </Col>
                         <Col xs={1} sm={1} className="text-right">
@@ -32,8 +32,8 @@ class HeaderOrder extends Component {
                         </Col>
                         <Col xs={11} sm={5}>
                             <h6>Alamat Pengiriman</h6>
-                            <div className="">{order.customerName}, {order.whatsappNumber}</div>
-                            <div className="">{order.address}, {order.districts.name}, {order.districts.city.name}</div>
+                            <div className="">{order.customer.customerName}, {order.customer.whatsappNumber}</div>
+                            <div className="">{order.customer.address}</div>
                         </Col>
                     </Row>
                 </PortletBody>

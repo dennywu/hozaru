@@ -1,7 +1,9 @@
 ﻿using Hozaru.ApplicationServices.Orders;
 using Hozaru.ApplicationServices.Orders.Dtos;
+using Hozaru.Authentication;
 using Hozaru.Core.Application.Services.Dto;
 using Hozaru.Core.Dependency;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,10 +24,29 @@ namespace Hozaru.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AllScheme)]
         public OrderDto CreateOrder(CreateOrderInputDto inputDto)
         {
             var order = _orderAppService.CreateOrder(inputDto);
             return order;
+        }
+
+        [HttpGet]
+        [Route("{id:guid}")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AllScheme)]
+        public OrderDto Get(Guid id)
+        {
+            var order = _orderAppService.Get(id);
+            return order;
+        }
+
+        [HttpGet]
+        [Route("{id:guid}/tracking")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AllScheme)]
+        public DetailOrderShipmentTrackingDto GetTrackingInformation(Guid id)
+        {
+            var result = _orderAppService.GetShipmentTracking(id);
+            return result;
         }
 
         [HttpGet]
@@ -34,14 +55,6 @@ namespace Hozaru.WebApi.Controllers
         {
             var result = _orderAppService.GetAll(inputDto);
             return result;
-        }
-
-        [HttpGet]
-        [Route("{id:guid}")]
-        public OrderDto Get(Guid id)
-        {
-            var order = _orderAppService.Get(id);
-            return order;
         }
 
 
@@ -58,9 +71,10 @@ namespace Hozaru.WebApi.Controllers
 
         [HttpPost]
         [Route("confirmation")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AllScheme)]
         public Guid Confirmation([FromForm]ConfirmationOrderInputDto inputDto)
         {
-            return _orderAppService.Confirmation(inputDto);
+            return _orderAppService.AddPayment(inputDto);
         }
 
         [HttpPut]
@@ -76,6 +90,22 @@ namespace Hozaru.WebApi.Controllers
         public IActionResult Reject(RejectPaymentInputDto inputDto)
         {
             _orderAppService.Reject(inputDto);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("cancel")]
+        public IActionResult Cancel(CancelPaymentInputDto inputDto)
+        {
+            _orderAppService.Cancel(inputDto);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("complete/{id:guid}")]
+        public IActionResult CompleteOrder(Guid id)
+        {
+            _orderAppService.CompleteOrder(id);
             return Ok();
         }
 

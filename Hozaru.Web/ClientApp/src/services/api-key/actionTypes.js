@@ -1,0 +1,1 @@
+﻿export const STORE_API_KEY = 'STORE_API_KEY';

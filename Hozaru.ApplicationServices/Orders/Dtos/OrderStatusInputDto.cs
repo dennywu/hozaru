@@ -12,6 +12,8 @@ namespace Hozaru.ApplicationServices.Orders.Dtos
         PAYMENTREJECTED,
         PACKAGING,
         SHIPPING,
-        DONE
+        DONE,
+        VOID,
+        RETURNED
     }
 }

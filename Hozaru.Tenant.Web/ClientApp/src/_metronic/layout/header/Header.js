@@ -41,7 +41,7 @@ class Header extends React.Component {
                 {/* <!-- begin:: Header Topbar --> */}
                 {/* <!-- empty div to fix topbar to stay on the right when menu-horizontal is hidden --> */}
                 {!menuHeaderDisplay && <div />}
-                {/*<Topbar htmlClassService={htmlClassService} />*/}
+                {<Topbar htmlClassService={htmlClassService} />}
                 {/* <!-- end:: Header Topbar --> */}
             </div>
         );

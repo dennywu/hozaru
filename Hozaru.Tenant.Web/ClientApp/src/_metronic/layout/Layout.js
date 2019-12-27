@@ -62,7 +62,7 @@ function Layout({
                         id="kt_wrapper"
                     >
                         {/* <!-- begin:: Header READY --> */}
-                        {/*<Header htmlClassService={htmlClassService} />*/}
+                        {<Header htmlClassService={htmlClassService} />}
                         {/* <!-- end:: Header --> */}
 
                         {/* <!-- begin:: Content --> */}

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Hozaru.ApplicationServices.Districtses.Dtos;
 using Hozaru.ApplicationServices.Expeditions.Dtos;
-using Hozaru.ApplicationServices.PaymentTypes.Dtos;
+using Hozaru.ApplicationServices.PaymentMethods.Dtos;
 using Hozaru.Domain;
 using System;
 using System.Linq;
@@ -24,15 +24,15 @@ namespace Hozaru.ApplicationServices.Orders.Dtos
             {
                 Id = order.Id,
                 OrderNumber = order.OrderNumber,
-                CustomerName = order.CustomerName,
-                Address = order.Address,
+                CustomerName = order.Customer.CustomerName,
+                Address = order.Customer.GetCustomerFullAddress(),
                 TransactionDate = order.TransactionDate,
                 Status = order.Status,
                 StatusText = ((OrderStatus)order.Status).ToString(),
-                City = order.Districts.City.Name,
-                ExpeditionFullName = order.Expedition.FullName,
-                PaymentType = order.PaymentType.Name,
-                TotalSummary = order.Summary.Total
+                City = order.Customer.Districts.City.Name,
+                ExpeditionServiceFullName = order.Shipment.ExpeditionService.FullName,
+                PaymentMethod = order.Payment.PaymentMethod.Bank.Name,
+                TotalSummary = order.Summary.NetTotal
             };
         }
     }

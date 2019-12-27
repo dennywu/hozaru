@@ -27,15 +27,21 @@ namespace Hozaru.WebApi
             }
             catch (Exception ex)
             {
-                var logger = IocManager.Instance.Resolve<ILogger>();
-                logger.Error(ex.GetBaseException().Message, ex);
-                //_logger.LogError($"Something went wrong: {ex}");
+                if(!(ex is HozaruException))
+                {
+                    var logger = IocManager.Instance.Resolve<ILogger>();
+                    logger.Error(ex.GetBaseException().Message, ex);
+                }
+
                 await HandleExceptionAsync(httpContext, ex);
             }
         }
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
+            if (context.Response.HasStarted)
+                return Task.FromResult(0);
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
@@ -48,7 +54,7 @@ namespace Hozaru.WebApi
             {
                 IsError = true,
                 StatusCode = context.Response.StatusCode,
-                Message = errorMessage
+                Message = exception.Message
             }.ToString());
         }
     }

@@ -1,5 +1,8 @@
-﻿using FluentNHibernate.Mapping;
+﻿using FluentNHibernate;
+using FluentNHibernate.Mapping;
 using Hozaru.Core.Domain.Entities;
+using Hozaru.Core.Domain.Entities.Auditing;
+using Hozaru.NHibernate.Filters;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,20 +24,20 @@ namespace Hozaru.NHibernate.EntityMappings
 
             Table(tableName);
             Id(x => x.Id);
-            //if (typeof(IMustHaveTenant).IsAssignableFrom(typeof(TEntity)))
-            //    Map(Reveal.Member<TEntity>("TenantId")).Column("TenantId").Not.Nullable().Index("tenantid");
-            //if (typeof(IMayHaveTenant).IsAssignableFrom(typeof(TEntity)))
-            //    Map(Reveal.Member<TEntity>("TenantId")).Column("TenantId").Nullable();
+            if (typeof(IMustHaveTenant).IsAssignableFrom(typeof(TEntity)))
+                Map(Reveal.Member<TEntity>("TenantId")).Column("TenantId").Not.Nullable().Index(string.Format("tenantid_{0}", tableName));
+            if (typeof(IMayHaveTenant).IsAssignableFrom(typeof(TEntity)))
+                Map(Reveal.Member<TEntity>("TenantId")).Column("TenantId").Nullable();
 
             //if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
             //{
             //    Where("IsDeleted = 0"); //TODO: Test with other DBMS then SQL Server
             //}
 
-            //if (typeof(IMustHaveTenant).IsAssignableFrom(typeof(TEntity)))
-            //    ApplyFilter<MustHaveTenantFilter>();
-            //if (typeof(IMayHaveTenant).IsAssignableFrom(typeof(TEntity)))
-            //    ApplyFilter<MayHaveTenantFilter>();
+            if (typeof(IMustHaveTenant).IsAssignableFrom(typeof(TEntity)))
+                ApplyFilter<MustHaveTenantFilter>();
+            if (typeof(IMayHaveTenant).IsAssignableFrom(typeof(TEntity)))
+                ApplyFilter<MayHaveTenantFilter>();
         }
     }
 }

@@ -9,13 +9,15 @@ using System.Reflection;
 namespace Hozaru.WebApi
 {
     [DependsOn(
-         typeof(HozaruDataModule),
-         typeof(HozaruApplicationModule),
+        typeof(HozaruDataModule),
+        typeof(HozaruApplicationModule),
+        typeof(HozaruAuthenticationModule),
         typeof(HozaruAuthenticationModule))]
     public class HozaruWebApiModule : HozaruModule
     {
         public override void PreInitialize()
         {
+            Configuration.MultiTenancy.IsEnabled = true;
             base.PreInitialize();
         }
 

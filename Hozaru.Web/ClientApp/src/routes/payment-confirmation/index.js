@@ -20,18 +20,7 @@ class PaymentConfirmation extends Component {
         this.state = {
             loading: true,
             buttonState: '',
-            order: {
-                paymentType: {
-                    code: '',
-                    bankName: '',
-                    accountNumber: '',
-                    accountName: '',
-                    bankBranch: ''
-                },
-                summary: {
-                    total: 0
-                }
-            },
+            order: {},
             orderId: '',
             receiptImage: '',
             fileReceiptImage: null,
@@ -123,11 +112,14 @@ class PaymentConfirmation extends Component {
             },
             buttonState: 'loading'
         }, () => {
-            if (this.state.errors.accountName !== '' && this.state.errors.accountNumber !== '' && this.state.errors.bankName !== '')
+            if (this.state.errors.accountName !== '' && this.state.errors.accountNumber !== '' && this.state.errors.bankName !== '') {
+                this.setState({ buttonState: '' });
                 return;
+            }
 
             if (this.state.receiptImage === '') {
                 alert('Silahkan Upload Bukti Transfer');
+                this.setState({ buttonState: '' });
                 return;
             }
 
@@ -195,7 +187,7 @@ class PaymentConfirmation extends Component {
                         <div className='col-5'>Total Pembayaran</div>
                         <div className='col-7 text-right'>
                             <span className="color-orange font-weight-bold">
-                                <NumberFormat value={this.state.order.summary.total} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                                <NumberFormat value={this.state.order.summary.netTotal} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
                             </span>
                         </div>
                     </div>
@@ -207,14 +199,14 @@ class PaymentConfirmation extends Component {
                             <div className="row pl-1">
                                 <div className="col-1">
                                     <img className='logobank'
-                                        alt={this.state.order.paymentType.bankName}
-                                        srcSet={this.state.order.paymentType.imageUrl} />
+                                        alt={this.state.order.payment.paymentMethod.bankName}
+                                        srcSet={this.state.order.payment.paymentMethod.imageUrl} />
                                 </div>
                                 <div className="col-9 pl-6">
-                                    <div className="font-weight-bold">{this.state.order.paymentType.bankName}</div>
-                                    <div>No. Rekening: <span className="font-weight-bold">{this.state.order.paymentType.accountNumber}</span></div>
-                                    <div>Nama Rekening: <span className="font-weight-bold">{this.state.order.paymentType.accountName}</span></div>
-                                    <div>Cabang: <span className="font-weight-bold">{this.state.order.paymentType.bankBranch}</span></div>
+                                    <div className="font-weight-bold">{this.state.order.payment.paymentMethod.bankName}</div>
+                                    <div>No. Rekening: <span className="font-weight-bold">{this.state.order.payment.paymentMethod.accountNumber}</span></div>
+                                    <div>Nama Rekening: <span className="font-weight-bold">{this.state.order.payment.paymentMethod.accountName}</span></div>
+                                    <div>Cabang: <span className="font-weight-bold">{this.state.order.payment.paymentMethod.bankBranch}</span></div>
                                 </div>
                             </div>
                         </div>

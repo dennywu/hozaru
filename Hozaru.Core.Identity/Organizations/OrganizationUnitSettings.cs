@@ -1,0 +1,66 @@
+﻿using Hozaru.Core.Configurations;
+using Hozaru.Core.Dependency;
+using Hozaru.Core.Identity.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Hozaru.Core.Identity.Organizations
+{
+    /// <summary>
+    /// Implements <see cref="IOrganizationUnitSettings"/> to get settings from <see cref="ISettingManager"/>.
+    /// </summary>
+    public class OrganizationUnitSettings : IOrganizationUnitSettings, ITransientDependency
+    {
+        /// <summary>
+        /// Maximum allowed organization unit membership count for a user.
+        /// Returns value for current tenant.
+        /// </summary>
+        public int MaxUserMembershipCount
+        {
+            get
+            {
+                return _settingManager.GetSettingValue<int>(HozaruIdentitySettingNames.OrganizationUnits.MaxUserMembershipCount);
+            }
+        }
+
+        private readonly ISettingManager _settingManager;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrganizationUnitSettings"/> class.
+        /// </summary>
+        public OrganizationUnitSettings(ISettingManager settingManager)
+        {
+            _settingManager = settingManager;
+        }
+
+        /// <summary>
+        /// Maximum allowed organization unit membership count for a user.
+        /// Returns value for given tenant.
+        /// </summary>
+        public async Task<int> GetMaxUserMembershipCountAsync(int? tenantId)
+        {
+            if (tenantId.HasValue)
+            {
+                return await _settingManager.GetSettingValueForTenantAsync<int>(HozaruIdentitySettingNames.OrganizationUnits.MaxUserMembershipCount, tenantId.Value);
+            }
+            else
+            {
+                return await _settingManager.GetSettingValueForApplicationAsync<int>(HozaruIdentitySettingNames.OrganizationUnits.MaxUserMembershipCount);
+            }
+        }
+
+        public async Task SetMaxUserMembershipCountAsync(int? tenantId, int value)
+        {
+            if (tenantId.HasValue)
+            {
+                await _settingManager.ChangeSettingForTenantAsync(tenantId.Value, HozaruIdentitySettingNames.OrganizationUnits.MaxUserMembershipCount, value.ToString());
+            }
+            else
+            {
+                await _settingManager.ChangeSettingForApplicationAsync(HozaruIdentitySettingNames.OrganizationUnits.MaxUserMembershipCount, value.ToString());
+            }
+        }
+    }
+}

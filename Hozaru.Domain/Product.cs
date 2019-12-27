@@ -6,14 +6,16 @@ using System.Text;
 
 namespace Hozaru.Domain
 {
-    public class Product : AuditedEntity<Guid>
+    public class Product : AuditedEntity<Guid>, IMustHaveTenant
     {
         public virtual string Name { get; set; }
+        public virtual string SKU { get; set; }
         public virtual string Description { get; set; }
         public virtual decimal Price { get; set; }
         public virtual decimal Weight { get; set; }
         public virtual ProductStatus Status { get; set; }
         public virtual IList<ProductImage> Images { get; set; }
+        public virtual int TenantId { get; set; }
 
         protected Product()
         {
@@ -21,18 +23,19 @@ namespace Hozaru.Domain
             this.Status = ProductStatus.ACTIVE;
         }
 
-        public Product(string name, string description, decimal price, decimal weight)
-            :this()
+        public Product(string name, string sku, string description, decimal price, decimal weight)
+            : this()
         {
             this.Name = name;
+            this.SKU = sku;
             this.Description = description;
             this.Price = price;
             this.Weight = weight;
         }
 
-        public static Product Create(string name, string description, decimal price, decimal weight)
+        public static Product Create(string name, string description, decimal price, decimal weight, string sku = "")
         {
-            return new Product(name, description, price, weight);
+            return new Product(name, sku, description, price, weight);
         }
 
         public virtual void Activate()
@@ -45,9 +48,10 @@ namespace Hozaru.Domain
             this.Status = ProductStatus.ARCHIVE;
         }
 
-        public virtual void Update(string name, string description, decimal price, decimal weight)
+        public virtual void Update(string name, string description, decimal price, decimal weight, string sku = "")
         {
             this.Name = name;
+            this.SKU = sku;
             this.Description = description;
             this.Price = price;
             this.Weight = weight;

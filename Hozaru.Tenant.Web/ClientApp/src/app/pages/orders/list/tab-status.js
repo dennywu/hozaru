@@ -21,7 +21,7 @@ class TabStatus extends Component {
                     <Tab label="Perlu Dikirim" style={{ minWidth: "130px" }}/>
                     <Tab label="Sedang Dikirim" style={{ minWidth: "130px" }}/>
                     <Tab label="Selesai" style={{ minWidth: "130px" }}/>
-                    <Tab label="Pembatalan" style={{ minWidth: "130px" }}/>
+                    <Tab label="Dibatalkan" style={{ minWidth: "130px" }}/>
                     <Tab label="Pengembalian" style={{ minWidth: "130px" }}/>
                 </Tabs>
             </AppBar>

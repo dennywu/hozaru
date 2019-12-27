@@ -5,8 +5,11 @@ const alert = {
     error: (message, title = 'Oops...') => {
         swal.fire(title, message, 'error');
     },
-    success: (message, title = 'Yea...') => {
-        swal.fire(title, message, 'success');
+    success: (message, callback, title = 'Yea...') => {
+        swal.fire(title, message, 'success').then(result => {
+            if (callback)
+                callback(result);
+        });
     }
 };
 

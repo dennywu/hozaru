@@ -64,13 +64,13 @@ namespace Hozaru.WebApi
                 {
                     assembliesInBinFolder.Add(AssemblyLoadContext.Default.LoadFromAssemblyPath(item));
                 }
-                catch (System.IO.FileLoadException loadEx)
+                catch (System.IO.FileLoadException)
                 {
                 } // The Assembly has already been loaded.
-                catch (BadImageFormatException imgEx)
+                catch (BadImageFormatException)
                 {
                 } // If a BadImageFormatException exception is thrown, the file is not an assembly.
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
             }

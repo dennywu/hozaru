@@ -10,35 +10,35 @@ class DialogPayment extends Component {
         this.handleClickPaymentRow = this.handleClickPaymentRow.bind(this);
 
         this.state = {
-            selectedPaymentType: props.selectedPaymentType
+            selectedPaymentMethod: props.selectedPaymentMethod
         };
     }
 
-    handleClickPaymentRow(paymentType) {
+    handleClickPaymentRow(paymentMethod) {
         this.setState({
-            selectedPaymentType: paymentType.code
+            selectedPaymentMethod: paymentMethod.code
         });
     }
 
     handleSubmit(event) {
         event.preventDefault();
         event.stopPropagation();
-        this.props.changePaymentTypeOption(this.state.selectedPaymentType);
+        this.props.changePaymentMethodOption(this.state.selectedPaymentMethod);
         this.props.toggleDialog();
     }
 
     render() {
-        const { paymentTypes } = this.props;
-        var paymentTypeOptionElements = [];
-        paymentTypes.forEach(paymentType => {
-            paymentTypeOptionElements.push(
-                <div key={paymentType.code} >
-                    <div className="row" onClick={this.handleClickPaymentRow.bind(this, paymentType)}>
+        const { paymentMethods } = this.props;
+        var paymentMethodOptionElements = [];
+        paymentMethods.forEach(paymentMethod => {
+            paymentMethodOptionElements.push(
+                <div key={paymentMethod.code} >
+                    <div className="row" onClick={this.handleClickPaymentRow.bind(this, paymentMethod)}>
                         <div className="col-12 custom-control custom-radio">
                             <input type="radio"
                                 className="custom-control-input"
-                                value={this.state.selectedPaymentType}
-                                checked={this.state.selectedPaymentType === paymentType.code}
+                                value={this.state.selectedPaymentMethod}
+                                checked={this.state.selectedPaymentMethod === paymentMethod.code}
                                 onChange={this.handleClickPaymentRow}
                             />
                             <label className="custom-control-label">
@@ -46,17 +46,17 @@ class DialogPayment extends Component {
                                     <div className="col-3 pl-30px">
                                         <img
                                             className='logobank'
-                                            alt={paymentType.bankName}
-                                            srcSet={paymentType.imageUrl}
+                                            alt={paymentMethod.bankName}
+                                            srcSet={paymentMethod.imageUrl}
                                         />
                                     </div>
                                     <div className="col-9">
-                                        <div>{paymentType.name}</div>
+                                        <div>{paymentMethod.name}</div>
                                         <div className="font-weight-light font-12px">
-                                            Hanya menerima dari Bank {paymentType.bankName}
+                                            Hanya menerima dari Bank {paymentMethod.bankName}
                                         </div>
                                         <div className="font-weight-light font-12px">
-                                            {paymentType.isManualConfirmation && "Perlu upload bukti transfer"}
+                                            {paymentMethod.isManualConfirmation && "Perlu upload bukti transfer"}
                                         </div>
                                     </div>
                                 </div>
@@ -74,14 +74,15 @@ class DialogPayment extends Component {
                 toggle={this.props.toggleDialog}
                 backdrop={true}
                 className="m-0 fixed-bottom"
+                style={{ overflowY: "initial !important" }}
             >
-                <ModalHeader toggle={this.props.toggleDialog}>Metode Pembayaran</ModalHeader>
+                <ModalHeader toggle={this.props.toggleDialog}>Pilih Metode Pembayaran</ModalHeader>
                 <form onSubmit={this.handleSubmit}>
-                    <ModalBody>
+                    <ModalBody style={{ maxHeight: "275px", overflowY: "auto" }}>
                         <div className="container">
                             <div className="form-group">
 
-                                {paymentTypeOptionElements}
+                                {paymentMethodOptionElements}
 
                             </div>
                         </div>

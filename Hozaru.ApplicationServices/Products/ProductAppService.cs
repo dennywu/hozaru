@@ -10,8 +10,9 @@ using Hozaru.Domain;
 using Hozaru.Core.Configurations;
 using Hozaru.Core;
 using Hozaru.ApplicationServices.ImagesGenerator;
-using System.Drawing;
-using System.Drawing.Imaging;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp;
+using Hozaru.Core.Application.Services.Dto;
 
 namespace Hozaru.ApplicationServices.Products
 {
@@ -49,15 +50,18 @@ namespace Hozaru.ApplicationServices.Products
             //if (_productRepo.Exist(i => i.Name == inputDto.Name))
             //    throw new HozaruException(string.Format("Produk {0} sudah terdaftar.", inputDto.Name));
 
-            var product = Product.Create(inputDto.Name, inputDto.Description, inputDto.Price, inputDto.Weight);
+            if (!inputDto.SKU.IsNullOrWhiteSpace() && _productRepo.Exist(i => i.SKU == inputDto.SKU))
+                throw new HozaruException(string.Format("Produk dengan SKU {0} sudah terdaftar.", inputDto.SKU));
+
+            var product = Product.Create(inputDto.Name, inputDto.Description, inputDto.Price, inputDto.Weight, inputDto.SKU);
             _productRepo.Insert(product);
 
             foreach (var imageInputDto in inputDto.Images)
             {
                 var fileName = string.Format("{0}_{1}", product.Name, imageInputDto.Priority);
                 var imageStream = imageInputDto.Image.OpenReadStream();
-                var imageObj = Image.FromStream(imageStream);
-                var filePath = _imageGenerator.SaveProductImage(imageObj, fileName, product, ImageFormat.Jpeg);
+                var imageObj = Image.Load(imageStream);
+                var filePath = _imageGenerator.SaveProductImage(imageObj, fileName, product, JpegFormat.Instance);
                 product.AddImage(filePath, fileName, imageInputDto.Priority);
             }
 
@@ -78,7 +82,10 @@ namespace Hozaru.ApplicationServices.Products
             var product = _productRepo.Get(inputDto.Id);
             Validate.Found(product, "Produk");
 
-            product.Update(inputDto.Name, inputDto.Description, inputDto.Price, inputDto.Weight);
+            if (product.SKU != inputDto.SKU && _productRepo.Count(i => i.SKU == inputDto.SKU) > 0)
+                throw new HozaruException(string.Format("Produk dengan SKU {0} sudah terdaftar.", inputDto.SKU));
+
+            product.Update(inputDto.Name, inputDto.Description, inputDto.Price, inputDto.Weight, inputDto.SKU);
 
             var pathFileDirectory = AppSettingConfigurationHelper.GetSection("PathFileStorageDirectory").Value;
             foreach (var priority in inputDto.DeletedImagesByPriority)
@@ -96,8 +103,8 @@ namespace Hozaru.ApplicationServices.Products
             {
                 var fileName = string.Format("{0}_{1}", product.Name, image.Priority);
                 var imageStream = image.Image.OpenReadStream();
-                var imageObj = Image.FromStream(imageStream);
-                var filePath = _imageGenerator.SaveProductImage(imageObj, fileName, product, ImageFormat.Jpeg);
+                var imageObj = Image.Load(imageStream);
+                var filePath = _imageGenerator.SaveProductImage(imageObj, fileName, product, JpegFormat.Instance);
                 product.AddImage(filePath, fileName, image.Priority);
             }
             _productRepo.Update(product);
@@ -129,6 +136,29 @@ namespace Hozaru.ApplicationServices.Products
             }
 
             return Mapper.Map<IList<Product>, IList<ProductDto>>(products);
+        }
+
+        public PagedResultOutput<ProductDto> GetProductActive(GetProductPagedInputDto inputDto)
+        {
+            IQueryable<Product> query;
+            var products = _productRepo.GetAll();
+            switch (inputDto.Status)
+            {
+                case ProductStatusInputDto.ARCHIVE:
+                    query = products.Where(i => i.Status == ProductStatus.ARCHIVE);
+                    break;
+                case ProductStatusInputDto.ACTIVE:
+                    query = products.Where(i => i.Status == ProductStatus.ACTIVE);
+                    break;
+                default:
+                    query = products;
+                    break;
+            }
+
+            var result = query.OrderByDescending(i => i.CreationTime).PageBy(inputDto).ToList();
+            var resultCount = query.Count();
+
+            return new PagedResultOutput<ProductDto>(resultCount, Mapper.Map<List<ProductDto>>(result));
         }
 
         public Stream GetImage(Guid productId, Guid productImageId)

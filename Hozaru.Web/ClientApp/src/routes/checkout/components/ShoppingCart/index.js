@@ -1,13 +1,28 @@
 ﻿import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ShoppingCartItem from './ShoppingCartItem';
-import { changeQuantity, removeProduct } from '../../../../services/shopping-cart/actions';
+import { changeQuantity, removeProduct, updateProduct } from '../../../../services/shopping-cart/actions';
+import axios from "axios";
 
 class ShoppingCart extends Component {
 
     constructor() {
         super();
         this.removeShoppingCartComponent = this.removeShoppingCartComponent.bind(this);
+        this.fetchProduct = this.fetchProduct.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.shoppingCartItems.map(item => {
+            this.fetchProduct(item.product.id);
+        });
+    }
+
+    fetchProduct(productId) {
+        axios.get("/api/products/" + productId)
+            .then(res => {
+                this.props.updateProduct(res.data);
+            });
     }
 
     removeShoppingCartComponent() {
@@ -45,4 +60,4 @@ const mapStateToProps = state => ({
     shoppingCartItems: state.shoppingCart.items
 });
 
-export default connect(mapStateToProps, { changeQuantity, removeProduct })(ShoppingCart);
+export default connect(mapStateToProps, { changeQuantity, removeProduct, updateProduct })(ShoppingCart);

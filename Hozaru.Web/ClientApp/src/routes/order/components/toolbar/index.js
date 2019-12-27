@@ -48,7 +48,7 @@ class Toolbar extends Component {
                         
                     </>;
                 break;
-            case StatusOrder.CANCELED:
+            case StatusOrder.VOID:
                 content =
                     <>
 

@@ -1,4 +1,4 @@
-﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_TYPE, RESET_SHOPPING_CART } from './actionTypes';
+﻿import { LOAD_CART, ADD_PRODUCT, REMOVE_PRODUCT, CHANGE_QUANTITY, CHANGE_FREIGHT, CHANGE_NOTE, CHANGE_PAYMENT_METHOD, RESET_SHOPPING_CART, UPDATE_PRODUCT } from './actionTypes';
 
 export const loadCart = product => ({
     type: LOAD_CART,
@@ -11,6 +11,13 @@ export const addProduct = (product, quantity, note) => dispatch => {
         payload: product,
         quantity: quantity,
         note: note
+    });
+};
+
+export const updateProduct = (product) => dispatch => {
+    dispatch({
+        type: UPDATE_PRODUCT,
+        payload: product
     });
 };
 
@@ -27,10 +34,10 @@ export const changeQuantity = (product, quantity) => dispatch => {
     });
 };
 
-export const changeFreight = (expeditionCode, shippingRate, totalWeight) => dispatch => {
+export const changeFreight = (expeditionServiceId, shippingRate, totalWeight) => dispatch => {
     dispatch({
         type: CHANGE_FREIGHT,
-        expeditionCode: expeditionCode,
+        expeditionServiceId: expeditionServiceId,
         shippingRate: shippingRate,
         totalWeight: totalWeight
     });
@@ -43,10 +50,10 @@ export const changeNote = (note) => dispatch => {
     });
 };
 
-export const changePaymentType = (paymentType) => dispatch => {
+export const changePaymentMethod = (paymentMethod) => dispatch => {
     dispatch({
-        type: CHANGE_PAYMENT_TYPE,
-        paymentType: paymentType
+        type: CHANGE_PAYMENT_METHOD,
+        paymentMethod: paymentMethod
     });
 };
 

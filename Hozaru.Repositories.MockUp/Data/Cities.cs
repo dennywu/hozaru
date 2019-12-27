@@ -10,8 +10,9 @@ namespace Hozaru.Repositories.MockUp.Data
     {
         public static IQueryable<City> GetAll()
         {
+            Province
             IList<City> cities = new List<City>();
-            cities.Add(new City("Batam", "Batam"));
+            cities.Add(new City(1, "Batam", "Batam", "kota", "12345"));
             cities.Add(new City("Lingga", "Lingga"));
             cities.Add(new City("TanjungPinang", "Tanjung Pinang"));
             cities.Add(new City("DaboSingkep", "Dabo Singkep"));

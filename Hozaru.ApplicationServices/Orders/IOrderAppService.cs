@@ -13,10 +13,14 @@ namespace Hozaru.ApplicationServices.Orders
         OrderDto CreateOrder(CreateOrderInputDto inputDto);
         OrderDto Get(Guid id);
         PagedResultOutput<ListOrderDto> GetAll(GetListOrderInputDto inputDto);
-        Guid Confirmation(ConfirmationOrderInputDto inputDto);
+        Guid AddPayment(ConfirmationOrderInputDto inputDto);
         Stream GetReceiptImage(Guid id, Guid paymentId);
         void Approve(Guid id);
         void Reject(RejectPaymentInputDto inputDto);
         void UpdateAirWaybill(UpdateAirWaybillInputDto inputDto);
+        void UpdateTrackingInfo(Guid orderId);
+        void Cancel(CancelPaymentInputDto inputDto);
+        void CompleteOrder(Guid orderId);
+        DetailOrderShipmentTrackingDto GetShipmentTracking(Guid orderId);
     }
 }

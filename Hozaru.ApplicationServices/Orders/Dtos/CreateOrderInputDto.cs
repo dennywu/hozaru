@@ -21,7 +21,7 @@ namespace Hozaru.ApplicationServices.Orders.Dtos
 
         [Display(Name = "Kecamatan Penerima")]
         [Required(ErrorMessageResourceType = typeof(MessagesDataAnnotation), ErrorMessageResourceName = "Required")]
-        public string DistrictCode { get; set; }
+        public Guid DistrictId { get; set; }
 
         [Display(Name = "Alamat Penerima")]
         [Required(ErrorMessageResourceType = typeof(MessagesDataAnnotation), ErrorMessageResourceName = "Required")]
@@ -33,11 +33,11 @@ namespace Hozaru.ApplicationServices.Orders.Dtos
 
         [Display(Name = "Ekpedisi")]
         [Required(ErrorMessageResourceType = typeof(MessagesDataAnnotation), ErrorMessageResourceName = "Required")]
-        public string ExpeditionCode { get; set; }
+        public Guid ExpeditionServiceId { get; set; }
 
-        [Display(Name = "Tipe Pembayaran")]
+        [Display(Name = "Metode Pembayaran")]
         [Required(ErrorMessageResourceType = typeof(MessagesDataAnnotation), ErrorMessageResourceName = "Required")]
-        public string PaymentTypeCode { get; set; }
+        public string PaymentMethodCode { get; set; }
 
         public CreateOrderInputDto()
         {

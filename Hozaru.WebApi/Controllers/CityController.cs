@@ -1,5 +1,6 @@
 ﻿using Hozaru.ApplicationServices.Cities;
 using Hozaru.ApplicationServices.Cities.Dtos;
+using Hozaru.Authentication;
 using Hozaru.Core.Dependency;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace Hozaru.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AllScheme)]
         public IEnumerable<CityDto> Get(string searchKey = "")
         {
             searchKey = searchKey.IsNullOrWhiteSpace() ? string.Empty : searchKey;

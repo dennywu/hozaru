@@ -16,6 +16,9 @@ import { LayoutContextProvider, LayoutSplashScreen } from "../../_metronic";
 import * as routerHelpers from "../router/RouterHelpers";
 import ProductPage from "../pages/product/ProductPage";
 import OrderPage from "../pages/orders/OrderPage";
+import PaymentMethodPage from "../pages/payment-method/PaymentMethodPage";
+import SettingExpeditionPage from "../pages/setting-expedition/SettingExpeditionPage";
+import SettingTenantPage from "../pages/setting-tenant/SettingTenantPage";
 
 export const Routes = withRouter(({ Layout, history }) => {
     const lastLocation = useLastLocation();
@@ -23,7 +26,7 @@ export const Routes = withRouter(({ Layout, history }) => {
     const { isAuthorized, menuConfig, userLastLocation } = useSelector(
         ({ auth, urls, builder: { menuConfig } }) => ({
             menuConfig,
-            isAuthorized: true,//auth.user != null,
+            isAuthorized: auth.user != null,
             userLastLocation: routerHelpers.getLastLocation()
         }),
         shallowEqual
@@ -39,7 +42,8 @@ export const Routes = withRouter(({ Layout, history }) => {
                 ) : (
                         /* Otherwise redirect to root page (`/`) */
                         <Redirect from="/auth" to={userLastLocation} />
-                    )}
+                    )
+                }
 
                 <Route path="/error" component={ErrorsPage} />
                 <Route path="/logout" component={LogoutPage} />
@@ -51,6 +55,9 @@ export const Routes = withRouter(({ Layout, history }) => {
                         <Layout>
                             <ProductPage userLastLocation={userLastLocation} />
                             <OrderPage userLastLocation={userLastLocation} />
+                            <PaymentMethodPage userLastLocation={userLastLocation} />
+                            <SettingExpeditionPage userLastLocation={userLastLocation} />
+                            <SettingTenantPage userLastLocation={userLastLocation} />
                         </Layout>
                     )}
             </Switch>

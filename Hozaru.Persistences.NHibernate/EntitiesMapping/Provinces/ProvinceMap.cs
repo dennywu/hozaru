@@ -11,7 +11,8 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Provinces
         public ProvinceMap()
             : base("Provinces")
         {
-            Map(i => i.Code).Length(12).Not.Nullable();
+            Map(i => i.IdRajaOngkir).Nullable();
+            Map(i => i.Code).Length(64).Not.Nullable();
             Map(i => i.Name).Length(64).Not.Nullable();
             this.MapAudited();
         }

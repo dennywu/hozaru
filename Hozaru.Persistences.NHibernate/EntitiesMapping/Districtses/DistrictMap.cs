@@ -11,7 +11,8 @@ namespace Hozaru.Persistences.NHibernate.EntitiesMapping.Districtses
         public DistrictMap():
             base("Districtses")
         {
-            Map(i => i.Code).Length(12).Not.Nullable();
+            Map(i => i.IdRajaOngkir).Nullable();
+            Map(i => i.Code).Length(64).Not.Nullable();
             Map(i => i.Name).Length(64).Not.Nullable();
             References(i => i.City).Column("City_Id").Index("districts_city_id");
             this.MapAudited();

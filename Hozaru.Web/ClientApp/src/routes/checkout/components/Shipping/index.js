@@ -19,7 +19,7 @@ class Shipping extends Component {
 
         this.state = {
             freights: [],
-            selectedExpeditionCode: props.expeditionCode,
+            selectedExpeditionServiceId: props.expeditionServiceId,
             showDialogShippingOption: false
         };
     }
@@ -55,8 +55,8 @@ class Shipping extends Component {
             return;
 
         var data = {
-            city: customer.city.value,
-            districts: customer.districts.value,
+            cityId: customer.city.value,
+            districtId: customer.districts.value,
             items: []
         };
         shoppingCart.items.forEach(i => {
@@ -75,16 +75,16 @@ class Shipping extends Component {
                 return;
             }
 
-            var selectedExpeditionCode = this.state.selectedExpeditionCode;
-            if (selectedExpeditionCode === '') {
+            var selectedExpeditionServiceId = this.state.selectedExpeditionServiceId;
+            if (selectedExpeditionServiceId === '') {
                 this.setState({
-                    selectedExpeditionCode: responseData[0].expeditionCode
+                    selectedExpeditionServiceId: responseData[0].expeditionServiceId
                 });
             }
 
-            if (selectedExpeditionCode !== '' && responseData.find(i => i.expeditionCode === selectedExpeditionCode) == null) {
+            if (selectedExpeditionServiceId !== '' && responseData.find(i => i.expeditionServiceId === selectedExpeditionServiceId) == null) {
                 this.setState({
-                    selectedExpeditionCode: responseData[0].expeditionCode
+                    selectedExpeditionServiceId: responseData[0].expeditionServiceId
                 });
             }
 
@@ -93,17 +93,17 @@ class Shipping extends Component {
     }
 
     updateFreight() {
-        const selectedFreight = this.state.freights.find(i => i.expeditionCode === this.state.selectedExpeditionCode);
-        this.props.changeFreight(selectedFreight.expeditionCode, selectedFreight.rate, selectedFreight.totalWeight);
+        const selectedFreight = this.state.freights.find(i => i.expeditionServiceId === this.state.selectedExpeditionServiceId);
+        this.props.changeFreight(selectedFreight.expeditionServiceId, selectedFreight.cost, selectedFreight.totalWeight);
     }
 
     resetShippingRate() {
         this.props.changeFreight('', 0);
     }
 
-    changeFreightOption(expeditionCode) {
+    changeFreightOption(expeditionServiceId) {
         this.setState({
-            selectedExpeditionCode: expeditionCode
+            selectedExpeditionServiceId: expeditionServiceId
         }, () => this.updateFreight());
     }
 
@@ -119,11 +119,11 @@ class Shipping extends Component {
 
     render() {
         const { customer } = this.props;
-        const selectedFreight = this.state.freights.find(i => i.expeditionCode === this.state.selectedExpeditionCode);
+        const selectedFreight = this.state.freights.find(i => i.expeditionServiceId === this.state.selectedExpeditionServiceId);
         const expeditionName = selectedFreight ? selectedFreight.expeditionName : '';
         const expeditionFullName = selectedFreight ? selectedFreight.expeditionFullName : '';
         const description = selectedFreight ? selectedFreight.description : '';
-        const rate = selectedFreight ? selectedFreight.rate : '';
+        const shippingCost = selectedFreight ? selectedFreight.cost : '';
 
         let contents = customer.districts && this.state.freights.length !== 0 ?
             <div className="row cursor-pointer" onClick={this.showDialogShippingOption}>
@@ -133,7 +133,7 @@ class Shipping extends Component {
                 </div>
                 <div className="col-7">
                     <div className="font-weight-bolder text-right">
-                        <NumberFormat value={rate} displayType={'text'} thousandSeparator={true} prefix={' Rp '} />
+                        <NumberFormat value={shippingCost} displayType={'text'} thousandSeparator={true} prefix={' Rp '} />
                         <FontAwesomeIcon icon={faChevronRight} className="ml-2" />
                     </div>
                 </div>
@@ -144,7 +144,7 @@ class Shipping extends Component {
                         isOpenDialog={this.state.showDialogShippingOption}
                         toggleDialog={this.closeDialogShippingOption}
                         freights={this.state.freights}
-                        selectedFreight={this.state.selectedExpeditionCode}
+                        selectedFreight={this.state.selectedExpeditionServiceId}
                         changeFreightOption={this.changeFreightOption}
                     />
                 }
@@ -174,7 +174,7 @@ const mapStateToProps = state => ({
     customerToChange: state.customer.customerToChange,
     quantityToChange: state.shoppingCart.quantityToChange,
     productToRemove: state.shoppingCart.productToRemove,
-    expeditionCode: state.shoppingCart.freight.expeditionCode
+    expeditionServiceId: state.shoppingCart.freight.expeditionServiceId
 });
 
 export default connect(mapStateToProps, { changeFreight })(Shipping);

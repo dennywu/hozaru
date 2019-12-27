@@ -49,7 +49,7 @@ class ShoppingCartOrder extends Component {
                                         <TableRow>
                                             <TableCell colSpan={2} align="right">Ongkos Kirim</TableCell>
                                             <TableCell align="right">
-                                                <NumberFormat value={order.summary.shippingCost} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                                                <NumberFormat value={order.summary.totalShippingCost} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
                                             </TableCell>
                                         </TableRow>
                                         <TableRow>
@@ -61,7 +61,7 @@ class ShoppingCartOrder extends Component {
                                         <TableRow>
                                             <TableCell colSpan={2} align="right">Total</TableCell>
                                             <TableCell align="right">
-                                                <NumberFormat value={order.summary.total} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                                                <NumberFormat value={order.summary.netTotal} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
                                             </TableCell>
                                         </TableRow>
                                     </TableBody>

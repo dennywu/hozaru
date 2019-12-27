@@ -7,6 +7,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using Hozaru.Core.Runtime.Security;
+using Microsoft.AspNetCore.Http;
+using Hozaru.Core.Dependency;
+using Hozaru.Core.Application.Services;
 
 namespace Hozaru.Core.Runtime.Session
 {
@@ -58,19 +61,42 @@ namespace Hozaru.Core.Runtime.Session
                     return DefaultTenantId;
                 }
 
-                var claimsPrincipal = Thread.CurrentPrincipal as ClaimsPrincipal;
-                if (claimsPrincipal == null)
+                var aspnetServiceResolver = IocManager.Instance.Resolve<IAspnetCoreServiceResolver>();
+                var serviceProvider = aspnetServiceResolver.GetServiceProvider();
+
+                if (serviceProvider.IsNull())
                 {
                     return null;
                 }
 
-                var tenantIdClaim = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == HozaruClaimTypes.TenantId);
-                if (tenantIdClaim == null || string.IsNullOrEmpty(tenantIdClaim.Value))
+                var httpContextAccessor = (IHttpContextAccessor)serviceProvider.GetService(typeof(IHttpContextAccessor));
+                var tenantId = httpContextAccessor.HttpContext.User.FindFirst(HozaruClaimTypes.TenantId)?.Value;
+
+                if (tenantId.IsNotNull())
                 {
-                    return null;
+                    return Convert.ToInt32(tenantId);
                 }
 
-                return Convert.ToInt32(tenantIdClaim.Value);
+                return null;
+
+                //if (!_multiTenancy.IsEnabled)
+                //{
+                //    return DefaultTenantId;
+                //}
+
+                //var claimsPrincipal = Thread.CurrentPrincipal as ClaimsPrincipal;
+                //if (claimsPrincipal == null)
+                //{
+                //    return null;
+                //}
+
+                //var tenantIdClaim = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == HozaruClaimTypes.TenantId);
+                //if (tenantIdClaim == null || string.IsNullOrEmpty(tenantIdClaim.Value))
+                //{
+                //    return null;
+                //}
+
+                //return Convert.ToInt32(tenantIdClaim.Value);
             }
         }
 

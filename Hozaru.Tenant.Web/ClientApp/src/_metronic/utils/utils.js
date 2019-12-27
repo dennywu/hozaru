@@ -1,5 +1,3 @@
-import Alert from '../../app/partials/layout/Alert';
-
 export function removeCSSClass(ele, cls) {
     const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
     ele.className = ele.className.replace(reg, " ");
@@ -10,60 +8,6 @@ export function addCSSClass(ele, cls) {
 }
 
 export const toAbsoluteUrl = pathname => process.env.PUBLIC_URL + pathname;
-
-function errorResponseHandler(error) {
-    // check for errorHandle config
-    if (error.config.hasOwnProperty('errorHandle') && error.config.errorHandle === false) {
-        return Promise.reject(error);
-    }
-
-    var defaultErrorMessage = 'Terjadi sesuatu yang tidak terduga sehingga tidak bisa menyelesaikan permintaan Anda. Kami mohon maaf.';
-    // if has response show the error
-    if (error.response) {
-        var message = '';
-        if (typeof error.response.data === "string") {
-            message = error.response.data;
-        } else {
-            if (error.response.data.Message) {
-                message = error.response.data.Message;
-            } else if (typeof error.response.data.errors === "object") {
-                message = error.response.data.errors[Object.keys(error.response.data.errors)[0]][0];
-            } else {
-                message = defaultErrorMessage;
-            }
-        }
-        Alert.error(message);
-    } else {
-        Alert.error(error.message);
-    }
-    return Promise.reject(error);
-}
-
-export function setupAxios(axios, store) {
-
-    axios.defaults.baseURL = "http://localhost:8989";
-    axios.interceptors.request.use(
-        config => {
-            //const {
-            //  auth: { authToken }
-            //} = "C5BFF7F0-B4DF-475E-A331-F737424F013C";//store.getState();
-
-            var apiKey = "C5BFF7F0-B4DF-475E-A331-F737424F013C";
-            //if (authToken) {
-            config.headers["X-Api-Key"] = apiKey;
-            //}
-
-            return config;
-        },
-        err => Promise.reject(err)
-    );
-
-    axios.interceptors.response.use(
-        response => response,
-        errorResponseHandler
-    );
-}
-
 
 /*  removeStorage: removes a key from localStorage and its sibling expiracy key
     params:

@@ -19,7 +19,7 @@ class OrderStatus extends Component {
                     <>
                         <div className="font-16px font-weight-500">Belum Bayar</div>
                         <span>
-                            Mohon melakukan pembayaran sebelum {dateTimeFormat(order.dueDateConfirmation)} melalui {order.paymentType.name}.
+                            Mohon melakukan pembayaran sebelum {dateTimeFormat(order.dueDateConfirmation)} melalui {order.payment.paymentMethod.name}.
                             Bila tidak, pesanan ini akan dibatalkan secara otomatis.
                         </span>
                         <div className="font-12px">Waktu Pemesanan: {dateTimeFormat(order.transactionDate)}</div>
@@ -30,10 +30,10 @@ class OrderStatus extends Component {
                     <>
                         <div className="font-16px font-weight-500">Proses Verifikasi Pembayaran</div>
                         <span>
-                            Kami sudah menerima Konfirmasi Pembayaran Anda sebesar <NumberFormat value={order.summary.total} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />.
-                            Kami akan menginformasikan melalui Whatsapp {order.whatsappNumber} setelah Orderan Anda terverifikasi.
+                            Kami sudah menerima Konfirmasi Pembayaran Anda sebesar <NumberFormat value={order.summary.netTotal} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />.
+                            Kami akan menginformasikan melalui Whatsapp {order.customer.whatsappNumber} setelah Orderan Anda terverifikasi.
                         </span>
-                        <div className="font-12px">Waktu Pembayaran: {dateTimeFormat(order.lastPayment.paymentDate)}</div>
+                        <div className="font-12px">Waktu Pembayaran: {dateTimeFormat(order.payment.lastPayment.paymentDate)}</div>
                     </>;
                 break;
             case StatusOrder.PAYMENTREJECTED:
@@ -45,35 +45,46 @@ class OrderStatus extends Component {
                             Tetapi kami tidak bisa verifikasi Pembayaran Anda dikarenakan Pembayaran Anda tidak diterima di rekening kami.
                             Silahkan lakukan Pembayaran dan upload Bukti Pembayaran Anda.
                         </span>
-                        <div className="font-12px">Waktu Pembayaran: {dateTimeFormat(order.lastPayment.paymentDate)}</div>
+                        <div className="font-12px">Waktu Pembayaran: {dateTimeFormat(order.payment.lastPaymentDate)}</div>
                     </>;
                 break;
-            case "PACKAGING":
+            case StatusOrder.PACKAGING:
                 content =
                     <>
                         <div className="font-16px font-weight-500">Sedang Dikemas</div>
                         <span>
                             Orderan Anda sedang dikemas.
-                            Kami akan menginformasikan melalui Whatsapp {order.whatsappNumber} setelah Orderan Anda dikirim.
+                            Kami akan menginformasikan melalui Whatsapp {order.customer.whatsappNumber} setelah Orderan Anda dikirim.
                         </span>
                     </>;
                 break;
-            case "SHIPPING":
+            case StatusOrder.SHIPPING:
                 content =
                     <>
                         <div className="font-16px font-weight-500">Sedang dalam Pengiriman</div>
                         <span>
-                            Orderan Anda sedang dalam pengiriman oleh Kurir.
-                            Lacak orderan Anda dibawah ini.
+                            Orderan Anda sedang dalam pengiriman oleh Kurir. Lacak orderan Anda dengan klik LACAK dibawah ini.
                         </span>
+                    <div className="font-12px">Waktu Pengiriman: {dateTimeFormat(order.shipment.shipmentDate)}</div>
+                    <div className="font-12px">{order.shipment.estimatedTimeDeliverySentence}</div>
                     </>;
                 break;
-            case "DONE":
+            case StatusOrder.DONE:
                 content =
                     <>
                         <div className="font-16px font-weight-500">Selesai</div>
                         <span>
                             Pesanan sudah selesai.
+                        </span>
+                    <div className="font-12px">Waktu Pesanan Selesai: {dateTimeFormat(order.shipment.proofOfDeliveryDate)}</div>
+                    </>;
+                break;
+            case StatusOrder.VOID:
+                content =
+                    <>
+                        <div className="font-16px font-weight-500">Dibatalkan</div>
+                        <span>
+                            Pesanan sudah dibatalkan.
                         </span>
                     </>;
                 break;

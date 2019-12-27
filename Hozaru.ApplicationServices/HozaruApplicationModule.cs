@@ -2,6 +2,7 @@
 using Hozaru.Core;
 using Hozaru.Core.Modules;
 using Hozaru.Domain;
+using Hozaru.Identity;
 using Hozaru.Whatsapp;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace Hozaru.ApplicationServices
         typeof(HozaruDomainModule),
         typeof(HozaruWhatsappModule),
         typeof(HozaruKernelModule),
-        typeof(HozaruAutoMapperModule)
+        typeof(HozaruAutoMapperModule),
+        typeof(HozaruIdentityModule)
         )]
     public class HozaruApplicationModule : HozaruModule
     {

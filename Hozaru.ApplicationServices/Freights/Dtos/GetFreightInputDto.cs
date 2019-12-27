@@ -9,12 +9,12 @@ namespace Hozaru.ApplicationServices.Freights.Dtos
     {
         [Display(Name = "Kota Penerima")]
         [Required(ErrorMessageResourceType = typeof(MessagesDataAnnotation), ErrorMessageResourceName = "Required")]
-        public string City { get; set; }
+        public Guid CityId { get; set; }
 
 
         [Display(Name = "Kecamatan Penerima")]
         [Required(ErrorMessageResourceType = typeof(MessagesDataAnnotation), ErrorMessageResourceName = "Required")]
-        public string Districts { get; set; }
+        public Guid DistrictId { get; set; }
 
         public IList<FreightShoppingCartItem> Items { get; set; }
     }

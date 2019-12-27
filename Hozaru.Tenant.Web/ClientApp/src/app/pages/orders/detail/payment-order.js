@@ -67,7 +67,7 @@ class PaymentOrder extends Component {
                             <h6>Informasi Pembayaran</h6>
                             <Row>
                                 <Col xs={12}>
-                                    <div className="font-weight-bold">{order.paymentType.name}</div>
+                                    <div className="font-weight-bold">{order.payment.paymentMethod.name}</div>
                                 </Col>
                             </Row>
                             {
@@ -75,12 +75,12 @@ class PaymentOrder extends Component {
                                 <>
                                     <Row>
                                         <Col md={6} xs={12}>
-                                            <div>Tanggal Pembayaran: <span className="font-weight-bold">{dateTimeFormat(order.lastPayment.paymentDate)}</span></div>
-                                            <div>Nama Pengirim: <span className="font-weight-bold">{order.lastPayment.paymentAccountName}</span></div>
+                                            <div>Tanggal Pembayaran: <span className="font-weight-bold">{dateTimeFormat(order.payment.lastPaymentDate)}</span></div>
+                                            <div>Nama Pengirim: <span className="font-weight-bold">{order.payment.lastPayment.paymentAccountName}</span></div>
                                         </Col>
                                         <Col md={6} xs={12}>
-                                            <div>Transfer dari bank: <span className="font-weight-bold">{order.lastPayment.paymentBankName}</span></div>
-                                            <div>No. Rekening Pengirim: <span className="font-weight-bold">{order.lastPayment.paymentAccountNumber}</span></div>
+                                            <div>Transfer dari bank: <span className="font-weight-bold">{order.payment.lastPayment.paymentBankName}</span></div>
+                                            <div>No. Rekening Pengirim: <span className="font-weight-bold">{order.payment.lastPayment.paymentAccountNumber}</span></div>
                                         </Col>
                                     </Row>
                                     <Row className="mt-10px">
@@ -124,7 +124,7 @@ class PaymentOrder extends Component {
                                     >
                                         <DialogTitle id="responsive-dialog-title">Bukti Pembayaran Pesanan <b> {order.orderNumber} </b></DialogTitle>
                                         <DialogContent>
-                                            <img srcSet={order.lastPayment.url} alt="Bukti Pembayaran" style={{ maxWidth: "400px" }} />
+                                            <img srcSet={order.payment.lastPayment.url} alt="Bukti Pembayaran" style={{ maxWidth: "400px" }} />
                                         </DialogContent>
                                         <DialogActions>
                                             <Button onClick={this.handleCloseDialogReceipt} color="primary" autoFocus>Tutup</Button>

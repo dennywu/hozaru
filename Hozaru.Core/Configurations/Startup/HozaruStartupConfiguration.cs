@@ -87,7 +87,7 @@ namespace Hozaru.Core.Configurations.Startup
         {
             //Localization = IocManager.Resolve<ILocalizationConfiguration>();
             Modules = IocManager.Resolve<IModuleConfigurations>();
-            //Features = IocManager.Resolve<IFeatureConfiguration>();
+            Features = IocManager.Resolve<IFeatureConfiguration>();
             //Navigation = IocManager.Resolve<INavigationConfiguration>();
             Authorization = IocManager.Resolve<IAuthorizationConfiguration>();
             Settings = IocManager.Resolve<ISettingsConfiguration>();

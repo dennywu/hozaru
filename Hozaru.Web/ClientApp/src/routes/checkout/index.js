@@ -39,12 +39,12 @@ class Checkout extends Component {
             return;
         }
 
-        if (shoppingCart.freight.expeditionCode === '') {
+        if (shoppingCart.freight.expeditionServiceId === '') {
             alert("Silahkan pilih Opsi Pengiriman.");
             return;
         }
 
-        if (shoppingCart.paymentType === '') {
+        if (shoppingCart.paymentMethod === '') {
             alert("Silahkan pilih metode pembayaran.");
             return;
         }
@@ -65,11 +65,11 @@ class Checkout extends Component {
             name: customer.name,
             whatsapp: customer.whatsapp,
             email: customer.email,
-            cityCode: customer.city.value,
-            districtCode: customer.districts.value,
+            cityId: customer.city.value,
+            districtId: customer.districts.value,
             address: customer.address,
-            paymentTypeCode: shoppingCart.paymentType,
-            expeditionCode: shoppingCart.freight.expeditionCode,
+            paymentMethodCode: shoppingCart.paymentMethod,
+            expeditionServiceId: shoppingCart.freight.expeditionServiceId,
             note: shoppingCart.note,
             items: []
         };
@@ -82,7 +82,9 @@ class Checkout extends Component {
         axios.post('/api/orders', data)
             .then(res => {
                 this.props.resetShoppingCart();
-                this.props.history.push('/payment/' + res.data.id);
+                setTimeout(() => {
+                    this.props.history.push('/payment/' + res.data.id);
+                }, 500);
             })
             .finally(() => {
                 this.setState({ buttonState: '' });

@@ -3,18 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileInvoiceDollar, faDollarSign, faStore, faComments } from '@fortawesome/free-solid-svg-icons';
 import { default as NumberFormat } from 'react-number-format';
 import { dateTimeFormat } from '../../utils/DateUtil';
+import { StatusOrder } from './OrderStatus';
 import OrderStatus from './components/status';
 import OrderReceiver from './components/receiver';
+import OrderShipment from './components/shipment';
 import ListOrderItem from './components/list-order-item';
 import Toolbar from './components/toolbar';
 import Loading from '../../components/loading';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 class Order extends Component {
     constructor() {
         super();
         this.renderContent = this.renderContent.bind(this);
         this.handleClickToHomepage = this.handleClickToHomepage.bind(this);
+        this.handleClickContactTenant = this.handleClickContactTenant.bind(this);
 
         this.state = {
             orderId: '',
@@ -45,6 +49,11 @@ class Order extends Component {
         this.props.history.push('/');
     }
 
+    handleClickContactTenant(ev) {
+        ev.preventDefault();
+        window.open(this.props.tenant.whatsappUrl);
+    }
+
     renderContent(order) {
         return (
             <>
@@ -52,6 +61,17 @@ class Order extends Component {
                 <div className="container">
                     <OrderReceiver order={order} />
                     <hr className="mt-1 mb-1" />
+
+                    {
+                        (order.statusText == StatusOrder.SHIPPING || order.statusText == StatusOrder.DONE) ?
+                            <>
+                                <OrderShipment order={order} />
+                                <hr className="mt-1 mb-1" />
+                            </>
+                            :
+                            <></>
+                    }
+
 
                     <div className="row">
                         <div className="col-1 font-16px mt-2">
@@ -68,13 +88,13 @@ class Order extends Component {
                             <div className="row mt-1">
                                 <div className="col-6 font-weight-500">Ongkos Kirim</div>
                                 <div className="col-6 text-right">
-                                    <NumberFormat value={order.summary.shippingCost} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                                    <NumberFormat value={order.summary.totalShippingCost} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
                                 </div>
                             </div>
                             <div className="row mt-1">
                                 <div className="col-6 font-weight-500">Jumlah Harus Dibayar</div>
                                 <div className="col-6 color-orange text-right">
-                                    <NumberFormat value={order.summary.total} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
+                                    <NumberFormat value={order.summary.netTotal} displayType={'text'} thousandSeparator={true} prefix={'Rp '} />
                                 </div>
                             </div>
                         </div>
@@ -86,7 +106,7 @@ class Order extends Component {
                         <div className="col-12 mt-2 mb-2">
                             <div className="font-16px font-weight-500">Metode Pembayaran</div>
                             <div>
-                                <FontAwesomeIcon icon={faDollarSign} className="color-orange" /> {order.paymentType.name}
+                                <FontAwesomeIcon icon={faDollarSign} className="color-orange" /> {order.payment.paymentMethod.name}
                             </div>
                         </div>
                     </div>
@@ -106,7 +126,7 @@ class Order extends Component {
                         <div className="col-12 mt-2 mb-2">
                             <div className="font-16px font-weight-500">Ongkos Kirim</div>
                             <div>
-                                {order.expedition.fullName} <NumberFormat value={order.summary.shippingCost} displayType={'text'} thousandSeparator={true} prefix={'Rp '} className='color-orange' />
+                                {order.shipment.expeditionService.fullName} <NumberFormat value={order.summary.totalShippingCost} displayType={'text'} thousandSeparator={true} prefix={'Rp '} className='color-orange' />
                             </div>
                         </div>
                     </div>
@@ -122,18 +142,34 @@ class Order extends Component {
                         <div className="col-7 text-right">{dateTimeFormat(order.transactionDate)}</div>
                     </div>
                     {
-                        order.statusText !== "DRAFT" &&
-                        <div className="row mb-2">
+                        order.statusText !== StatusOrder.DRAFT &&
+                        <div className="row">
                             <div className="col-5">Waktu Pembayaran</div>
-                            <div className="col-7 text-right">{dateTimeFormat(order.lastPayment.paymentDate)}</div>
+                            <div className="col-7 text-right">{dateTimeFormat(order.payment.lastPayment.paymentDate)}</div>
+                        </div>
+                    }
+                    {
+                        (order.statusText === StatusOrder.SHIPPING || order.statusText === StatusOrder.DONE) ?
+                            <div className="row">
+                                <div className="col-5">Waktu Pengiriman</div>
+                                <div className="col-7 text-right">{dateTimeFormat(order.shipment.shipmentDate)}</div>
+                            </div>
+                            :
+                            <></>
+                    }
+                    {
+                        order.statusText === StatusOrder.DONE &&
+                        <div className="row">
+                            <div className="col-5">Waktu Pesanan Selesai</div>
+                            <div className="col-7 text-right">{dateTimeFormat(order.shipment.proofOfDeliveryDate)}</div>
                         </div>
                     }
 
-                    <hr className="mt-1 mb-1" />
+                    <hr className="mt-2 mb-1" />
 
                     <div className="row mt-3 mb-3">
                         <div className="col-6">
-                            <button className="btn btn-transparent width-100percent" onClick={this.handleClickUploadPayment}>
+                            <button className="btn btn-transparent width-100percent" onClick={this.handleClickContactTenant}>
                                 <FontAwesomeIcon icon={faComments} /> Hubungi Penjual
                             </button>
                         </div>
@@ -163,4 +199,9 @@ class Order extends Component {
     }
 }
 
-export default Order;
+
+const mapStateToProps = state => ({
+    tenant: state.tenant
+});
+
+export default connect(mapStateToProps, {})(Order);

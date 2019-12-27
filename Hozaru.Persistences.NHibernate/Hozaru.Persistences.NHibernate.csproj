@@ -12,7 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Hozaru.Authentication\Hozaru.Authentication.csproj" />
+    <ProjectReference Include="..\Hozaru.Core.Identity.NHibernate\Hozaru.Core.Identity.NHibernate.csproj" />
     <ProjectReference Include="..\Hozaru.Domain\Hozaru.Domain.csproj" />
+    <ProjectReference Include="..\Hozaru.Identity\Hozaru.Identity.csproj" />
     <ProjectReference Include="..\Hozaru.NHibernate\Hozaru.NHibernate.csproj" />
   </ItemGroup>
 

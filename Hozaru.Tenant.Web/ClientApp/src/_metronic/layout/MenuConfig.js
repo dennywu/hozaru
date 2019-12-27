@@ -20,7 +20,7 @@ export default {
                 title: "Pesanan",
                 root: true,
                 bullet: "dot",
-                icon: "flaticon2-browser-2",
+                icon: "flaticon-file-2",
                 page: "orders"
             }, 
             {
@@ -33,7 +33,7 @@ export default {
                 title: "Product Saya",
                 root: true,
                 bullet: "dot",
-                icon: "flaticon2-browser-2",
+                icon: "flaticon2-tag",
                 page: "products"
             },
             {
@@ -48,6 +48,34 @@ export default {
                 title: "Ubah Product",
                 page: "/products/:id/edit",
                 hide: true
+            },
+            {
+                section: "Pengaturan"
+            },
+            {
+                title: "Pengaturan Toko",
+                icon: "flaticon2-gear",
+                page: "setting-tenant"
+            },
+            {
+                title: "Metode Pembayaran",
+                icon: "flaticon-price-tag",
+                page: "paymentmethods"
+            },
+            {
+                title: "Tambah Metode Pembayaran",
+                page: "paymentmethods/new",
+                hide: true
+            },
+            {
+                title: "Ubah Metode Pembayaran",
+                page: "/paymentmethods/:id/edit",
+                hide: true
+            },
+            {
+                title: "Jasa Pengiriman",
+                icon: "flaticon-truck",
+                page: "settingexpeditionservices"
             }
         ]
     }

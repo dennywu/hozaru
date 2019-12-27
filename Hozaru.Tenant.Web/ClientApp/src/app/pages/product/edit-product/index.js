@@ -11,6 +11,7 @@ class EditProduct extends Component {
         super();
         this.syncProduct = this.syncProduct.bind(this);
         this.handleChangeProductName = this.handleChangeProductName.bind(this);
+        this.handleChangeSKU = this.handleChangeSKU.bind(this);
         this.handleChangeProductDescription = this.handleChangeProductDescription.bind(this);
         this.handleChangeProductPrice = this.handleChangeProductPrice.bind(this);
         this.handleChangeProductWeight = this.handleChangeProductWeight.bind(this);
@@ -24,6 +25,7 @@ class EditProduct extends Component {
         this.state = {
             id: '',
             name: '',
+            sku: '',
             description: '',
             price: '',
             weight: '',
@@ -50,6 +52,7 @@ class EditProduct extends Component {
                 this.setState({
                     id: res.data.id,
                     name: res.data.name,
+                    sku: res.data.sku,
                     description: res.data.description,
                     price: res.data.price,
                     weight: res.data.weight,
@@ -80,6 +83,11 @@ class EditProduct extends Component {
     handleChangeProductName(ev) {
         let productName = ev.target.value;
         this.setState({ name: productName });
+    }
+
+    handleChangeSKU(ev) {
+        let sku = ev.target.value;
+        this.setState({ sku: sku });
     }
 
     handleChangeProductDescription(ev) {
@@ -143,6 +151,7 @@ class EditProduct extends Component {
         const formData = new FormData();
         formData.append('id', this.state.id);
         formData.append('name', this.state.name);
+        formData.append('sku', this.state.sku || "");
         formData.append('description', this.state.description);
         formData.append('weight', this.state.weight);
         formData.append('price', this.state.price);
@@ -213,7 +222,7 @@ class EditProduct extends Component {
                         <img src={imageData.data}
                             alt="Upload Gambar Produk"
                             className="margin-center"
-                        style={{ width: "auto", height: "auto", maxHeight: "100px", margin: "0 auto", display: "block" }} />
+                            style={{ width: "auto", height: "auto", maxHeight: "100px", margin: "0 auto", display: "block" }} />
                         <div className="mt-2 hand text-center text-underline">
                             <a onClick={this.handleDeleteImage.bind(this, imageData.priority)}>Hapus gambar</a>
                         </div>
@@ -225,7 +234,7 @@ class EditProduct extends Component {
                         <img src={imageUrl.url}
                             alt="Upload Gambar Produk"
                             className="margin-center"
-                            style={{ width: "auto", height:"auto", maxHeight: "100px", margin: "0 auto", display: "block" }} />
+                            style={{ width: "auto", height: "auto", maxHeight: "100px", margin: "0 auto", display: "block" }} />
                         <div className="mt-2 hand text-center color-orange text-underline" onClick={this.removeOriginImage.bind(this, imageUrl.priority)}>
                             <a>Hapus gambar</a>
                         </div>
@@ -261,6 +270,13 @@ class EditProduct extends Component {
                                 </Form.Text>
                             </Form.Group>
                             <Form.Group>
+                                <Form.Label>SKU Produk</Form.Label>
+                                <Form.Control type="text" placeholder="SKU atau Kode Produk" defaultValue={this.state.sku} onBlur={this.handleChangeSKU} />
+                                <Form.Text className="text-muted">
+                                    Ini boleh tidak diisi. Anda bisa masukkan SKU, Kode produk atau Barcode
+                                </Form.Text>
+                            </Form.Group>
+                            <Form.Group>
                                 <Form.Label>Deskripsi Produk</Form.Label>
                                 <Form.Control as="textarea" rows="9" placeholder="Deskripsi Produk" defaultValue={this.state.description} onBlur={this.handleChangeProductDescription} />
                             </Form.Group>
@@ -278,17 +294,15 @@ class EditProduct extends Component {
                                 {dropzoneImages}
                             </Form.Group>
                             <Form.Group as={Row}>
-                                <Col sm={6}>
-                                    <HozaruButton className="btn btn-secondary" state={this.state.buttonCancelState} onClick={this.handleCancel}>Batal</HozaruButton>
-                                    <HozaruButton type="submit" className="btn btn-primary" state={this.state.buttonState}>Simpan</HozaruButton>
-                                </Col>
-                                <Col sm={6} className="text-right">
+                                <Col xs={12} >
                                     {this.state.status === 10 &&
-                                        <HozaruButton type="button" className="btn btn-warning" state={this.state.buttonArchiveState} onClick={this.archiveProduct}>Arsipkan Produk</HozaruButton>
+                                        <HozaruButton type="button" className="btn btn-warning" state={this.state.buttonArchiveState} onClick={this.archiveProduct}>Arsipkan</HozaruButton>
                                     }
                                     {this.state.status === 20 &&
                                         <HozaruButton type="button" className="btn btn-primary" state={this.state.buttonActivateState} onClick={this.activateProduct}>Aktifkan Produk</HozaruButton>
                                     }
+                                    <HozaruButton className="btn btn-secondary" state={this.state.buttonCancelState} onClick={this.handleCancel}>Batal</HozaruButton>
+                                    <HozaruButton type="submit" className="btn btn-primary" state={this.state.buttonState}>Simpan</HozaruButton>
                                 </Col>
                             </Form.Group>
                         </Form>

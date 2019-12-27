@@ -8,6 +8,7 @@ import ShippingOrder from "./shipping-order";
 import ShoppingCartOrder from "./shopping-cart-order";
 import PaymentOrder from "./payment-order";
 import Notes from "./notes";
+import OrderUrl from "./order-url";
 import Toolbar from "./toolbar";
 
 class DetailOrder extends Component {
@@ -35,7 +36,7 @@ class DetailOrder extends Component {
         const { order } = this.state;
         if (!order) {
             return (
-                <div>Orderan tidak ditemukan</div>
+                <div></div>
             );
         }
         else {
@@ -49,8 +50,10 @@ class DetailOrder extends Component {
                             <PaymentOrder order={order} />
                             <ShoppingCartOrder order={order} />
                             <Notes order={order} />
+                            <OrderUrl order={order}/>
                         </Col>
                         <Col xs={12} sm={2}>
+                            <Toolbar order={order} />
                         </Col>
                     </Row>
                 </div>

@@ -17,9 +17,9 @@ class OrderReceiver extends Component {
                 </div>
                 <div className="col-11 ml-minus-10px mt-2 mb-2">
                     <div className="font-16px font-weight-500">Alamat Pengiriman</div>
-                    <div>{order.customerName}</div>
-                    <div>{order.whatsapp}</div>
-                    <div>{order.address}, {order.districts.name}, {order.districts.city.name}</div>
+                    <div>{order.customer.customerName}</div>
+                    <div>{order.customer.whatsapp}</div>
+                    <div>{order.customer.address}</div>
                 </div>
             </div>
         );

@@ -1,5 +1,6 @@
 ﻿using Hozaru.ApplicationServices.Products.Dtos;
 using Hozaru.Core.Application.Services;
+using Hozaru.Core.Application.Services.Dto;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,5 +18,6 @@ namespace Hozaru.ApplicationServices.Products
         IList<ProductDto> GetAll(ProductStatusInputDto inputDto);
         ProductDto Get(Guid id);
         Stream GetImage(Guid productId, Guid productImageId);
+        PagedResultOutput<ProductDto> GetProductActive(GetProductPagedInputDto inputDto);
     }
 }

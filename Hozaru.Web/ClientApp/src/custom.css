@@ -189,8 +189,8 @@ body {
     padding-left: 30px !important;
 }
 
-pl-0{
-    padding-left:0px !important;
+pl-0 {
+    padding-left: 0px !important;
 }
 
 .pt-5px {
@@ -207,6 +207,14 @@ pl-0{
 
 .mt-3px {
     margin-top: 3px;
+}
+
+.mt-5px {
+    margin-top: 5px;
+}
+
+.mb-85px {
+    margin-bottom: 85px;
 }
 
 .navbar-light .navbar-toggler {
@@ -227,6 +235,10 @@ pl-0{
 
 .pr-2em {
     padding-right: 2em;
+}
+
+.pr-0px {
+    padding-right: 0px;
 }
 
 .product-grid {

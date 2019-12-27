@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hozaru.Core.Identity\Hozaru.Core.Identity.csproj" />
+    <ProjectReference Include="..\Hozaru.Core\Hozaru.Core.csproj" />
+    <ProjectReference Include="..\Hozaru.NHibernate\Hozaru.NHibernate.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EntityMappings\" />
+  </ItemGroup>
+
+</Project>

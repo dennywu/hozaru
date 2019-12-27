@@ -2,6 +2,7 @@
 import { withRouter } from "react-router-dom";
 import { TableCell, TableRow } from '@material-ui/core';
 import { getStatusIndonesia } from "../status-order";
+import { default as NumberFormat } from 'react-number-format';
 
 class RowOrder extends Component {
     constructor() {
@@ -20,8 +21,8 @@ class RowOrder extends Component {
             <TableRow onClick={this.handleShowDetailOrder}>
                 <TableCell component="th" scope="row">{order.orderNumber}</TableCell>
                 <TableCell align="right">{order.customerName}</TableCell>
-                <TableCell align="right">{order.totalSummary}</TableCell>
-                <TableCell align="right">{order.expeditionFullName}</TableCell>
+                <TableCell align="right"><NumberFormat value={order.totalSummary} displayType={'text'} thousandSeparator={true} prefix={'Rp '} /></TableCell>
+                <TableCell align="right">{order.expeditionServiceFullName}</TableCell>
                 <TableCell align="right">{getStatusIndonesia(order.statusText)}</TableCell>
                 <TableCell align="right">
                     <a className="text-underline">Periksa Rincian</a>

@@ -2,35 +2,41 @@ import React, { Component } from 'react';
 import './NavMenu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
 
-export class NavMenu extends Component {
-    static displayName = NavMenu.name;
-    static navigations = [{
-        path: '/',
-        title: 'mumubeautyhouse.id',
-        hasBackButton: false,
-        backUrl: '/'
-    }, {
-        path: '/checkout',
-        title: 'Keranjang',
-        hasBackButton: true,
-        backUrl: 'before'
-    }, {
-        path: '/payment',
-        title: 'Info Pembayaran',
-        hasBackButton: true,
-        backUrl: '/'
-    }, {
-        path: '/order',
-        title: 'Pesanan Anda',
-        hasBackButton: true,
-        backUrl: '/'
-    }, {
-        path: '/payment-confirmation',
-        title: 'Konfirmasi Pembayaran',
-        hasBackButton: true,
-        backUrl: 'before'
-    }];
+const navigations = [{
+    path: '/',
+    title: 'hozaru',
+    hasBackButton: false,
+    backUrl: '/'
+}, {
+    path: '/checkout',
+    title: 'Keranjang',
+    hasBackButton: true,
+    backUrl: 'before'
+}, {
+    path: '/payment/:id',
+    title: 'Info Pembayaran',
+    hasBackButton: true,
+    backUrl: '/'
+}, {
+    path: '/order/:id',
+    title: 'Pesanan Anda',
+    hasBackButton: true,
+    backUrl: '/'
+}, {
+    path: '/order/:id/tracking',
+    title: 'Status Pengiriman',
+    hasBackButton: true,
+    backUrl: 'before'
+}, {
+    path: '/payment-confirmation/:id',
+    title: 'Konfirmasi Pembayaran',
+    hasBackButton: true,
+    backUrl: 'before'
+}];
+
+class NavMenu extends Component {
 
     constructor(props) {
         super(props);
@@ -50,23 +56,63 @@ export class NavMenu extends Component {
         this.setNagivationInfo();
     }
 
-    componentWillReceiveProps() {
+    componentWillReceiveProps(nextProp) {
+        var homeTitle = navigations.find(i => i.path == "/");
+        homeTitle.title = nextProp.tenant.name.toLowerCase() || homeTitle.title;
+
         this.setNagivationInfo();
     }
 
     setNagivationInfo() {
         var path = window.location.pathname;
-        var pathName = path;
-        if (path.split('/').length > 2) {
-            pathName = '/' + path.split('/')[1];
-        }
+        //if (path.split('/').length > 2) {
+        //    pathName = '/' + path.split('/')[1];
+        //}
 
-        var navigationInfo = NavMenu.navigations.find(nav => nav.path === pathName);
+        //var navigationInfo = navigations.find(nav => nav.path === pathName);
+
+        var navigationInfo = this.findNagivation(path) || this.findAdvanceNagivation(path);
         this.setState({
             title: navigationInfo.title,
             hasBackButton: navigationInfo.hasBackButton,
             backUrl: navigationInfo.backUrl
         });
+    }
+
+    findNagivation(currentPage) {
+        for (const itemNav of navigations) {
+            // Return `item` if it's `page` matches `currentPage`
+            if (currentPage === itemNav.path) {
+                return itemNav;
+            }
+        }
+    }
+
+    findAdvanceNagivation(currentPage) {
+        var currentPage = currentPage[0] === "/" ? currentPage.slice(1) : currentPage;
+        for (const itemNav of navigations) {
+            var firstPath = currentPage.split('/')[0];
+            var secondPath = currentPage.split('/')[1];
+            var thirdPath = currentPage.split('/')[2];
+
+            if (itemNav.path && itemNav.path.includes(":id")) {
+                const itemPage = itemNav.path[0] === "/" ? itemNav.path.slice(1) : itemNav.page;
+                var firstItemPage = itemPage.split('/')[0];
+                var secondItemPage = itemPage.split('/')[1];
+                var thirdItemPage = itemPage.split('/')[2];
+
+                // Return `item` if it's `page` matches `currentPage`
+                if (!thirdPath) {
+                    if (firstPath === firstItemPage) {
+                        return itemNav;
+                    }
+                } else {
+                    if (firstPath === firstItemPage && thirdPath === thirdItemPage) {
+                        return itemNav;
+                    }
+                }
+            }
+        }
     }
 
     handleBackButton() {
@@ -95,9 +141,16 @@ export class NavMenu extends Component {
                     {backButtonElement}
                     <div className="container">
                         <div className="navbar-brand margin-center">{this.state.title}</div>
+                        <div style={{ display: "none" }}>{this.props.tenant.name}</div>
                     </div>
                 </div>
             </header>
         );
     }
 }
+
+const mapStateToProps = state => ({
+    tenant: state.tenant
+});
+
+export default connect(mapStateToProps, {})(NavMenu);

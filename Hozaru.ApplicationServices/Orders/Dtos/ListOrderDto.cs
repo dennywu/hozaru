@@ -1,6 +1,6 @@
 ﻿using Hozaru.ApplicationServices.Districtses.Dtos;
 using Hozaru.ApplicationServices.Expeditions.Dtos;
-using Hozaru.ApplicationServices.PaymentTypes.Dtos;
+using Hozaru.ApplicationServices.PaymentMethods.Dtos;
 using Hozaru.Core.Application.Services.Dto;
 using Hozaru.Domain;
 using System;
@@ -18,8 +18,8 @@ namespace Hozaru.ApplicationServices.Orders.Dtos
         public OrderStatus Status { get; set; }
         public string StatusText { get; set; }
         public string Address { get; set; }
-        public string ExpeditionFullName { get; set; }
-        public string PaymentType { get; set; }
+        public string PaymentMethod { get; set; }
+        public string ExpeditionServiceFullName { get; set; }
         public decimal TotalSummary { get; set; }
     }
 }
